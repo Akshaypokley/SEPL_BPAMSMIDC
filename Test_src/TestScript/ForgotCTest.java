@@ -7,6 +7,7 @@ import jxl.Workbook;
 import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
 import jxl.write.*;
+import org.apache.log4j.Priority;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -15,10 +16,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,6 +49,9 @@ public class ForgotCTest {
     public WritableSheet sourceSheet;
     public static WritableSheet targetSheet;
     public Workbook sourceDocument;
+
+    public static String WinHandleBefore1;
+    public static String WinHandleBefore2;
     /*****************************************************************/
     private static int n = 2;
     private static int j = 1;
@@ -74,7 +75,7 @@ public class ForgotCTest {
         sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/TestCaseDemo.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
         copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/ForgotPasswordTestReport.xls"));
-        sourceSheet = writableTempSource.getSheet(3);
+        sourceSheet = writableTempSource.getSheet(4);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
         WritableFont cellFont = new WritableFont(WritableFont.COURIER, 11);
@@ -156,7 +157,7 @@ public class ForgotCTest {
                 targetSheet.setColumnView(3, widthInChars2);
                 targetSheet.mergeCells(0, 0, 6, 0);
                 Label lable = new Label (0, 0,
-                        "LTP-Registration screen test  report",cellFormat5);
+                        "Forgot Password screen test  report",cellFormat5);
                 targetSheet.addCell(lable);
                 targetSheet.addCell(l2);
                 targetSheet.addCell(l3);
@@ -187,8 +188,8 @@ public class ForgotCTest {
             LoginConsole login = new LoginConsole(driver);
             login.ClickForgotPasswordlink();
             Thread.sleep(200);
-            NewWindow(driver);
-
+           NewWindow(driver);
+         //   WinHandleBefore1 = driver.getWindowHandle();
             SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
@@ -206,7 +207,7 @@ public class ForgotCTest {
 
                 case "CLICK":
                     String FilePath = "E:\\Akshay85\\select.pdf";
-                    String WinHandleBefore1 = driver.getWindowHandle();
+                WinHandleBefore2 = driver.getWindowHandle();
                     switch (objectName) {
 
                         case "Submit":
@@ -246,24 +247,6 @@ public class ForgotCTest {
                         case "Login Id":
                             forgotPasswordConsole.setLoginID(value);
 
-                            try {
-
-                                if ((ExpectedConditions.alertIsPresent()) == null) {
-                                    final String fieldValue = forgotPasswordConsole.getLoginID().getAttribute("value");
-                                    if (fieldValue.equals(value))
-                                        if(!String.matcher(fieldValue).matches()){
-
-                                            Result = "Pass";
-                                        } else {
-                                            Result = "fail";
-                                        }
-                                } else {
-                                    Alert alert = driver.switchTo().alert();
-
-                                    Actual = driver.switchTo().alert().getText();
-                                    Thread.sleep(300);
-                                    alert.accept();
-                                }
 
                                 final String fieldValue = forgotPasswordConsole.getLoginID().getAttribute("value");
                                 if (fieldValue.isEmpty()) {
@@ -287,14 +270,14 @@ public class ForgotCTest {
                                         }
 
                                     } catch (Throwable e) {
-                                        Actual = "Alert message not display.";
-                                        Result = "Fail";
+                                        /*Actual = "Alert message not display.";
+                                        Result = "Fail";*/
                                     }
 
 
                                 } else {
                                     if (fieldValue.equals(value)) {
-                                        if (!String.matcher(fieldValue).matches()) {
+                                        if (!Emailval.matcher(fieldValue).matches()) {
                                             try {
                                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                                     Actual = "Alert message not display.";
@@ -330,9 +313,7 @@ public class ForgotCTest {
                                         }
                                     }
                                 }
-                            } catch (Throwable e) {
 
-                            }
                             break;
                         case "Mobile No":
                             forgotPasswordConsole.setMobileNo(value);
@@ -508,7 +489,7 @@ public class ForgotCTest {
         Object[][] object = null;
         FileInputStream fis = new FileInputStream("ExcelData/InputData/TestCaseDemo.xls");
         HSSFWorkbook wb = new HSSFWorkbook(fis);
-        HSSFSheet sh = wb.getSheet("Sheet2");
+        HSSFSheet sh = wb.getSheet("Forgot Password");
         //  HSSFRow rows = sh.getRow(1);
 //Read keyword sheet
 //Find number of rows in Expl.excel file
@@ -530,5 +511,14 @@ public class ForgotCTest {
         }
         return object;
     }
+
+
+    @AfterSuite()
+    public  void closedTestCase()
+    {
+        driver.close();
+     //   driver.switchTo().window(WinHandleBefore1);
+       // driver.close();
+     }
 
 }

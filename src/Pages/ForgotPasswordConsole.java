@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 public class ForgotPasswordConsole {
 
     WebDriver driver;
-    @FindBy(xpath = ".//*[@id='A1']")
+    @FindBy(xpath = ".//*[@id='imgPlus']")
     WebElement ForgotPasswrdLogo;
 
     @FindBy(xpath = ".//*[@id='txtLoginId']")
