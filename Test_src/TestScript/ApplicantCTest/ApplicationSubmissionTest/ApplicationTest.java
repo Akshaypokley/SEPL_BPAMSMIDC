@@ -22,7 +22,9 @@ import org.testng.annotations.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.*;
 
@@ -72,7 +74,7 @@ public class ApplicationTest {
     static final java.util.regex.Pattern Alphnu = java.util.regex.Pattern.compile("^[A-Za-z,0-9  ]++$");
     static final java.util.regex.Pattern Flot = java.util.regex.Pattern.compile("^[+-]?([0-9]*[.])?[0-9]++$");
     public static   Application application;
-
+    public static   String subWindowHandler = null;
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
@@ -341,8 +343,7 @@ public class ApplicationTest {
 
                                     //  Actual = driver.switchTo().alert().getText();
                                     Thread.sleep(300);
-                                    alert
-                                            .accept();
+                                    alert.accept();
                                 }
                             }else { driver.findElement(By.id("btnAttached")).click();
                                 if ((ExpectedConditions.alertIsPresent()) == null) {
@@ -393,17 +394,45 @@ public class ApplicationTest {
                                 for (WebElement cell : cells) {
                                     String fiels = cell.getText();
                                     System.out.println(fiels);
+                                    if (fiels.equals("Allotment Order")) {
+                                        int g = 2 + i;
+                                        i = g;
+                                    }
                                     if(fiels.equals(value)) {
-                                        if(driver.findElement(By.xpath(".//*[@id='Checkbox1']")).isSelected())
+                                        if(driver.findElement(By.xpath(".//*[@id='Checkbox"+i+"']")).isSelected())
                                         {
                                             System.out.println("ch");
+                                            System.out.println(i);
+                                            driver.findElement(By.xpath(".//*[@id='category_Doc"+i+"']/div/table/tbody/tr[2]/td[3]/a")).click();
+
+                                driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+                                            /*driver.findElement(By.xpath("//html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+*/
+                                            driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
+                               driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
 
 
+                                            BeforeWH(driver);
+                                            WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                                            ss.click();
+                                            Thread.sleep(6000);
+                                            AttachFuntn(driver, FilePath);
+
+                                            Thread.sleep(700);
+
+        /* Actions actions = new Actions(driver);
+                                            actions.moveToElement(driver.findElement(By.xpath("//html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")));
+                                            actions.click();
+                                            actions.build().perform();*/
                                         }else {
                                             System.out.println("nch");
+                                            System.out.println(i);
                                         }
+
+
                                         break;
-                                    }
+                                    }else {    ++i;
+                                        System.out.println(i);}
                                 }
 
                             }catch (Throwable d)
