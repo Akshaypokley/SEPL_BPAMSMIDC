@@ -19,4 +19,15 @@ public class LoginFunction {
 
 
     }
+
+    public static void CFO_LogFunction(WebDriver driver)
+    {
+
+        LoginConsole loginConsole =new LoginConsole(driver);
+        loginConsole.setUsername("Cfofficer");
+        loginConsole.setPassword("Admin@123");
+        loginConsole.ClickLoginBtn();
+
+
+    }
 }

@@ -1,6 +1,9 @@
 package TestScript.ChiefFOCTest.ApplicationStatusTest;
 
+import Pages.Applicant_Console.ApplicantMenu;
 import Pages.Applicant_Console.Application_Submission.Application;
+import Pages.Chief_Fire_Officer_Console.Application_Status.InprocessPlan;
+import Pages.Chief_Fire_Officer_Console.CFOC_Menu;
 import Pages.LoginConsole;
 import jxl.Workbook;
 import jxl.format.CellFormat;
@@ -12,6 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -21,7 +26,11 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import static Utilites.LoginFunction.CFO_LogFunction;
+import static Utilites.LoginFunction.LogFunction;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
 import static jxl.format.Colour.*;
@@ -64,17 +73,17 @@ public class InprocessPlanTest {
     static final java.util.regex.Pattern Emailval = java.util.regex.Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     static final java.util.regex.Pattern Alphnu = java.util.regex.Pattern.compile("^[A-Za-z,0-9  ]++$");
     static final java.util.regex.Pattern Flot = java.util.regex.Pattern.compile("^[+-]?([0-9]*[.])?[0-9]++$");
-    public static Application application;
+    public static InprocessPlan inprocessPlan;
     public static   String subWindowHandler = null;
-
+    public static  String status;
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
         sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/TestCaseDemo.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
         copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/ApplicantReport.xls"));
-        sourceSheet = writableTempSource.getSheet(5);
-        targetSheet = copyDocument.createSheet("sheet 1", 2);
+        sourceSheet = writableTempSource.getSheet(7);
+        targetSheet = copyDocument.createSheet("sheet 1", 6);
 
         WritableFont cellFont = new WritableFont(WritableFont.COURIER, 11);
         cellFont.setBoldStyle(WritableFont.BOLD);
@@ -177,14 +186,21 @@ public class InprocessPlanTest {
     }
 
     @Test(dataProvider="hybridData")
-    public static void E(String testcaseName,String keyword,String objectName,String value,String Expeted) throws Exception
-    {
+    public static void E(String testcaseName,String keyword,String objectName,String value,String Expeted) throws Exception {
 
         //   RowIncr=LastRow;
         if (testcaseName != null && testcaseName.length() != 0 ) {
 
             driver = openBrowser("chrome");
             GetUrl("url");
+            CFO_LogFunction(driver);
+            Thread.sleep(200);
+            inprocessPlan =new InprocessPlan(driver);
+            CFOC_Menu cfoc_menu=new CFOC_Menu(driver);
+            cfoc_menu.ClickInprocessPlan();
+
+            driver.switchTo().frame("ifrmListing");
+
             SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
@@ -196,13 +212,13 @@ public class InprocessPlanTest {
 
         }
         try {
-            LoginConsole login = new LoginConsole(driver);
+
             switch (keyword.toUpperCase()) {
                 case "CLICK":
                     switch (objectName) {
                         case "Submit":
 
-                            login.ClickLoginBtn();
+
                             Actual2 = "Alert message should be display.";
                             // if (driver.findElement(By.xpath("./*//*[@id='lblULBName']")).getText().equals("Delhi Development Authority")) {
                             try {
@@ -226,10 +242,87 @@ public class InprocessPlanTest {
 
                             } catch (Throwable e) {
                             }
+                            break;
 
 
+     /*----------------------------------------------  Approve Inprocess Plan --------------------------------------------------------*/
+
+                        case "Check payment Status":
+                            driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+                            if(inprocessPlan.getFileStaus().getText().equals("Inprocess"))
+                            {
+                                System.out.println("p");
+
+                                driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+                                try {
+
+                                    inprocessPlan.ClickPaymentsTab();
+                                   // driver.switchTo().frame("");
+                                    if(inprocessPlan.getChallanType().getText().equals("Fire"));
+                                    {
+                                        System.out.println("P1");
+                                        if(inprocessPlan.getPaymentStatus().getText().equals("Paid")){
+                                            System.out.println("p2");
+                                        }
+                                    }
+
+
+                                } catch (Throwable e) {
+                                    System.out.println(e);
+                                }
+                            }
+
+
+
+                            break;
+                            /*----------------------------------------------  Inprocess Plan --------------------------------------------------------*/
+                        case "File Name":
+
+                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+                            try {
+                                if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
+                                    driver.manage().timeouts().implicitlyWait(26, TimeUnit.SECONDS);
+
+                                    WebElement d = driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[3]/td/div/table/tbody/tr/td/div"));
+                                    String s = d.getText();
+                                    if (s.equals(Expeted)) {
+                                        Result = "pass";
+                                    } else {
+                                        Result = "fail";
+                                        Actual = s;
+                                    }
+                                } else {
+                                    driver.manage().timeouts().implicitlyWait(78, TimeUnit.SECONDS);
+                                    List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
+
+                                    for (WebElement cell : cells) {
+                                        String fiels = cell.getText();
+                                        System.out.println(fiels);
+
+                                        if (fiels.equals(value)){
+                                            cell.click();
+                                        Result = "pass";
+                                        break;}else {
+                                            Result = "fails";
+                                            Actual="File not Found";
+                                        }
+                                    }
+
+                                }
+
+                            } catch (Throwable e) {
+                                System.out.println(e);
+                            }
+
+                         break;
+                        case "Select Architct":
+                            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+                            inprocessPlan.setSelect_ArchitectName(value);
+                            inprocessPlan.ClickSeachBtn(); Thread.sleep(200);   Result = "pass";
+                            break;
                     }
-
+                    break;
                 case "SETTEXT":
                     //    NewApplication newApplication = new NewApplication(driver); //Set text on control
                     switch (objectName) {
@@ -239,58 +332,23 @@ public class InprocessPlanTest {
                             }
                             break;
                         case "password":
-                            login.setPassword(value);
-                            final String fieldValue2 = login.getPassword().getAttribute("value");
-                            if (fieldValue2.isEmpty()) {
-                                try {
-                                    if ((ExpectedConditions.alertIsPresent()) == null) {
-
-                                    } else {
-                                        Alert alert = driver.switchTo().alert();
-                                        Actual = driver.switchTo().alert().getText();
-                                        if (Actual.equals(Expeted)) {
-                                            Result = "pass";
-                                        } else {
-                                            Result = "Fail";
-                                        }
-                                        System.out.println(Actual);
-                                        //    Thread.sleep(50);
-                                        alert.accept();
-
-                                    }
+                               try {
 
                                 } catch (Throwable e) {Actual = "Alert message not display.";
                                     Result = "Fail";
                                 }
 
 
-                            } else {
-                                if (fieldValue2.equals(value)) {
 
 
                                     try {
-                                        if ((ExpectedConditions.alertIsPresent()) == null) {
-                                            Actual = "Alert message not display .";
-                                            Result = "Fail";
-                                        } else {
-                                            Alert alert = driver.switchTo().alert();
-                                            Actual = driver.switchTo().alert().getText();
-                                            if (Actual.equals(Expeted)) {
-                                                Result = "pass";
-                                            } else {
-                                                Result = "Fail";
-                                            }
-                                            System.out.println(Actual);
-                                            //    Thread.sleep(50);
-                                            alert.accept();
 
-                                        }
 
                                     } catch (Throwable e) {Actual = "Alert message not display.";
                                         Result = "Fail";
                                     }
-                                }
-                            }
+
+
                             break;
 
 
@@ -329,7 +387,7 @@ public class InprocessPlanTest {
         Object[][] object = null;
         FileInputStream fis = new FileInputStream("ExcelData/InputData/TestCaseDemo.xls");
         HSSFWorkbook wb = new HSSFWorkbook(fis);
-        HSSFSheet sh = wb.getSheet("Applicant");
+        HSSFSheet sh = wb.getSheet("Sheet4");
         //  HSSFRow rows = sh.getRow(1);
 //Read keyword sheet
 //Find number of rows in Expl.excel file

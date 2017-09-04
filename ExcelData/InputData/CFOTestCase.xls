@@ -1,0 +1,4 @@
+CFO_Inprocess screen test  Case				
+TestCase	Keyword	Object	value	Expected
+TEST CASE 1				
+	CLICK	Select Architct	Satish Varandmal Ahuja	
