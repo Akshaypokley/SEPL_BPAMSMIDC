@@ -25,6 +25,9 @@ public class InprocessPlan {
     @FindBy(xpath = ".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")
     WebElement SeachWithKeyword;
 
+    @FindBy(xpath = ".//*[@id='form1']/div[3]//div[5]//div[2]/table/tbody/tr/td/div/button")
+    WebElement Filters;
+
     public InprocessPlan(WebDriver driver)
     { this.driver=driver;
         PageFactory.initElements(driver,this);
@@ -33,6 +36,11 @@ public class InprocessPlan {
     }
 
     /************************* Filter's**********************/
+
+    public WebElement getFilters()
+    {
+        return Filters;
+    }
 
     public WebElement getSeachWithKeyword()
     {
