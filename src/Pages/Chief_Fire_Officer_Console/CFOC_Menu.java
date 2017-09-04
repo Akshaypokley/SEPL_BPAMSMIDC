@@ -20,7 +20,7 @@ public class CFOC_Menu {
    /* @FindBy(xpath = "//li[1]/a/div/div[2]/span")
     WebElement ApplicationSubmission;*/
 
-    @FindBy(xpath = ".//*[@id='a_18433']/span")
+    @FindBy(xpath = ".//*[@id='sidebar']/div/nav/ul/li/ul/li[1]/a/span")
     WebElement InprocessPlan;
 
     @FindBy(xpath = ".//*[@id='a_18434']/span")
