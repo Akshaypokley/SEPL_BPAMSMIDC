@@ -384,6 +384,148 @@ public class ApplicationTest {
                             Result="pass";
                             break;
 
+                        case "Attch medatory doc":
+                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+                            try {
+                                 List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='RadTabStrip1']/div/ul/li/a/span/span"));
+
+                                for (WebElement cell : cells) {
+                                    String fiels = cell.getText();
+
+
+                                    if (fiels.equals(value)) {
+                                        cell.click();
+                                        System.out.println(fiels);
+                                        if("Building Plan Primary Documents".equals(value))
+                                        {
+
+                                            for(int k=1;k<55;k++){
+
+
+
+                                            try {
+
+                                                if (k==5) {
+                                                    int g = 2 + k;
+                                                    k = g;
+                                                } else {
+
+                                                }
+                                                if (k==13) {
+                                                    int g = 35 + k;
+                                                    k = g;
+                                                } else {
+
+                                                }
+                                                if (k==49) {
+                                                    int g = 5 + k;
+                                                    k = g;
+                                                } else {
+
+                                                }
+                                                Thread.sleep(300);
+                                                WebElement fiels3=driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[2]"));
+                                                String d=fiels3.getText();
+                                                System.out.println(d);
+
+                                                WebElement df=driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a"));
+                                                String y=df.getText();
+                                                if(!y.equals("Attach Files"))
+                                                {
+                                                }else {
+                                                    df.click();
+                                                    System.out.println(k);
+                                                    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+                                                    driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
+                                                    driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+
+
+                                                    BeforeWH(driver);
+                                                    WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                                                    ss.click();
+                                                    Thread.sleep(600);
+                                                    AttachFuntn(driver, FilePath);
+                                                    System.out.println(driver.switchTo().window(WinHandleBefore1));
+                                                    driver.switchTo().frame("ifrmListing");
+                                                    Thread.sleep(70);
+
+                                                    driver.switchTo().frame("ifrmDocuments");
+                                                    System.out.println("pass");
+                                                    driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+                                                    System.out.println(k);
+                                                }
+
+                                            } catch (Throwable d) {
+                                                System.out.println(d.getMessage());
+                                            }
+                                            Result = "pass";
+                                        }
+                                            System.out.println("proposal");
+                                        }else {
+                                            System.out.println("Fire");
+                                            for (int l = 35;l < 52; l++) {
+
+                                                if (l==39){
+                                                    int r =12 + l;
+                                                    l = r;
+                                                } else {
+
+                                                }
+
+                                                try {
+                                                    Thread.sleep(300);
+                                                    WebElement fiels3=driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[2]"));
+                                                     String d=fiels3.getText();
+                                                    System.out.println(d);
+
+                                                    Thread.sleep(200);
+                                                        driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a")).click();
+                                                        System.out.println(l);
+                                                        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+                                                        driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
+                                                        driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+
+
+                                                        BeforeWH(driver);
+                                                        WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                                                        ss.click();
+                                                        Thread.sleep(600);
+                                                        AttachFuntn(driver, FilePath);
+                                                        System.out.println(driver.switchTo().window(WinHandleBefore1));
+                                                        driver.switchTo().frame("ifrmListing");
+
+
+                                                        driver.switchTo().frame("ifrmDocuments");
+                                                        System.out.println("pass");
+                                                        driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+
+
+
+                                                } catch (Throwable d) {
+                                                    System.out.println(d.getMessage());
+
+                                                }
+
+                                            }
+
+                                        }
+                                        break;
+                                    }else {
+                                        System.out.println("NoCC");
+                                    }
+
+                                }
+                            }catch (Throwable e)
+                            {
+                                System.out.println(e.getMessage());}
+                            Result="pass";
+                            break;
+
                         case "Attch Document":
 
                             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -397,7 +539,9 @@ public class ApplicationTest {
                                     if (fiels.equals("Allotment Order")) {
                                         int g = 2 + i;
                                         i = g;
-                                    }
+                                    }else {}
+
+
                                     if(fiels.equals(value)) {
                                         if(driver.findElement(By.xpath(".//*[@id='Checkbox"+i+"']")).isSelected())
                                         {
@@ -406,8 +550,7 @@ public class ApplicationTest {
                                             driver.findElement(By.xpath(".//*[@id='category_Doc"+i+"']/div/table/tbody/tr[2]/td[3]/a")).click();
 
                                 driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
-                                            /*driver.findElement(By.xpath("//html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
-*/
+
                                             driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
                                driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
 
@@ -417,13 +560,14 @@ public class ApplicationTest {
                                             ss.click();
                                             Thread.sleep(6000);
                                             AttachFuntn(driver, FilePath);
-
+                                            System.out.println( driver.switchTo().window(WinHandleBefore1).getPageSource());
+                                            driver.switchTo().frame("ifrmListing");
                                             Thread.sleep(700);
 
-        /* Actions actions = new Actions(driver);
-                                            actions.moveToElement(driver.findElement(By.xpath("//html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")));
-                                            actions.click();
-                                            actions.build().perform();*/
+                                            driver.switchTo().frame("ifrmDocuments");
+                                            System.out.println("pass");
+                                            driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
                                         }else {
                                             System.out.println("nch");
                                             System.out.println(i);
@@ -463,10 +607,10 @@ public class ApplicationTest {
 
                                     if (fiels.equals(value))
                                         cell.click();
-                                    Result="pass";
+                                    Result = "pass";
                                 }
-                            }catch (Throwable e)
-                            {}
+                            } catch (Throwable e) {
+                            }
                             break;
 
                         case "Proposal Use":
@@ -496,12 +640,12 @@ public class ApplicationTest {
 /*---------------------------------------------- Building Deatials --------------------------------------------------------*/
 
                         case "Building Use":
-                                driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             Actions actions = new Actions(driver);
                             actions.moveToElement(application.getBuilding_Use());
                             actions.click();
                             actions.build().perform();
-                                try {
+                            try {
 
                                 List<WebElement> cells = driver.findElements(By.xpath("./*//*[@class='GLMenuBody GLEnumMenuBody']/div//div"));
 
@@ -511,15 +655,14 @@ public class ApplicationTest {
 
                                     if (fiels.equals(value))
                                         cell.click();
-                                    Result="pass";
+                                    Result = "pass";
                                 }
-                            }catch (Throwable e)
-                            {
+                            } catch (Throwable e) {
                                 System.out.println(e);
                             }
                             break;
                         case "Building Subuse":
-                            driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             Actions action = new Actions(driver);
                             action.moveToElement(application.getBuilding_Subuse());
                             action.click();
@@ -535,22 +678,21 @@ public class ApplicationTest {
 
                                     if (fiels.equals(value))
                                         cell.click();
-                                    Result="pass";
+                                    Result = "pass";
                                 }
-                            }catch (Throwable e)
-                            {
+                            } catch (Throwable e) {
                                 System.out.println(e);
                             }
                             break;
 
                         case "Building Type":
-                            driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             Actions action1 = new Actions(driver);
                             action1.moveToElement(application.getBuilding_Type());
                             action1.click();
 
                             action1.build().perform();
-                           driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             try {
 
                                 List<WebElement> cells = driver.findElements(By.xpath("//div[@class='GLMenuMain GLEnumMenuMain']/div/div/div/div/div"));
@@ -561,22 +703,21 @@ public class ApplicationTest {
 
                                     if (fiels.equals(value))
                                         cell.click();
-                                    Result="pass";
+                                    Result = "pass";
                                 }
-                            }catch (Throwable e)
-                            {
+                            } catch (Throwable e) {
                                 System.out.println(e);
                             }
                             break;
 
                         case "Building Strucher":
-                            driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             Actions action3 = new Actions(driver);
                             action3.moveToElement(application.getBuilding_Strucher());
                             action3.click();
 
                             action3.build().perform();
-                            driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             try {
 
                                 List<WebElement> cells = driver.findElements(By.xpath("//div[@class='GLMenuMain GLEnumMenuMain']/div/div/div/div/div"));
@@ -587,14 +728,12 @@ public class ApplicationTest {
 
                                     if (fiels.equals(value))
                                         cell.click();
-                                    Result="pass";
+                                    Result = "pass";
                                 }
-                            }catch (Throwable e)
-                            {
+                            } catch (Throwable e) {
                                 System.out.println(e);
                             }
                             break;
-
 
 
                     }
