@@ -36,7 +36,7 @@ public class Application {
     @FindBy(xpath = "./*//*[@id='cboCompanyActivitys']")
     WebElement Company_Activity;
 
-    @FindBy(xpath = "./*//*[@id='radPossessionDate_dateInput_text']")
+    @FindBy(xpath = ".//*[@id='radPossessionDate_dateInput_text']")
     WebElement Plot_Possession_Date;
 
     @FindBy(xpath = "./*//*[@id='txtRRate_text']")
@@ -48,7 +48,7 @@ public class Application {
     @FindBy(xpath = "./*//*[@id='cboSPA']")
     WebElement Concerned_SPA;
 
-    @FindBy(xpath = "./*//*[@id='txtBuildingHeight_text']")
+    @FindBy(xpath = ".//*[@id='txtBuildingHeight_text']")
     WebElement Total_Building_Height;
 
     @FindBy(xpath = "./*//*[@id='txtPlotArea_text']")

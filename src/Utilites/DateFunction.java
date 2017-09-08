@@ -24,30 +24,36 @@ public class DateFunction {
         //driver.findElement(By.xpath("html/body/div[1]/aside/section/ul/li[5]/a/span")).click();
 
 
-        SimpleDateFormat myDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("dd/MM/YYYY");
+
         SimpleDateFormat calDateFormat = new SimpleDateFormat("MMMM yyyy");
 
         Date setDate=myDateFormat.parse(seDate);
 
-        driver.findElement(By.xpath(".//*[@id='ValidUpTo1']/p/span/button")).click();
+        driver.findElement(By.xpath(".//*[@id='radPossessionDate_popupButton']")).click();
         driver.manage().timeouts().implicitlyWait(40,TimeUnit.SECONDS);
 
-        Date curDate = calDateFormat.parse(driver.findElement(By.xpath("html/body/div[2]/div[1]/table/thead/tr[1]/th[2]")).getText());
+        Date curDate = calDateFormat.parse(driver.findElement(By.xpath("//html/body/div/div[4]/table/thead/tr/td/table/tbody/tr/td[3]")).getText());
         System.out.println(curDate);
 
-        int monthDiff = Months.monthsBetween(new DateTime(curDate).withDayOfMonth(1), new DateTime(setDate).withDayOfMonth(1)).getMonths();
+        int monthDiff = Months.monthsBetween(new DateTime(setDate).withDayOfMonth(1),new DateTime(curDate).withDayOfMonth(1)).getMonths();
         boolean isFuture = true;
+        System.out.println(monthDiff);
         // decided whether set date is in past or future
-        if(monthDiff<0){
+        if(monthDiff <0){
             isFuture = false;
             monthDiff*=-1;
         }
         // iterate through month difference
         for(int i=1;i<=monthDiff;i++){
-            driver.findElement(By.xpath("html/body/div[2]/div[1]/table/thead/tr[1]/th[@class="+ (isFuture ? "'next'" : "'prev'") + "]")).click();
+            driver.findElement(By.xpath(".//*[@id='radPossessionDate_calendar']/thead/tr/td/table/tbody/tr/td/a[@class="+ (isFuture ? "'rcNext'" : "'rcPrev'") + "]")).click();
         }
         // Click on Day of Month from table
-        driver.findElement(By.xpath("html/body/div[2]/div[1]/table/tbody/tr[4]/td[text()='" + (new DateTime(setDate).getDayOfMonth()) + "']")).click();
+       /* for(int j=1;j<7;j++){
+*/
+            driver.findElement(By.xpath(".//*[@id='radPossessionDate_calendar_Top']/tbody/tr[2]/td/a[text()='" + (new DateTime(setDate).getDayOfMonth()) + "']")).click();
+
+     /*   }*/
 
 
     }

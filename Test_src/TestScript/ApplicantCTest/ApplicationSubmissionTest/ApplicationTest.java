@@ -30,6 +30,7 @@ import java.util.regex.*;
 
 import static Utilites.AttachFunction.AttachFuntn;
 import static Utilites.BeforeWH.BeforeWH;
+import static Utilites.DateFunction.DateFun;
 import static Utilites.LoginFunction.LogFunction;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
@@ -199,9 +200,9 @@ public class ApplicationTest {
             applicantMenu.ClickApplication();
             driver.switchTo().frame("ifrmListing");
 
-            /*applicantMenu.ClickSelectProposal();
+            applicantMenu.ClickSelectProposal();
             driver.switchTo().frame("ifrmProjectInfo");
-*/
+
             SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
@@ -225,7 +226,8 @@ public class ApplicationTest {
                         case "Submit":
                             application.clickSave_Submit();
 
-                            Actual2 = "Alert message should be display.";
+                          //  driver.findElement(By.xpath(".//*[@id='RadWindowWrapper_alert1504867221191']/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/ul/li/a/span")).click();
+                           /* Actual2 = "Alert message should be display.";
                             try {
                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                     System.out.println("alert was not present");
@@ -249,7 +251,7 @@ public class ApplicationTest {
                                 }
 
                             } catch (Throwable e) {
-                            }
+                            }*/
                             break;
 
                         case "Double Height FSI":
@@ -773,7 +775,7 @@ try {
                             break;
 
                         case "Plot Possession / A to L Date":
-                            application.setPlot_Possession_Date(value);
+                            DateFun(driver,"09/08/2017");
                             Result = "pass";
                             break;
 
@@ -897,6 +899,11 @@ try {
                     switch (objectName) {
                         case "Proposal Title":
                             application.setProposal_Title(value);
+                            Result = "pass";
+                            break;
+
+                        case "Plot No":
+                            application.setPlot_No(value);
                             Result = "pass";
                             break;
 
@@ -1392,6 +1399,7 @@ try {
                             break;
 
                         case "Total Building Height":
+                            Thread.sleep(30);
                             application.getTotal_Building_Height().clear();
                             application.setTotal_Building_Height(value);
 
