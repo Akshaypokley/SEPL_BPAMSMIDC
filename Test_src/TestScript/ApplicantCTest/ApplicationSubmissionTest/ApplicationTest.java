@@ -75,6 +75,7 @@ public class ApplicationTest {
     static final java.util.regex.Pattern Flot = java.util.regex.Pattern.compile("^[+-]?([0-9]*[.])?[0-9]++$");
     public static   Application application;
     public static   String subWindowHandler = null;
+    public static   String Actvalue;
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
@@ -174,7 +175,7 @@ public class ApplicationTest {
 
     }
     @AfterTest()
-    public void f() throws IOException, WriteException
+    public void Clsoed() throws IOException, WriteException
     {
 
         copyDocument.write();
@@ -185,7 +186,7 @@ public class ApplicationTest {
     }
 
     @Test(dataProvider="hybridData")
-    public static void ForgotTest(String testcaseName,String keyword,String objectName,String value,String Expected) throws Exception {
+    public static void ApplicationTest(String testcaseName,String keyword,String objectName,String value,String Expected) throws Exception {
 
         if (testcaseName != null && testcaseName.length() != 0 ) {
 
@@ -482,8 +483,13 @@ public class ApplicationTest {
                                                     System.out.println(d);
 
                                                     Thread.sleep(200);
-                                                        driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a")).click();
+                                                      WebElement ty=  driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a"));
+                                                      String h=ty.getText();
                                                         System.out.println(l);
+                                                    if(!h.equals("Attach Files"))
+                                                    {
+                                                    }else {
+                                                        ty.click();
                                                         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
                                                         driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
@@ -503,7 +509,7 @@ public class ApplicationTest {
                                                         System.out.println("pass");
                                                         driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
 
-
+                                                    }
 
 
                                                 } catch (Throwable d) {
@@ -526,59 +532,207 @@ public class ApplicationTest {
                             Result="pass";
                             break;
 
-                        case "Attch Document":
+                        case "Attach Additional Document":
+try {
+    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    System.out.println(Actvalue);
+    try {
+        if ("Building Plan Additional Documents".equals(Actvalue)) {
+            System.out.println("Proposal");
+            for (int k = 13; k < 54; k++) {
+
+                if (k == 18) {
+                    int r = 4 + k;
+                    k = r;
+                }
+                if (k == 35) {
+                    int r = 17 + k;
+                    k = r;
+                }
+                try {
+                    Thread.sleep(300);
+                    WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[2]"));
+                    String d = fiels3.getText();
+                    System.out.println(d);
+                    if(d.equals(value))
+                    {
+                        WebElement Chckbox = driver.findElement(By.xpath(".//*[@id='Checkbox" + k + "']"));
+                        if (!Chckbox.isSelected()) {
+                            Chckbox.click();
+                            System.out.println("ch");
+                            System.out.println(k);
+                            application.ClickSubmit_Btn();
+                            driver.findElement(By.xpath(".//*[@id='CloseButtonAlert']")).click();
+                            Thread.sleep(23);
+
+                            driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a")).click();
+                            driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
+                            driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+
+
+                            BeforeWH(driver);
+                            WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                            ss.click();
+                            Thread.sleep(600);
+                            AttachFuntn(driver, FilePath);
+                            System.out.println(driver.switchTo().window(WinHandleBefore1));
+                            driver.switchTo().frame("ifrmListing");
+
+
+                            driver.switchTo().frame("ifrmDocuments");
+                            System.out.println("pass");
+                            driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+                        } else {
+                            WebElement ty = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a"));
+                            String h = ty.getText();
+                            System.out.println(k);
+                            if (h.equals("Attach Files")) {
+                                driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a")).click();
+                                driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
+                                driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+
+
+                                BeforeWH(driver);
+                                WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                                ss.click();
+                                Thread.sleep(600);
+                                AttachFuntn(driver, FilePath);
+                                System.out.println(driver.switchTo().window(WinHandleBefore1));
+                                driver.switchTo().frame("ifrmListing");
+
+
+                                driver.switchTo().frame("ifrmDocuments");
+                                System.out.println("pass");
+                                driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+                            }
+
+                        }
+
+                        break;
+                    }
+                    else {
+                        System.out.println("Document not Availble");
+                    }
+                }catch (Throwable ls)
+                {
+
+                }
+
+
+
+            }
+        } else {
+            System.out.println("Fire");
+            for (int l = 39; l < 51; l++) {
+
+                if (l == 43) {
+                    int r = 2 + l;
+                    l = r;
+                }
+                if (l == 46) {
+                    int r = 1 + l;
+                    l = r;
+                }
+
+                try {
+                    Thread.sleep(300);
+                    WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[2]"));
+                    String d = fiels3.getText();
+                    System.out.println(d);
+                    if (d.equals(value)) {
+                        WebElement Chckbox = driver.findElement(By.xpath(".//*[@id='Checkbox" + l + "']"));
+                        if (!Chckbox.isSelected()) {
+                            Chckbox.click();
+                            System.out.println("ch");
+                            System.out.println(l);
+                            application.ClickSubmit_Btn();
+                            driver.findElement(By.xpath(".//*[@id='CloseButtonAlert']")).click();
+                            Thread.sleep(23);
+
+                            driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a")).click();
+                            driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
+                            driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+
+
+                            BeforeWH(driver);
+                            WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                            ss.click();
+                            Thread.sleep(600);
+                            AttachFuntn(driver, FilePath);
+                            System.out.println(driver.switchTo().window(WinHandleBefore1));
+                            driver.switchTo().frame("ifrmListing");
+
+
+                            driver.switchTo().frame("ifrmDocuments");
+                            System.out.println("pass");
+                            driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+                        } else {
+                            WebElement ty = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a"));
+                            String h = ty.getText();
+                            System.out.println(l);
+                            if (h.equals("Attach Files")) {
+                                driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a")).click();
+                                driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
+                                driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+
+
+                                BeforeWH(driver);
+                                WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                                ss.click();
+                                Thread.sleep(600);
+                                AttachFuntn(driver, FilePath);
+                                System.out.println(driver.switchTo().window(WinHandleBefore1));
+                                driver.switchTo().frame("ifrmListing");
+
+
+                                driver.switchTo().frame("ifrmDocuments");
+                                System.out.println("pass");
+                                driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+                            }
+
+                        }
+                        break;
+                    }
+
+                } catch (Throwable d) {
+                    System.out.println(d.getMessage());
+
+                }
+
+            }
+
+        }
+        break;
+
+
+    } catch (Throwable e) {
+        System.out.println(e.getMessage());
+    }
+    Result = "pass";
+}catch (Throwable m)
+{System.out.println(m.getMessage());}
+                            break;
+
+
+                        case "Click on Additional Document":
 
                             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             try {
-                                int i=1;
-                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='PageViewDoc']/div/div/table/tbody/tr[2]/td[2]"));
+                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='RadTabStrip1']/div/ul/li/a/span/span"));
 
                                 for (WebElement cell : cells) {
-                                    String fiels = cell.getText();
-                                    System.out.println(fiels);
-                                    if (fiels.equals("Allotment Order")) {
-                                        int g = 2 + i;
-                                        i = g;
-                                    }else {}
+                                  Actvalue = cell.getText();
 
 
-                                    if(fiels.equals(value)) {
-                                        if(driver.findElement(By.xpath(".//*[@id='Checkbox"+i+"']")).isSelected())
-                                        {
-                                            System.out.println("ch");
-                                            System.out.println(i);
-                                            driver.findElement(By.xpath(".//*[@id='category_Doc"+i+"']/div/table/tbody/tr[2]/td[3]/a")).click();
-
-                                driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
-
-                                            driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
-                               driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
-
-
-                                            BeforeWH(driver);
-                                            WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
-                                            ss.click();
-                                            Thread.sleep(6000);
-                                            AttachFuntn(driver, FilePath);
-                                            System.out.println( driver.switchTo().window(WinHandleBefore1).getPageSource());
-                                            driver.switchTo().frame("ifrmListing");
-                                            Thread.sleep(700);
-
-                                            driver.switchTo().frame("ifrmDocuments");
-                                            System.out.println("pass");
-                                            driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
-
-                                        }else {
-                                            System.out.println("nch");
-                                            System.out.println(i);
-                                        }
-
-
+                                    if (Actvalue.equals(value)) {
+                                        cell.click();
                                         break;
-                                    }else {    ++i;
-                                        System.out.println(i);}
+                                    }
                                 }
-
                             }catch (Throwable d)
                             {
                                 System.out.println(d.getMessage());

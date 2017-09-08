@@ -143,6 +143,9 @@ public class Application {
         @FindBy(xpath = ".//*[@id='RadTabStrip1']/div/ul/li/a/span/span")
         WebElement Document_Types;
 
+        @FindBy(xpath = ".//*[@id='btnSave1']")
+        WebElement Submit_Btn;
+
 
 
     public Application(WebDriver driver) {
@@ -154,6 +157,10 @@ public class Application {
 
  /*---------------------------------------------- Document Deatials --------------------------------------------------------*/
 
+ public void ClickSubmit_Btn()
+ {
+     Submit_Btn.click();
+ }
     public void ClickDocument_Types()
     {
         Document_Types.click();
