@@ -1,0 +1,21 @@
+<suite name="Suite1" verbose="2" >
+
+    <listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+        <listener class-name="org.testng.reporters.EmailableReporter2" />
+    </listeners>
+    <test name="Regression" >
+        <classes>
+
+            <class name="TestScript.ApplicantCTest.PaymentsTest.Pending_Processing_FeesTest" />
+           <!-- <class name="Example" />
+           --> <!---    <class name="TestScript.Applicant.ArchDraftTest" />
+    -->
+
+        </classes>
+    </test>
+
+
+
+</suite>

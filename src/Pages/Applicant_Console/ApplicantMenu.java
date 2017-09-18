@@ -28,6 +28,22 @@ public class ApplicantMenu {
 
     @FindBy(xpath = ".//*[@id='btnNewApplication']")
     WebElement  SelectProposal;
+/*-------------------------------------------------Payments-------------------------------------------------*/
+
+    @FindBy(xpath = ".//*[@id='MainUL']/li[3]/a/div/div[2]/span")
+    WebElement PaymentsTab;
+
+    @FindBy(xpath = ".//*[@id='a_26766']/span")
+    WebElement Pending_Processing_FeesFPlan;
+
+    @FindBy(xpath = ".//*[@id='a_26770']/span")
+    WebElement Pending_Processing_Fees;
+
+    @FindBy(xpath = ".//*[@id='a_26767']/span")
+    WebElement Paid_Processing_FeesFPlan;
+
+    @FindBy(xpath = ".//*[@id='a_26771']/span")
+    WebElement PaidProcessingFees;
 
     public ApplicantMenu(WebDriver driver)
     { this.driver=driver;
@@ -35,6 +51,34 @@ public class ApplicantMenu {
         if(!MenuLogo.isDisplayed())
             throw  new IllegalStateException("This is not Home page");
     }
+
+/*-------------------------------------------------Payments-------------------------------------------------*/
+public void ClickPaymentsTab()
+{
+    PaymentsTab.click();
+}
+
+    public void ClickPending_Processing_FeesFPlan()
+    {
+        Pending_Processing_FeesFPlan.click();
+    }
+
+    public void ClickPending_Processing_Fees()
+    {
+        Pending_Processing_Fees.click();
+    }
+
+    public void ClickPaid_Processing_FeesFPlan()
+    {
+        Paid_Processing_FeesFPlan.click();
+    }
+
+    public void ClickPaidProcessingFees()
+    {
+        PaidProcessingFees.click();
+    }
+/*-------------------------------------------------Application submission-------------------------------------------------*/
+
     public void ClickSelectProposal()
     {
         SelectProposal.click();

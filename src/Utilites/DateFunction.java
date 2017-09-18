@@ -36,7 +36,7 @@ public class DateFunction {
         Date curDate = calDateFormat.parse(driver.findElement(By.xpath("//html/body/div/div[4]/table/thead/tr/td/table/tbody/tr/td[3]")).getText());
         System.out.println(curDate);
 
-        int monthDiff = Months.monthsBetween(new DateTime(setDate).withDayOfMonth(1),new DateTime(curDate).withDayOfMonth(1)).getMonths();
+        int monthDiff = Months.monthsBetween(new DateTime(curDate).withDayOfMonth(1),new DateTime(setDate).withDayOfMonth(1)).getMonths();
         boolean isFuture = true;
         System.out.println(monthDiff);
         // decided whether set date is in past or future

@@ -1,10 +1,9 @@
-package TestScript.ChiefFOCTest.ApplicationStatusTest;
+package TestScript.PaymentConsoleTest.SupportTest;
 
-import Pages.Applicant_Console.ApplicantMenu;
-import Pages.Applicant_Console.Application_Submission.Application;
-import Pages.Chief_Fire_Officer_Console.Application_Status.InprocessPlan;
-import Pages.Chief_Fire_Officer_Console.CFOC_Menu;
+import Pages.ForgotPasswordConsole;
 import Pages.LoginConsole;
+import Pages.PaymentcConsole.PC_Menu;
+import Pages.PaymentcConsole.Support.PayChallan;
 import jxl.Workbook;
 import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
@@ -13,34 +12,25 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import static Utilites.LoginFunction.CFO_LogFunction;
-import static Utilites.LoginFunction.LogFunction;
+import static Utilites.LoginFunction.PC_LogFunction;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
+import static Utilites.Windowhander.NewWindow;
 import static jxl.format.Colour.*;
 import static jxl.format.Colour.LIGHT_TURQUOISE;
 
 /**
- * Created by akshay.pokley on 9/4/2017.
+ * Created by akshay.pokley on 9/15/2017.
  */
-public class InprocessPlanTest {
-
+public class PaychallanTest {
 
     static WebDriver driver;
     public Label l4;
@@ -56,6 +46,9 @@ public class InprocessPlanTest {
     public WritableSheet sourceSheet;
     public static WritableSheet targetSheet;
     public Workbook sourceDocument;
+
+    public static String WinHandleBefore1;
+    public static String WinHandleBefore2;
     /*****************************************************************/
     private static int n = 2;
     private static int j = 1;
@@ -72,18 +65,17 @@ public class InprocessPlanTest {
     static final java.util.regex.Pattern Num = java.util.regex.Pattern.compile("^[0-9]++$");
     static final java.util.regex.Pattern Emailval = java.util.regex.Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     static final java.util.regex.Pattern Alphnu = java.util.regex.Pattern.compile("^[A-Za-z,0-9  ]++$");
-    static final java.util.regex.Pattern Flot = java.util.regex.Pattern.compile("^[+-]?([0-9]*[.])?[0-9]++$");
-    public static InprocessPlan inprocessPlan;
-    public static   String subWindowHandler = null;
-    public static  String status;
+ public  static PayChallan payChallan;
+    public  static PC_Menu pc_menu;
+
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
         sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/TestCaseDemo.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
-        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/ApplicantReport.xls"));
-        sourceSheet = writableTempSource.getSheet(7);
-        targetSheet = copyDocument.createSheet("sheet 1", 6);
+        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/PayChallanTestReport.xls"));
+        sourceSheet = writableTempSource.getSheet(11);
+        targetSheet = copyDocument.createSheet("sheet 1", 2);
 
         WritableFont cellFont = new WritableFont(WritableFont.COURIER, 11);
         cellFont.setBoldStyle(WritableFont.BOLD);
@@ -164,7 +156,7 @@ public class InprocessPlanTest {
                 targetSheet.setColumnView(3, widthInChars2);
                 targetSheet.mergeCells(0, 0, 6, 0);
                 Label lable = new Label (0, 0,
-                        "Applicant screen test  report",cellFormat5);
+                        "Forgot Password screen test  report",cellFormat5);
                 targetSheet.addCell(lable);
                 targetSheet.addCell(l2);
                 targetSheet.addCell(l3);
@@ -174,7 +166,7 @@ public class InprocessPlanTest {
         }
 
     }
-    @AfterTest()
+    @AfterTest
     public void f() throws IOException, WriteException
     {
 
@@ -186,21 +178,20 @@ public class InprocessPlanTest {
     }
 
     @Test(dataProvider="hybridData")
-    public static void E(String testcaseName,String keyword,String objectName,String value,String Expeted) throws Exception {
+    public static void PaymentTest(String testcaseName,String keyword,String objectName,String value,String Expected) throws Exception {
 
-        //   RowIncr=LastRow;
         if (testcaseName != null && testcaseName.length() != 0 ) {
 
             driver = openBrowser("chrome");
             GetUrl("url");
-            CFO_LogFunction(driver);
+            PC_LogFunction(driver);
             Thread.sleep(200);
-            inprocessPlan =new InprocessPlan(driver);
-            CFOC_Menu cfoc_menu=new CFOC_Menu(driver);
-            cfoc_menu.ClickInprocessPlan();
+            pc_menu=new PC_Menu(driver);
 
-            driver.switchTo().frame("ifrmListing");
+            pc_menu.ClickSupportClick();
+            pc_menu.ClickPaychallanclick();
 
+           // payChallan=new PayChallan(driver);
             SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
@@ -208,28 +199,33 @@ public class InprocessPlanTest {
             targetSheet.addCell(l8);
         } else {
             SetBord = j++;
-
-
         }
+
         try {
+          /*  Thread.sleep(400);
+            NewWindow(driver);*/
+                 switch (keyword.toUpperCase()) {
 
-            switch (keyword.toUpperCase()) {
                 case "CLICK":
+                    String FilePath = "E:\\Akshay85\\select.pdf";
+                    WinHandleBefore2 = driver.getWindowHandle();
                     switch (objectName) {
+
                         case "Submit":
-
-
-                            Actual2 = "Alert message should be display.";
+                                  Actual2 = "Alert message should be display.";
                             // if (driver.findElement(By.xpath("./*//*[@id='lblULBName']")).getText().equals("Delhi Development Authority")) {
                             try {
                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                     System.out.println("alert was not present");
-                                    if (driver.findElement(By.xpath(".*//*//**//*[@id='lblULBName']")).getText().equals("Delhi Development Authority"))
+                                    if (Actual2.equals(Expected)) {
                                         Result = "pass";
+                                    } else {
+                                        Result = "Fail";
+                                    }
                                 } else {
                                     Alert alert = driver.switchTo().alert();
                                     Actual = driver.switchTo().alert().getText();
-                                    if (Actual.equals(Expeted) || Actual2.equals(Expeted)) {
+                                    if (Actual.equals(Expected) || Actual2.equals(Expected)) {
                                         Result = "pass";
                                     } else {
                                         Result = "Fail";
@@ -242,118 +238,24 @@ public class InprocessPlanTest {
 
                             } catch (Throwable e) {
                             }
-                            break;
 
-
-     /*----------------------------------------------  Approve Inprocess Plan --------------------------------------------------------*/
-
-                        case "Check payment Status":
-                            driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-                            if(inprocessPlan.getFileStaus().getText().equals("Inprocess"))
-                            {
-                                System.out.println("p");
-
-                                driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
-                                try {
-
-                                    inprocessPlan.ClickPaymentsTab();
-                                   // driver.switchTo().frame("");
-                                    if(inprocessPlan.getChallanType().getText().equals("Fire"));
-                                    {
-                                        System.out.println("P1");
-                                        if(inprocessPlan.getPaymentStatus().getText().equals("Paid")){
-                                            System.out.println("p2");
-                                        }
-                                    }
-
-
-                                } catch (Throwable e) {
-                                    System.out.println(e);
-                                }
-                            }
-
-
-
-                            break;
-                            /*----------------------------------------------  Inprocess Plan --------------------------------------------------------*/
-                        case "File Name":
-
-                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
-                            try {
-                                if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
-                                    driver.manage().timeouts().implicitlyWait(26, TimeUnit.SECONDS);
-
-                                    WebElement d = driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[3]/td/div/table/tbody/tr/td/div"));
-                                    String s = d.getText();
-                                    if (s.equals(Expeted)) {
-                                        Result = "pass";
-                                    } else {
-                                        Result = "fail";
-                                        Actual = s;
-                                    }
-                                } else {
-                                    driver.manage().timeouts().implicitlyWait(78, TimeUnit.SECONDS);
-                                    List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
-
-                                    for (WebElement cell : cells) {
-                                        String fiels = cell.getText();
-                                        System.out.println(fiels);
-
-                                        if (fiels.equals(value)){
-                                            cell.click();
-                                        Result = "pass";
-                                        break;
-
-                                        }else {
-                                            Result = "fails";
-                                            Actual="File not Found";
-                                        }
-                                    }
-
-                                }
-
-                            } catch (Throwable e) {
-                                System.out.println(e);
-                            }
-
-                         break;
-                        case "Select Architct":
-                            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-                            inprocessPlan.setSelect_ArchitectName(value);
-                            inprocessPlan.ClickSeachBtn(); Thread.sleep(200);   Result = "pass";
-                            break;
-                    }
-                    break;
+                    }break;
                 case "SETTEXT":
-                    //    NewApplication newApplication = new NewApplication(driver); //Set text on control
+
                     switch (objectName) {
 
-                        case "UserName":
-
-                            }
-                            break;
-                        case "password":
-                               try {
-
-                                } catch (Throwable e) {Actual = "Alert message not display.";
-                                    Result = "Fail";
-                                }
-
-
-
-
-                                    try {
-
-
-                                    } catch (Throwable e) {Actual = "Alert message not display.";
-                                        Result = "Fail";
-                                    }
+                        case "Login Id":
 
 
                             break;
+                        case "Mobile No":
 
 
+                            break;
+                        case "Email":
+
+
+                    }  break;
                 default:
                     break;
             }
@@ -377,9 +279,8 @@ public class InprocessPlanTest {
                 LastRow = n++;
 
             }
-
-
-        }catch (NullPointerException e){}
+        }catch (NullPointerException e)
+        {}
 
     }
 
@@ -389,16 +290,16 @@ public class InprocessPlanTest {
         Object[][] object = null;
         FileInputStream fis = new FileInputStream("ExcelData/InputData/TestCaseDemo.xls");
         HSSFWorkbook wb = new HSSFWorkbook(fis);
-        HSSFSheet sh = wb.getSheet("Sheet4");
+        HSSFSheet sh = wb.getSheet("PayChallan");
         //  HSSFRow rows = sh.getRow(1);
 //Read keyword sheet
 //Find number of rows in Expl.excel file
-        int rowCount = sh.getLastRowNum() - sh.getFirstRowNum();
+        int rowCount =sh.getLastRowNum()-sh.getFirstRowNum();
         System.out.println(rowCount);
         object = new Object[rowCount][5];
         for (int i = 1; i < rowCount; i++) {
 
-            HSSFRow row = sh.getRow(i + 1);
+            HSSFRow row = sh.getRow(i+1);
 
 
             for (int j = 0; j < row.getLastCellNum(); j++) {
@@ -410,18 +311,7 @@ public class InprocessPlanTest {
 
         }
         return object;
-
-
     }
-
-
-   /* @AfterClass()
-    public  void closedTestCase()
-    {
-        driver.close();
-        //   driver.switchTo().window(WinHandleBefore1);
-        // driver.close();
-    }*/
 
 
 

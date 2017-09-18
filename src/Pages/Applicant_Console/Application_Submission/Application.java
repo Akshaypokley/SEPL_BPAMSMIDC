@@ -145,6 +145,31 @@ public class Application {
 
         @FindBy(xpath = ".//*[@id='btnSave1']")
         WebElement Submit_Btn;
+/*---------------------------------------------- Header tools bar --------------------------------------------------------*/
+    @FindBy(xpath = "//table/tbody/tr[2]/td/table/tbody/tr/td[2]/a[2]")
+    WebElement DrawingScunity;
+
+    @FindBy(xpath = "//table/tbody/tr[2]/td/table/tbody/tr/td[2]/a[3]")
+    WebElement RunPreDCR;
+
+    @FindBy(xpath = "//table/tbody/tr[2]/td/table/tbody/tr/td[2]/a[4]")
+    WebElement SendScunity;
+
+    @FindBy(xpath = "//table/tbody/tr[2]/td/table/tbody/tr/td[2]/a[5]")
+    WebElement Back;
+
+    @FindBy(xpath = "//table/tbody/tr[2]/td/table/tbody/tr/td[2]/a[2]")
+    WebElement Advancepayment;
+
+    /*---------------------------------------------- proposal risk --------------------------------------------------------*/
+    @FindBy(xpath = "//div[3]/div[3]/div[1]//div[2]/div[3]/div[1]/div[1]/div/input")
+    WebElement RiskField;
+
+    @FindBy(xpath = ".//*[@id='imgRisk']")
+    WebElement RiskFieldMESH;
+    @FindBy(xpath = "html/body/form/div[1]/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/ul/li/a")
+    WebElement ClosedRiskWindow;
+
 
 
 
@@ -153,6 +178,71 @@ public class Application {
         PageFactory.initElements(driver, this);
         if (!Formlogo.isDisplayed())
             throw new IllegalStateException("This is not Applicant Form");
+    }
+   /*---------------------------------------------- proposal risk --------------------------------------------------------*/
+
+   public void ClickClosedRiskWindow()
+   {
+       ClosedRiskWindow.click();
+   }
+
+   public WebElement getRiskField()
+   {
+       return RiskField;
+   }
+
+   public void ClickRiskFieldMESH()
+
+   {
+       RiskFieldMESH.click();
+   }
+
+
+
+    /*---------------------------------------------- Header tools bar --------------------------------------------------------*/
+public WebElement getBack()
+{
+    return  Back;
+}
+    public void  ClickBack()
+    {
+        Back.click();
+    }
+    public WebElement getSendScunity()
+        {
+          return  SendScunity;
+        }
+
+    public void ClickSendScunity()
+    {
+        SendScunity.click();
+    }
+    public WebElement getDrawingScunity()
+    {
+        return  DrawingScunity;
+    }
+
+    public void ClickDrawingScunity()
+    {
+        DrawingScunity.click();
+    }
+
+    public WebElement getRunPreDCR()
+    {
+        return  RunPreDCR;
+    }
+    public void ClickRunPreDCR()
+    {
+ RunPreDCR.click();
+    }
+
+    public void ClickAdvancepayment()
+    {
+        Advancepayment.click();
+    }
+    public WebElement getAdvancepayment()
+    {
+        return  Advancepayment;
     }
 
  /*---------------------------------------------- Document Deatials --------------------------------------------------------*/

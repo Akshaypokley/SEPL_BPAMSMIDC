@@ -30,4 +30,27 @@ public class LoginFunction {
 
 
     }
+
+
+    public static void PC_LogFunction(WebDriver driver)
+    {
+
+        LoginConsole loginConsole =new LoginConsole(driver);
+        loginConsole.setUsername("support@1");
+        loginConsole.setPassword("Admin@123");
+        loginConsole.ClickLoginBtn();
+
+
+    }
+
+    public static void SC_LogFunction(WebDriver driver)
+    {
+
+        LoginConsole loginConsole =new LoginConsole(driver);
+        loginConsole.setUsername("scrutinycell8");
+        loginConsole.setPassword("Admin@123");
+        loginConsole.ClickLoginBtn();
+
+
+    }
 }
