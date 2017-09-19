@@ -20,11 +20,12 @@ public class InprocessPlan {
     @FindBy(xpath = ".//*[@id='cboArchitect_Input']")
     WebElement Select_ArchitectName;
 
-    @FindBy(xpath = ".//*[@class='container-fluid']//div/div[2]/input")
-    WebElement SeachBtn;
 
         @FindBy(xpath = ".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")
     WebElement SeachWithKeyword;
+
+    @FindBy(xpath = ".//*[@class='container-fluid']//div/div[2]/input")
+    WebElement SeachBtn;
 
     @FindBy(xpath = ".//*[@id='form1']/div[3]//div[5]//div[2]/table/tbody/tr/td/div/button")
     WebElement Filters;
