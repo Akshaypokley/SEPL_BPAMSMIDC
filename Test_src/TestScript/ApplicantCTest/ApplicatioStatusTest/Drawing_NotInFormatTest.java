@@ -288,11 +288,10 @@ public class Drawing_NotInFormatTest {
                         case "Attach New Drawing":
                             try
                             {
-                                application.ClickDrawing_Tab();
-                                driver.switchTo().frame("ifrmDrawings");
-                                String St = application.getDrawing_Data().getText();
+
+                                String St = drawing_notInFormat.getDrawing_Data().getText();
                                 if (St.equals("No data found")) {
-                                    driver.findElement(By.id("btnAttached")).click();
+                                    drawing_notInFormat.setselectFile();
                                     if ((ExpectedConditions.alertIsPresent()) == null) {
 
                                     } else {
@@ -333,6 +332,7 @@ public class Drawing_NotInFormatTest {
                                         Thread.sleep(300);
                                         alert.accept();
                                         driver.switchTo().parentFrame();
+                                       // driver.switchTo().frame("ifrmListing");
                                     }
                                 }
 
@@ -367,7 +367,7 @@ public class Drawing_NotInFormatTest {
 
                             break;
                         case "Submit":
-
+                            drawing_notInFormat.setSubmit();
                             break;
                         default:
                             System.out.println("default");
@@ -404,6 +404,13 @@ public class Drawing_NotInFormatTest {
                 case "SETTEXT":
 
                     switch (objectName) {
+
+                        case "Remarks detials":
+                            driver.switchTo().frame("ifrmListing");
+                            drawing_notInFormat.setRemarks(value);
+                            Result="pass";
+
+                            break;
 
                         case "Enter Keyword for search":
                             Thread.sleep(3000);

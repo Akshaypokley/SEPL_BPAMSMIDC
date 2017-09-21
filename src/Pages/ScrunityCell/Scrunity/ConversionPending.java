@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Created by akshay.pokley on 9/18/2017.
@@ -33,13 +34,52 @@ public class ConversionPending {
     /*-----------------------------------------Status Tab---------------------------------------------------*/
     @FindBy(xpath = ".//*[@id='lblStatus']")
     WebElement ProposalStatus;
+/*--------------------------------------------Filter---------------------------------------------*/
+    @FindBy(xpath = ".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")
+    WebElement SeachWithKeyword;
 
+/*--------------------------------------------Change Status ---------------------------------------------*/
+    @FindBy(xpath = ".//*[@id='cboStatus']")
+    WebElement selectStatus;
+
+    @FindBy(xpath = ".//*[@id='txtRemarks']")
+    WebElement Remarks;
+
+    @FindBy(xpath = ".//*[@id='btnSubmited']")
+    WebElement Submit;
     public ConversionPending(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         if (!logo.isDisplayed())
             throw new IllegalStateException("This is not Conversion pending page");
     }
+
+    /*--------------------------------------------Change Status ---------------------------------------------*/
+
+    public void setselectStatus(String selectStatus1)
+    {
+        Select combo = new Select (selectStatus) ;
+        combo.selectByValue(selectStatus1);
+    }
+
+    public void setRemarks(String remarks)
+    {
+        Remarks.sendKeys(remarks);
+    }
+
+    public WebElement getRemarks()
+    {
+       return Remarks;
+    }
+
+    public void setSubmit()
+    {
+        Submit.click();
+    }
+
+
+
+
 /*------------------------------------------HederTab-----------------------------------------------------*/
 
     public void setScrutiny_Remarks() {
@@ -70,5 +110,11 @@ public WebElement getProposalStatus()
 {
     return  ProposalStatus;
 }
+/*--------------------------------------------Filter---------------------------------------------*/
+
+    public WebElement getSeachWithKeyword()
+    {
+        return SeachWithKeyword;
+    }
 
 }

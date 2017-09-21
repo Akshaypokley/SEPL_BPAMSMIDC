@@ -16,6 +16,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -212,11 +213,33 @@ public class ConversionPendingTest {
                     String FilePath = "E:\\Akshay85\\select.pdf";
                     WinHandleBefore2 = driver.getWindowHandle();
                     switch (objectName) {
+
                         case "Change Status":
 
                             driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
                             try {
+                               driver.switchTo().frame("ifrmToolbar");
+                                conversionPending.setChange_Status();
+                                Result="pass";
+                            } catch (Throwable e) {
+                                System.out.println(e.getMessage());
+                            }
 
+                            break;
+
+                        case "Submit":
+
+                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+                            try {
+                                conversionPending.setSubmit();
+                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    System.out.println("alert was not present");
+
+                                } else {
+                                    Alert alert = driver.switchTo().alert();
+                                    Actual = driver.switchTo().alert().getText();
+                                    alert.accept();
+                                }
                             } catch (Throwable e) {
                                 System.out.println(e.getMessage());
                             }
@@ -265,9 +288,30 @@ public class ConversionPendingTest {
                             }
 
                             break;
+                        case "Filter":
+                            try
+                            {
+                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='form1']/div[3]/div/div/div[5]/div/div/div/div/div[2]/table/tbody/tr/td/div/button"));
+
+                                for (WebElement cell : cells) {
+                                    String fiels = cell.getText();
+                                    System.out.println(fiels);
+
+                                    if (fiels.equals(value)) {
+                                        cell.click();
+                                        Result="pass";
+                                        break;
+                                    }
+                                }
+                            }
+                            catch (Throwable t)
+                            {
+                                System.out.println(t.getMessage());
+                            }
 
 
-                        case "Submit":
+                            break;
+                        case "Submit1":
                             Actual2 = "Alert message should be display.";
                             // if (driver.findElement(By.xpath("./*//*[@id='lblULBName']")).getText().equals("Delhi Development Authority")) {
                             try {
@@ -301,18 +345,56 @@ public class ConversionPendingTest {
 
                     switch (objectName) {
 
+
+                        case "Remarks Details":
+
+                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+                            try {
+                                BeforeWH(driver);
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+                                conversionPending.setRemarks(value);
+
+                            } catch (Throwable e) {
+                                System.out.println(e.getMessage());
+                            }
+
+                            break;
+                        case "Select Status":
+                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+                            try {
+                                BeforeWH(driver);
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                                conversionPending.setselectStatus("2");
+                            } catch (Throwable e) {
+                                System.out.println(e.getMessage());
+                            }
+
+                            break;
+                                case "Enter Keyword for search":
+                            Thread.sleep(3000);
+                            Actions actions = new Actions(driver);
+                            actions.moveToElement(conversionPending.getSeachWithKeyword());
+                            actions.click();
+                            actions.click();
+                            actions.sendKeys(value);
+                            actions.build().perform();
+                            Result="pass";
+
+                            break;
                         case "Get Proposal Status":
 
                                 try {
-                                Thread.sleep(3000);
+
                                 if(conversionPending.getProposalStatus().getText().equals(value))
                                 {   System.out.println("don");
                                     driver.switchTo().frame("ifrmToolbar");
-                                    conversionPending.setChange_Status();
-                                    BeforeWH(driver);
+                                    Result="pass";
+
+
                                 }
 
-                                Result = "pass";
+
                             }catch (Throwable e)
                             {
                                 System.out.println(e.getMessage());

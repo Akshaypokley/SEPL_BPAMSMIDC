@@ -52,6 +52,9 @@ WebElement back;
 @FindBy(xpath = ".//*[@id='btnAttached']")
 WebElement selectFile;
 
+    @FindBy(xpath = ".//*[@id='AttachFile']/tbody/tr[3]/td/div/table/tbody/tr/td/div")
+    WebElement Drawing_Data;
+
     public Drawing_NotInFormat(WebDriver driver)
     { this.driver=driver;
         PageFactory.initElements(driver,this);
@@ -122,6 +125,11 @@ public void setResubmit()
     public WebElement getSeachWithKeyword()
     {
        return SeachWithKeyword;
+    }
+
+    public WebElement  getDrawing_Data()
+    {
+        return  Drawing_Data;
     }
 
 }
