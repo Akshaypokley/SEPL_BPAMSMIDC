@@ -1,10 +1,10 @@
 package TestScript.ScrunityCellTest.ScrunityTest;
 
-import Pages.Chief_Fire_Officer_Console.Application_Status.InprocessPlan;
-import static Utilites.BeforeWH.BeforeWH;
+import Pages.ForgotPasswordConsole;
+import Pages.LoginConsole;
 import Pages.ScrunityCell.SC_Menu;
 import Pages.ScrunityCell.Scrunity.ConversionPending;
-import Utilites.BeforeWH;
+import Pages.ScrunityCell.Scrunity.ScrunityPending;
 import jxl.Workbook;
 import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
@@ -18,10 +18,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,7 +26,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static Utilites.LoginFunction.CFO_LogFunction;
+import static Utilites.BeforeWH.BeforeWH;
 import static Utilites.LoginFunction.SC_LogFunction;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
@@ -38,44 +35,50 @@ import static jxl.format.Colour.*;
 import static jxl.format.Colour.LIGHT_TURQUOISE;
 
 /**
- * Created by akshay.pokley on 9/18/2017.
+ * Created by akshay.pokley on 9/25/2017.
  */
-public class ConversionPendingTest {
-
+public class ScrunityPendingTest {
     static WebDriver driver;
+    public Label l4;
     public static WritableCellFormat cellFormat;
     public static WritableCellFormat cellFormat1;
     public static WritableCellFormat cellFormat3;
     public static WritableCellFormat cellFormat4;
-    public WritableCellFormat cellFormat2;
-    public static WritableCellFormat cellFormat6;
+    public WritableCellFormat cellFormat2; public static WritableCellFormat cellFormat6;
     public static WritableCellFormat cellFormat5;
+    public  String TestCase;
     public WritableWorkbook writableTempSource;
     public WritableWorkbook copyDocument;
     public WritableSheet sourceSheet;
     public static WritableSheet targetSheet;
     public Workbook sourceDocument;
-    public static String WinHandleBefore2;
+    public static ScrunityPending scrunityPending;
     public static SC_Menu sc_menu;
-    public static ConversionPending conversionPending;
+    public static String WinHandleBefore1;
+    public static String WinHandleBefore2;
+    /*****************************************************************/
     private static int n = 2;
     private static int j = 1;
-    public static String Result;
+    public static  String Result;
+    public static  String k;
+    public static String ResultPass1="Username";
+    public static String ResultFail1="Password";
     public static String Actual;
-    public static String Actual2;    public static InprocessPlan inprocessPlan;
+    public static String Actual2;
     static int LastRow;
     static int SetBord;
+    static int RowIncr;
     static final java.util.regex.Pattern String = java.util.regex.Pattern.compile("^[A-Za-z, ]++$");
     static final java.util.regex.Pattern Num = java.util.regex.Pattern.compile("^[0-9]++$");
     static final java.util.regex.Pattern Emailval = java.util.regex.Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     static final java.util.regex.Pattern Alphnu = java.util.regex.Pattern.compile("^[A-Za-z,0-9  ]++$");
 
     @BeforeTest
-    public void OutputExcelCreation() throws IOException, BiffException, WriteException {
+    public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
         sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/TestCaseDemo.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
-        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/ScrunityReports/ConversionPendingTestReport.xls"));
+        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/ScrunityReports/ScrunityPedingTestReport.xls"));
         sourceSheet = writableTempSource.getSheet(12);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
@@ -138,9 +141,9 @@ public class ConversionPendingTest {
                 targetSheet.addCell(newCell);
 
 
-                Label l2 = new Label(5, 1, "Actual", cellFormat);
+                Label l2=new Label(5,1,"Actual",cellFormat);
 
-                Label l3 = new Label(6, 1, "Status", cellFormat);
+                Label l3=new Label(6,1,"Status",cellFormat);
                 //Label l4=new Label(4,row,"",cellFormat);
                 int widthInChars = 36;
                 int widthInChars2 = 18;
@@ -157,8 +160,8 @@ public class ConversionPendingTest {
 
                 targetSheet.setColumnView(3, widthInChars2);
                 targetSheet.mergeCells(0, 0, 6, 0);
-                Label lable = new Label(0, 0,
-                        "Conversion Pending screen test  report", cellFormat5);
+                Label lable = new Label (0, 0,
+                        "Scrunity Peding screen test  report",cellFormat5);
                 targetSheet.addCell(lable);
                 targetSheet.addCell(l2);
                 targetSheet.addCell(l3);
@@ -168,9 +171,9 @@ public class ConversionPendingTest {
         }
 
     }
-
     @AfterTest
-    public void f() throws IOException, WriteException {
+    public void f() throws IOException, WriteException
+    {
 
         copyDocument.write();
         copyDocument.close();
@@ -178,9 +181,8 @@ public class ConversionPendingTest {
         sourceDocument.close();
 
     }
-
     @Test(dataProvider="hybridData")
-    public static void ConversionPTest(String testcaseName,String keyword,String objectName,String value,String Expected) throws Exception {
+    public static void SPTest(String testcaseName,String keyword,String objectName,String value,String Expected) throws Exception {
 
         if (testcaseName != null && testcaseName.length() != 0 ) {
 
@@ -190,11 +192,11 @@ public class ConversionPendingTest {
             sc_menu=new SC_Menu(driver);
 
             sc_menu.setScrunityTab();
-            sc_menu.setConversionPending();
-            conversionPending =new ConversionPending(driver);
+            Thread.sleep(150);
+            sc_menu.setScrunityPending();
+            scrunityPending =new ScrunityPending(driver);
 
             driver.switchTo().frame("ifrmListing");
-
             SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
@@ -218,9 +220,9 @@ public class ConversionPendingTest {
 
                             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                             try {
-                               driver.switchTo().frame("ifrmToolbar");
-                                conversionPending.setChange_Status();
-                                Result="pass";
+                                driver.switchTo().frame("ifrmToolbar");
+                                scrunityPending.setChange_Status();
+                                Result = "pass";
                             } catch (Throwable e) {
                                 System.out.println(e.getMessage());
                             }
@@ -231,7 +233,7 @@ public class ConversionPendingTest {
 
                             driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
                             try {
-                                conversionPending.setSubmit();
+                                scrunityPending.setSubmit();
                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                     System.out.println("alert was not present");
 
@@ -247,9 +249,11 @@ public class ConversionPendingTest {
                             break;
 
 
+
+
                         case "File Name":
 
-                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
                             try {
                                 if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
                                     driver.manage().timeouts().implicitlyWait(26, TimeUnit.SECONDS);
@@ -344,27 +348,29 @@ public class ConversionPendingTest {
                 case "SETTEXT":
 
                     switch (objectName) {
-                        case "Remarks Details":
-
-                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
-                            try {
-                                BeforeWH(driver);
-                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-                                conversionPending.setRemarks(value);
-
-                            } catch (Throwable e) {
-                                System.out.println(e.getMessage());
-                            }break;
-
 
                         case "Select Status":
 
-                            driver.manage().timeouts().implicitlyWait(150, TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                             try {
                                 BeforeWH(driver);
                                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                                conversionPending.setselectStatus(value);
+                                scrunityPending.setselectStatus(value);
+
+
+                            } catch (Throwable e) {
+                                System.out.println(e.getMessage());
+                            }
+                                break;
+
+                        case "Remarks Details":
+
+                            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                            try {
+                                BeforeWH(driver);
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+                             scrunityPending.setRemarks(value);
 
                             } catch (Throwable e) {
                                 System.out.println(e.getMessage());
@@ -372,10 +378,10 @@ public class ConversionPendingTest {
 
                             break;
 
-                                case "Enter Keyword for search":
+                        case "Enter Keyword for search":
                             Thread.sleep(3000);
                             Actions actions = new Actions(driver);
-                            actions.moveToElement(conversionPending.getSeachWithKeyword());
+                            actions.moveToElement(scrunityPending.getSeachWithKeyword());
                             actions.click();
                             actions.click();
                             actions.sendKeys(value);
@@ -385,9 +391,9 @@ public class ConversionPendingTest {
                             break;
                         case "Get Proposal Status":
 
-                                try {
+                            try {
 
-                                if(conversionPending.getProposalStatus().getText().equals(value))
+                                if(scrunityPending.getProposalStatus().getText().equals(value))
                                 {   System.out.println("don");
                                     driver.switchTo().frame("ifrmToolbar");
                                     Result="pass";
@@ -444,7 +450,7 @@ public class ConversionPendingTest {
     }
 
 
-    @DataProvider(name = "hybridData")
+    @DataProvider(name="hybridData")
     public Object[][] getDataFromDataprovider() throws IOException {
         Object[][] object = null;
         FileInputStream fis = new FileInputStream("ExcelData/InputData/TestCaseDemo.xls");
@@ -453,12 +459,12 @@ public class ConversionPendingTest {
         //  HSSFRow rows = sh.getRow(1);
 //Read keyword sheet
 //Find number of rows in Expl.excel file
-        int rowCount = sh.getLastRowNum() - sh.getFirstRowNum();
+        int rowCount =sh.getLastRowNum()-sh.getFirstRowNum();
         System.out.println(rowCount);
         object = new Object[rowCount][5];
         for (int i = 1; i < rowCount; i++) {
 
-            HSSFRow row = sh.getRow(i + 1);
+            HSSFRow row = sh.getRow(i+1);
 
 
             for (int j = 0; j < row.getLastCellNum(); j++) {
@@ -471,5 +477,8 @@ public class ConversionPendingTest {
         }
         return object;
     }
+
+
+
 
 }

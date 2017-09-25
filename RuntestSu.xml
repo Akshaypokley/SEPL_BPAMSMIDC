@@ -8,8 +8,9 @@
     <test name="Regression" >
         <classes>
 
-            <class name="TestScript.ApplicantCTest.PaymentsTest.Pending_Processing_FeesTest" />
-           <!-- <class name="Example" />
+            <class name="TestScript.ScrunityCellTest.ApplicationStatusTest.DrawingNotInformatTest" />
+          <!--  <class name="TestScript.ScrunityCellTest.ApplicationStatusTest.ScrunityCantBeDoneTest" />
+          --> <!-- <class name="Example" />
            --> <!---    <class name="TestScript.Applicant.ArchDraftTest" />
     -->
 
