@@ -25,6 +25,8 @@ import java.io.IOException;
 
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
+import static Utilites.ValidationLogic.ActualoutputFun;
+import static Utilites.ValidationLogic.ValidationLogic;
 import static jxl.format.Colour.*;
 /**
  * Created by akshay.pokley on 6/13/2017.
@@ -47,6 +49,8 @@ public class LoginCTest {
     public WritableSheet sourceSheet;
     public static WritableSheet targetSheet;
     public Workbook sourceDocument;
+    public static String Acual;
+    public static String Result1;
     /*****************************************************************/
     private static int n = 2;
     private static int j = 1;
@@ -63,42 +67,42 @@ public class LoginCTest {
     static String AlrMESS="Alert was not open ";
 
     static final java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^[A-Za-z,0-9  ]++$");
-  @BeforeTest
+    @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
         sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/LoginInputData.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
-        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/LoginTestReport.xls"));
+        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/LoginTestReport2.xls"));
         sourceSheet = writableTempSource.getSheet(0);
         targetSheet = copyDocument.createSheet("sheet 1", 0);
 
         WritableFont cellFont = new WritableFont(WritableFont.COURIER, 11);
-     cellFont.setBoldStyle(WritableFont.BOLD);
+        cellFont.setBoldStyle(WritableFont.BOLD);
 /************************************************************************************************/
         WritableFont cellFont2 = new WritableFont(WritableFont.COURIER, 12);
         cellFont2.setColour(BLACK);
-       // cellFont2.setBoldStyle(WritableFont.BOLD);
+        // cellFont2.setBoldStyle(WritableFont.BOLD);
         cellFormat1 = new WritableCellFormat(cellFont2);
         cellFormat1.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat1.setWrap(true);
-      //cellFormat1.setBackground(LIGHT_TURQUOISE);
+        //cellFormat1.setBackground(LIGHT_TURQUOISE);
 
-      cellFormat6 = new WritableCellFormat(cellFont2);
-      cellFormat6.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-      cellFormat6.setWrap(true);
-      cellFormat6.setBackground(LIGHT_TURQUOISE);
+        cellFormat6 = new WritableCellFormat(cellFont2);
+        cellFormat6.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
+        cellFormat6.setWrap(true);
+        cellFormat6.setBackground(LIGHT_TURQUOISE);
 /*******************************************************************************************************/
 /************************************************************************************************/
         WritableFont cellFont3 = new WritableFont(WritableFont.COURIER, 12);
         cellFont3.setColour(RED);
-      //  cellFont3.setBoldStyle(WritableFont.BOLD);
+        //  cellFont3.setBoldStyle(WritableFont.BOLD);
         cellFormat3 = new WritableCellFormat(cellFont3);
         cellFormat3.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat3.setWrap(true);
 
         WritableFont cellFont4 = new WritableFont(WritableFont.COURIER, 12);
         cellFont4.setColour(GREEN);
-       // cellFont4.setBoldStyle(WritableFont.BOLD);
+        // cellFont4.setBoldStyle(WritableFont.BOLD);
         cellFormat4 = new WritableCellFormat(cellFont4);
         cellFormat4.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat4.setWrap(true);
@@ -225,7 +229,7 @@ public class LoginCTest {
                     }
 
                 case "SETTEXT":
-                //    NewApplication newApplication = new NewApplication(driver); //Set text on control
+                    //    NewApplication newApplication = new NewApplication(driver); //Set text on control
                     switch (objectName) {
 
                         case "UserName":
@@ -311,82 +315,90 @@ public class LoginCTest {
                         case "password":
                             login.setPassword(value);
                             final String fieldValue2 = login.getPassword().getAttribute("value");
-                            if (fieldValue2.isEmpty()) {
-                                try {
-                                    if ((ExpectedConditions.alertIsPresent()) == null) {
-
-                                    } else {
-                                        Alert alert = driver.switchTo().alert();
-                                        Actual = driver.switchTo().alert().getText();
-                                        if (Actual.equals(Expeted)) {
-                                            Result = "pass";
-                                        } else {
-                                            Result = "Fail";
-                                        }
-                                        System.out.println(Actual);
-                                        //    Thread.sleep(50);
-                                        alert.accept();
-
-                                    }
-
-                                } catch (Throwable e) {Actual = "Alert message not display.";
-                                    Result = "Fail";
-                                }
-
-
-                            } else {
-                                if (fieldValue2.equals(value)) {
-                                    if (!pattern.matcher(fieldValue2).matches()) {
-                                        try {
-                                            if ((ExpectedConditions.alertIsPresent()) == null) {
-                                                Actual = "Alert message not display.";
-                                                Result = "Fail";
-                                            } else {
-                                                Alert alert = driver.switchTo().alert();
-                                                Actual = driver.switchTo().alert().getText();
-                                                if (Actual.equals(Expeted)) {
-                                                    Result = "pass";
-                                                } else {
-                                                    Result = "Fail";
-                                                }
-                                                System.out.println(Actual);
-                                                //    Thread.sleep(50);
-                                                alert.accept();
-
-                                            }
-
-                                        } catch (Throwable e) {Actual = "Alert message not display .";
-                                            Result = "Fail";
-                                        }
-                                    } else {
-                                        Result = "pass";
-                                        System.out.println(fieldValue2);
-                                        System.out.println(Result);
-                                    }
-                                } else {
-                                    try {
-                                        if ((ExpectedConditions.alertIsPresent()) == null) {
-                                            Actual = "Alert message not display .";
-                                            Result = "Fail";
-                                        } else {
-                                            Alert alert = driver.switchTo().alert();
-                                            Actual = driver.switchTo().alert().getText();
-                                            if (Actual.equals(Expeted)) {
-                                                Result = "pass";
-                                            } else {
-                                                Result = "Fail";
-                                            }
-                                            System.out.println(Actual);
-                                            //    Thread.sleep(50);
-                                            alert.accept();
-
-                                        }
-
-                                    } catch (Throwable e) {Actual = "Alert message not display.";
-                                        Result = "Fail";
-                                    }
-                                }
-                            }
+                            String Origvalue = value;
+                            String OrigenExpeted = Expeted;
+                            String REs=  ValidationLogic(driver, fieldValue2, Origvalue, OrigenExpeted,Result1);
+                            String ACT= ActualoutputFun(Acual);
+                            Result=REs;
+                            Actual=ACT;
+                            System.out.println("R:"+Result);
+                            System.out.println("A:"+ACT);
+//                            if (fieldValue2.isEmpty()) {
+//                                try {
+//                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+//
+//                                    } else {
+//                                        Alert alert = driver.switchTo().alert();
+//                                        Actual = driver.switchTo().alert().getText();
+//                                        if (Actual.equals(Expeted)) {
+//                                            Result = "pass";
+//                                        } else {
+//                                            Result = "Fail";
+//                                        }
+//                                        System.out.println(Actual);
+//                                        //    Thread.sleep(50);
+//                                        alert.accept();
+//
+//                                    }
+//
+//                                } catch (Throwable e) {Actual = "Alert message not display.";
+//                                    Result = "Fail";
+//                                }
+//
+//
+//                            } else {
+//                                if (fieldValue2.equals(value)) {
+//                                    if (!pattern.matcher(fieldValue2).matches()) {
+//                                        try {
+//                                            if ((ExpectedConditions.alertIsPresent()) == null) {
+//                                                Actual = "Alert message not display.";
+//                                                Result = "Fail";
+//                                            } else {
+//                                                Alert alert = driver.switchTo().alert();
+//                                                Actual = driver.switchTo().alert().getText();
+//                                                if (Actual.equals(Expeted)) {
+//                                                    Result = "pass";
+//                                                } else {
+//                                                    Result = "Fail";
+//                                                }
+//                                                System.out.println(Actual);
+//                                                //    Thread.sleep(50);
+//                                                alert.accept();
+//
+//                                            }
+//
+//                                        } catch (Throwable e) {Actual = "Alert message not display .";
+//                                            Result = "Fail";
+//                                        }
+//                                    } else {
+//                                        Result = "pass";
+//                                        System.out.println(fieldValue2);
+//                                        System.out.println(Result);
+//                                    }
+//                                } else {
+//                                    try {
+//                                        if ((ExpectedConditions.alertIsPresent()) == null) {
+//                                            Actual = "Alert message not display .";
+//                                            Result = "Fail";
+//                                        } else {
+//                                            Alert alert = driver.switchTo().alert();
+//                                            Actual = driver.switchTo().alert().getText();
+//                                            if (Actual.equals(Expeted)) {
+//                                                Result = "pass";
+//                                            } else {
+//                                                Result = "Fail";
+//                                            }
+//                                            System.out.println(Actual);
+//                                            //    Thread.sleep(50);
+//                                            alert.accept();
+//
+//                                        }
+//
+//                                    } catch (Throwable e) {Actual = "Alert message not display.";
+//                                        Result = "Fail";
+//                                    }
+//                                }
+//                            }
                             break;
                     }
 
@@ -437,7 +449,7 @@ public class LoginCTest {
 
 
             for (int j = 0; j < row.getLastCellNum(); j++) {
-              //  System.out.println(row.getCell(j).toString());
+                //  System.out.println(row.getCell(j).toString());
                 object[i][j] = row.getCell(j).toString();
 
             }

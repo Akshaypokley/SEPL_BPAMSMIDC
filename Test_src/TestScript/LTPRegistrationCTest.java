@@ -208,7 +208,7 @@ public class LTPRegistrationCTest {
             switch (keyword.toUpperCase()) {
 
                 case "CLICK":
-                    String FilePath = "E:\\Akshay85\\select.pdf";
+                    String FilePath = "E:\\Akshay\\PWIMS Deployment.pdf";
                     String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
 

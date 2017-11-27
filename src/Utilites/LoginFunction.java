@@ -13,8 +13,19 @@ public class LoginFunction {
     {
 
         LoginConsole loginConsole =new LoginConsole(driver);
-        loginConsole.setUsername("aditi@midc.com");
-        loginConsole.setPassword("Aditi@123");
+        loginConsole.setUsername("akshay85@gmail.com");
+        loginConsole.setPassword("Akshay85");
+        loginConsole.ClickLoginBtn();
+
+
+    }
+
+    public static void DFO_LogFunction(WebDriver driver)
+    {
+
+        LoginConsole loginConsole =new LoginConsole(driver);
+        loginConsole.setUsername("deputycfo");
+        loginConsole.setPassword("Admin@123");
         loginConsole.ClickLoginBtn();
 
 
@@ -48,6 +59,17 @@ public class LoginFunction {
 
         LoginConsole loginConsole =new LoginConsole(driver);
         loginConsole.setUsername("scrutinycell8");
+        loginConsole.setPassword("Admin@123");
+        loginConsole.ClickLoginBtn();
+
+
+    }
+
+    public static void SPA_LogFunction(WebDriver driver)
+    {
+
+        LoginConsole loginConsole =new LoginConsole(driver);
+        loginConsole.setUsername("apamravati");
         loginConsole.setPassword("Admin@123");
         loginConsole.ClickLoginBtn();
 

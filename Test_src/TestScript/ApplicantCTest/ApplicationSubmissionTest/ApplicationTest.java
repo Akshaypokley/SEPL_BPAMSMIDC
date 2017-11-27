@@ -214,8 +214,8 @@ public class ApplicationTest {
                 switch (keyword.toUpperCase()) {
 
                     case "CLICK":
-                        String FilePath = "E:\\Akshay85\\select.pdf";
-                        String FilePath2 = "E:\\Akshay85\\8.1\\IMP\\13_7\\New folder (3)\\g.dwg";
+                        String FilePath = "E:\\Akshay\\Resume_Akshay_pokley.pdf";
+                        String FilePath2 = "E:\\Akshay\\wew.dwg.dwg";
                         String WinHandleBefore1 = driver.getWindowHandle();
                         switch (objectName) {
 /************************************************************************************************/

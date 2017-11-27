@@ -1,0 +1,6 @@
+Applicant screen test  Case				
+TestCase	Keyword	Object	value	Expected
+TEST CASE 1				
+	LOGIN	Architect		
+TEST CASE 2				
+	LOGIN	Deputy Chief officer		

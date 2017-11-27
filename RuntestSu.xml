@@ -8,9 +8,13 @@
     <test name="Regression" >
         <classes>
 
-            <class name="TestScript.ScrunityCellTest.ApplicationStatusTest.DrawingNotInformatTest" />
-          <!--  <class name="TestScript.ScrunityCellTest.ApplicationStatusTest.ScrunityCantBeDoneTest" />
-          --> <!-- <class name="Example" />
+          <!--  <class name="TestScript.ForgotCTest" />
+            <class name="TestScript.LTPRegistrationCTest"/>-->
+
+
+          <class name="TestScript.ApplicantCTest.ApplicationSubmissionTest.ApplicationTest"/>
+            <!--  <class name="TestScript.ScrunityCellTest.ApplicationStatusTest.ScrunityCantBeDoneTest" />
+            --> <!-- <class name="Example" />
            --> <!---    <class name="TestScript.Applicant.ArchDraftTest" />
     -->
 
