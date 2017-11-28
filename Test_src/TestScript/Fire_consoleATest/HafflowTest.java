@@ -20,6 +20,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class HafflowTest {
     public static String Actual2;
     static int LastRow;
     static int SetBord;
-    static int RowIncr;
+    static int ToolbarCount=0;
     static final java.util.regex.Pattern String = java.util.regex.Pattern.compile("^[A-Za-z, ]++$");
     static final java.util.regex.Pattern Num = java.util.regex.Pattern.compile("^[0-9]++$");
     static final java.util.regex.Pattern Emailval = java.util.regex.Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
@@ -186,13 +187,8 @@ public class HafflowTest {
 
             driver = openBrowser("chrome");
             GetUrl("url");
-         //   LoginConsole login = new LoginConsole(driver);
-            //login.ClickForgotPasswordlink();
             Thread.sleep(200);
             NewWindow(driver);
-            //   WinHandleBefore1 = driver.getWindowHandle();
-
-           // Higherauthoriotyflows higherauthoriotyflows=new Higherauthoriotyflows(driver);
             SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
@@ -203,8 +199,6 @@ public class HafflowTest {
         }
 
         try {
-          /*  Thread.sleep(400);
-            NewWindow(driver);*/
             switch (keyword.toUpperCase()) {
 
                 case "LOGIN":
@@ -216,6 +210,84 @@ public class HafflowTest {
                             break;
                         case"Deputy Chief officer":
                             DFO_LogFunction(driver);
+                    }break;
+                case "STATUS BAR":
+
+                    switch (objectName) {
+                        case "Get Opertional Bar Details ":
+
+                          //  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                            try {
+                                driver.switchTo().frame("ifrmToolbar");
+                                List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
+                                for (WebElement cell : d) {
+                                    String fiels = cell.getText();
+                                    //   System.out.println("Tool bar Componets are " + fiels);
+
+                                    if (fiels.equals(value)) {
+                                        cell.click();
+                                   if(fiels.equals(" Print NoteSheet")||fiels.equals(" View Fire NOC")){
+                                       NewWindow(driver);
+                                       Thread.sleep(2000);
+                                       java.awt.Robot robot = new java.awt.Robot();
+                                       Thread.sleep(1000);
+                                       robot.keyPress(KeyEvent.VK_CONTROL);
+                                       robot.keyPress(KeyEvent.VK_S);
+                                       robot.keyRelease(KeyEvent.VK_S);
+                                       robot.keyRelease(KeyEvent.VK_CONTROL);
+                                       Thread.sleep(2000);
+                                       robot.keyPress(KeyEvent.VK_ENTER);
+                                       Thread.sleep(2000);
+                                       robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
+                                       Thread.sleep(2000);
+                                       robot.keyPress(KeyEvent.VK_ENTER); // hit enter
+                                   }else {
+
+                                       if(fiels.equals(" Back"))
+                                       {
+
+                                       }else {
+                                           if(fiels.equals("  Notesheet"))
+                                           {
+
+                                           }
+                                       }
+
+                                   }
+                                        Result = "pass";
+                                        break;
+                                    }else {
+                                        List<WebElement> d1 = driver.findElements(By.xpath(".//*[@id='SetbReports']/tbody/tr/td[2]/a"));
+                                        for (WebElement cell1 : d1) {
+                                            String fiels1 = cell1.getText();
+                                                     System.out.println("Tool bar Componets are:->"+fiels1);
+                                            if (fiels1.equals(value)) {
+                                                cell1.click();
+                                                System.out.println("Tool bar Componets are "+fiels1);
+
+                                                Result = "pass";
+                                                break;
+                                            }else {
+                                                System.out.println("Componets are not available ");
+                                            }
+                                        }
+                                    }
+
+                                }
+
+
+
+                            } catch (Throwable e) {
+
+                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    System.out.println("alert was not present");
+                                } else {
+                                    Alert alert = driver.switchTo().alert();
+                                    Actual = driver.switchTo().alert().getText();
+                                    alert.accept();
+                                }
+                                System.out.println(e.getMessage());
+                            }
                     }break;
 
 
@@ -275,29 +347,45 @@ public class HafflowTest {
                     String FilePath = "E:\\Akshay85\\select.pdf";
                     WinHandleBefore2 = driver.getWindowHandle();
                     switch (objectName) {
+
                         case "File Name":
-
-                            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
                             try {
+                                if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
+                                    driver.manage().timeouts().implicitlyWait(26, TimeUnit.SECONDS);
 
-                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
+                                    WebElement d = driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[3]/td/div/table/tbody/tr/td/div"));
+                                    String s = d.getText();
+                                    if (s.equals(Expected)) {
+                                        Result = "pass";
+                                    } else {
+                                        Result = "fail";
+                                        Actual = s;
+                                    }
+                                } else {
+                                    driver.manage().timeouts().implicitlyWait(78, TimeUnit.SECONDS);
+                                    List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
 
-                                for (WebElement cell : cells) {
-                                    String fiels = cell.getText();
-                                    System.out.println(fiels);
+                                    for (WebElement cell : cells) {
+                                        String fiels = cell.getText();
+                                        System.out.println(fiels);
 
-                                    if (fiels.equals(value))
-                                        cell.click();
+                                        if (fiels.equals(value)) {
+                                            cell.click();
+                                            Result = "pass";
+                                            break;
 
+                                        } else {
+                                            Result = "fails";
+                                            Actual = "File not Found";
+                                        }
+                                    }
 
-                                    Result = "pass";
                                 }
-                            } catch (Throwable e) {
 
+                            } catch (Throwable e) {
                                 System.out.println(e.getMessage());
                             }
-
-                       }break;
+                            }break;
                 case "SETTEXT":
 
                     switch (objectName) {
