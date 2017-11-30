@@ -39,9 +39,10 @@ public class Application {
     @FindBy(xpath = ".//*[@id='radPossessionDate_dateInput_text']")
     WebElement Plot_Possession_Date;
 
-    @FindBy(xpath = "./*//*[@id='txtRRate_text']")
+    @FindBy(xpath = ".//*[@id='txtRRcRate_text']")
     WebElement Ready_Reckoner_Rate;
-
+    @FindBy(xpath = ".//*[@id='txtRRate_text']")
+    WebElement Land_Ready_Reckoner_Rate;
     @FindBy(xpath = "./*//*[@id='CboLocation']")
     WebElement Industrial_Area;
 
@@ -507,9 +508,19 @@ return Building_Rows;
         Ready_Reckoner_Rate.sendKeys(ready_reckoner_rate);
     }
 
+    public void setLand_Ready_Reckoner_Rate( String land_ready_reckoner_rate)
+    {
+        Land_Ready_Reckoner_Rate.sendKeys(land_ready_reckoner_rate);
+    }
+
     public WebElement getReady_Reckoner_Rate()
     {
       return   Ready_Reckoner_Rate;
+    }
+
+    public WebElement getLand_Ready_Reckoner_Rate()
+    {
+        return   Land_Ready_Reckoner_Rate;
     }
 
     public void setPlot_Possession_Date( String plot_possession_date)

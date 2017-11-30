@@ -80,7 +80,7 @@ public class ApplicationTest {
 
         sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/TestCaseDemo.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
-        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/ApplicantReport.xls"));
+        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/ApplicantReport14.xls"));
         sourceSheet = writableTempSource.getSheet(5);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
@@ -214,7 +214,7 @@ public class ApplicationTest {
                 switch (keyword.toUpperCase()) {
 
                     case "CLICK":
-                        String FilePath = "E:\\Akshay\\Resume_Akshay_pokley.pdf";
+                        String FilePath = "E:\\Akshay\\PWIMS Deployment.pdf";
                         String FilePath2 = "E:\\Akshay\\wew.dwg.dwg";
                         String WinHandleBefore1 = driver.getWindowHandle();
                         switch (objectName) {
@@ -226,9 +226,9 @@ public class ApplicationTest {
                                 System.out.println(element.getText());
                                 Actions actions = new Actions(driver);
                                 actions.moveToElement(element);
-                                Thread.sleep(100);
+                                Thread.sleep(200);
                                 actions.click();
-                                Thread.sleep(100);
+                                Thread.sleep(200);
                                 actions.build().perform();
                                 driver.switchTo().parentFrame();
                                 Result = "pass";
@@ -446,9 +446,8 @@ public class ApplicationTest {
 
                                         //  Actual = driver.switchTo().alert().getText();
                                         Thread.sleep(300);
-                                        alert.accept();
-                                        driver.switchTo().parentFrame();
-                                    }
+                                        alert.accept();   Thread.sleep(70);
+                                        driver.switchTo().parentFrame();                    }
 
                                 } else {
                                     driver.findElement(By.id("btnAttached")).click();
@@ -459,8 +458,9 @@ public class ApplicationTest {
 
                                         //  Actual = driver.switchTo().alert().getText();
                                         Thread.sleep(300);
-                                        alert.accept();
+                                        alert.accept(); Thread.sleep(70);
                                         driver.switchTo().parentFrame();
+
                                     }
                                 }
 
@@ -486,8 +486,10 @@ public class ApplicationTest {
                                         if (fiels.equals(value))
                                             cell.click();
                                         Result = "pass";
+
                                     }
                                 } catch (Throwable e) {
+                                    System.out.println(e.getMessage());
                                 }
                                 Result = "pass";
                                 break;
@@ -538,6 +540,7 @@ public class ApplicationTest {
                                                         WebElement df = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a"));
                                                         String y = df.getText();
                                                         if (!y.equals("Attach Files")) {
+                                                            System.out.println("E");
                                                         } else {
                                                             df.click();
                                                             System.out.println(k);
@@ -557,7 +560,7 @@ public class ApplicationTest {
                                                             Thread.sleep(70);
 
                                                             driver.switchTo().frame("ifrmDocuments");
-                                                            System.out.println("pass");
+                                                      System.out.println("pass");
                                                             driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
 
                                                             System.out.println(k);
@@ -581,12 +584,12 @@ public class ApplicationTest {
                                                     }
 
                                                     try {
-                                                        Thread.sleep(300);
+                                                        Thread.sleep(400);
                                                         WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[2]"));
                                                         String d = fiels3.getText();
                                                         System.out.println(d);
 
-                                                        Thread.sleep(200);
+                                                        Thread.sleep(400);
                                                         WebElement ty = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a"));
                                                         String h = ty.getText();
                                                         System.out.println(l);
@@ -623,7 +626,7 @@ public class ApplicationTest {
                                                 }
 
                                             }
-                                            break;
+
                                         } else {
                                             System.out.println("NoCC");
                                         }
@@ -683,7 +686,7 @@ public class ApplicationTest {
 
 
                                                             driver.switchTo().frame("ifrmDocuments");
-                                                            System.out.println("pass");
+                                                            System.out.println("pass");   Thread.sleep(70);
                                                             driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
 
                                                         } else {
@@ -706,7 +709,7 @@ public class ApplicationTest {
 
 
                                                                 driver.switchTo().frame("ifrmDocuments");
-                                                                System.out.println("pass");
+                                                                System.out.println("pass");        System.out.println("pass");   Thread.sleep(70);
                                                                 driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
 
                                                             }
@@ -1609,6 +1612,76 @@ public class ApplicationTest {
                                         System.out.println(fieldValue);
 
                                         if (!Flot.matcher(fieldValue).matches()) {
+                                            try {
+                                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                    Actual = "Alert message not display.";
+                                                    Result = "Fail";
+                                                } else {
+                                                    Alert alert = driver.switchTo().alert();
+                                                    Actual = driver.switchTo().alert().getText();
+                                                    if (Actual.equals(Expected)) {
+                                                        Result = "pass";
+                                                    } else {
+                                                        Result = "Fail";
+                                                    }
+                                                    System.out.println(Actual);
+                                                    //    Thread.sleep(50);
+                                                    alert.accept();
+
+                                                }
+
+                                            } catch (Throwable e) {
+                                                Actual = "Alert message not display .";
+                                                Result = "Fail";
+                                            }
+                                        } else {
+                                            Result = "pass";
+                                        }
+                                    } else {
+                                        Actual = "Ready Reckoner Rate not be accept other than flot value ";
+
+                                        Result = "fail";
+                                    }
+                                }
+                                break;
+
+                            case "Land_Ready Reckoner Rate":
+                                application.getLand_Ready_Reckoner_Rate().clear();
+                                application.setLand_Ready_Reckoner_Rate(value);
+
+                                final String fieldValu = application.getLand_Ready_Reckoner_Rate().getAttribute("value");
+                                if (fieldValu.isEmpty()) {
+                                    try {
+                                        if ((ExpectedConditions.alertIsPresent()) == null) {
+
+                                        } else {
+                                            Alert alert = driver.switchTo().alert();
+
+                                            Actual = driver.switchTo().alert().getText();
+                                            Thread.sleep(300);
+                                            alert.accept();
+                                            if (Actual.equals(Expected)) {
+                                                Result = "pass";
+                                            } else {
+                                                Result = "Fail";
+                                            }
+                                            System.out.println(Actual);
+                                            //    Thread.sleep(50);
+
+                                        }
+
+                                    } catch (Throwable e) {
+                                        Actual = "Alert message not display.";
+                                        Result = "Fail";
+                                    }
+
+
+                                } else {
+                                    if (fieldValu.equals(value)) {
+
+                                     //   System.out.println(fieldValue);
+
+                                        if (!Flot.matcher(fieldValu).matches()) {
                                             try {
                                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                                     Actual = "Alert message not display.";

@@ -1,4 +1,4 @@
-<suite name="Suite1" verbose="2" >
+<suite name="Suite1" verbose="3" >
 
     <listeners>
         <listener class-name="org.uncommons.reportng.HTMLReporter"/>
@@ -11,8 +11,8 @@
           <!--  <class name="TestScript.ForgotCTest" />
             <class name="TestScript.LTPRegistrationCTest"/>-->
 
-
-          <class name="TestScript.ApplicantCTest.ApplicationSubmissionTest.ApplicationTest"/>
+<class name="TestScript.ApplicantCTest.ApplicationSubmissionTest.ApplicationTest"></class>
+       <!--   <class name="TestScript.Fire_consoleATest.HafflowTest"/>-->
             <!--  <class name="TestScript.ScrunityCellTest.ApplicationStatusTest.ScrunityCantBeDoneTest" />
             --> <!-- <class name="Example" />
            --> <!---    <class name="TestScript.Applicant.ArchDraftTest" />

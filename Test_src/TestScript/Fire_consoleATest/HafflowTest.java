@@ -334,10 +334,11 @@ public class HafflowTest {
 
                                         System.out.println("The value of K:-" + k);
                                         break;
-                                    }
+                                    }else { driver.switchTo().frame("ifrmListing");}
 
                                 }
                             } catch (Throwable e) {
+
                                 System.out.println(e.getMessage());
                             }
                     }break;
@@ -350,9 +351,10 @@ public class HafflowTest {
 
                         case "File Name":
                             try {
-                                if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
-                                    driver.manage().timeouts().implicitlyWait(26, TimeUnit.SECONDS);
 
+
+                                if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
+                                    Thread.sleep(80);
                                     WebElement d = driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[3]/td/div/table/tbody/tr/td/div"));
                                     String s = d.getText();
                                     if (s.equals(Expected)) {

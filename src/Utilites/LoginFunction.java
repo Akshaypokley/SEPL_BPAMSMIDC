@@ -13,8 +13,8 @@ public class LoginFunction {
     {
 
         LoginConsole loginConsole =new LoginConsole(driver);
-        loginConsole.setUsername("akshay85@gmail.com");
-        loginConsole.setPassword("Akshay85");
+        loginConsole.setUsername("aditi@midc.com");
+        loginConsole.setPassword("Admin@123");
         loginConsole.ClickLoginBtn();
 
 
