@@ -1797,9 +1797,9 @@ public class ApplicationTest {
     @DataProvider(name="hybridData")
     public Object[][] getDataFromDataprovider() throws IOException {
         Object[][] object = null;
-        FileInputStream fis = new FileInputStream("ExcelData/InputData/TestCaseDemo.xls");
+        FileInputStream fis = new FileInputStream("ExcelData/InputData/ApplicantTestData.xls");
         HSSFWorkbook wb = new HSSFWorkbook(fis);
-        HSSFSheet sh = wb.getSheet("Applicant");
+        HSSFSheet sh = wb.getSheet("Sheet1");
         //  HSSFRow rows = sh.getRow(1);
 //Read keyword sheet
 //Find number of rows in Expl.excel file
@@ -1823,14 +1823,4 @@ public class ApplicationTest {
 
 
     }
-
-
-  /* @AfterTest()
-    public  void closedTestCase()
-    {
-
-            driver.close();
-
-    }*/
-
 }

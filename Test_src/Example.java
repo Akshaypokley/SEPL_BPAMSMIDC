@@ -24,16 +24,8 @@ public class Example {
         GetUrl("url");
         LogFunction(driver);
         Thread.sleep(200);
-       /* application=new Application(driver);
-        ApplicantMenu applicantMenu=new ApplicantMenu(driver);
-        applicantMenu.ClickApplication();*/
-      /*String d= driver.switchTo().frame("ifrmListing").getTitle();
-        System.out.println(d);
+        driver.switchTo().frame("ifrmListing");
 
-     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-      String sd=  driver.findElement(By.xpath("./*//*[@id='ListProposalGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]")).getText();
-        System.out.println(sd);
 
-        driver.close();*/
             }
 }

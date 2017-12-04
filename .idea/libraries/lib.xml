@@ -79,6 +79,8 @@
       <root url="jar://$PROJECT_DIR$/lib/htmlunit-2.24.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/testng-6.9.9-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
