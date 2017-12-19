@@ -75,4 +75,16 @@ public class LoginFunction {
 
 
     }
+
+
+    public static void MIDCPA_LogFunction(WebDriver driver)
+    {
+
+        LoginConsole loginConsole =new LoginConsole(driver);
+        loginConsole.setUsername("midcpayment");
+        loginConsole.setPassword("Admin@123");
+        loginConsole.ClickLoginBtn();
+
+
+    }
 }

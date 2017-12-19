@@ -14,6 +14,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -30,9 +31,7 @@ import static TestScript.ForgotCTest.WinHandleBefore1;
 import static Utilites.AttachFunction.AttachFuntn;
 import static Utilites.BeforeWH.BeforeWH;
 import static Utilites.DateFunction.DateFun;
-import static Utilites.LoginFunction.DFO_LogFunction;
-import static Utilites.LoginFunction.LogFunction;
-import static Utilites.LoginFunction.PC_LogFunction;
+import static Utilites.LoginFunction.*;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
 import static Utilites.Windowhander.NewWindow;
@@ -82,8 +81,10 @@ public class ACT {
     public static String Actvalue;
 public static int x=3;
     public static int u;
-
+    public static int vb=2;
     public static int k1=1;
+    public static int rr=1;
+    public static int Rec=1;
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
@@ -201,26 +202,108 @@ public static int x=3;
 
             driver = openBrowser("chrome");
             GetUrl("url");
-          //  LogFunction(driver);
             Thread.sleep(200);
-
-
-
-            SetBord = j++;
+          SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
             Label l8 = new Label(6, SetBord, "", cellFormat6);
             targetSheet.addCell(l8);
         } else {
             SetBord = j++;
-
         }
 
         try {
-
-
             switch (keyword.toUpperCase()) {
 
+                case "RECONCILIIATION":
+
+                    switch (objectName) {
+
+
+                        case "Save Reconciliation Status":
+                        driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
+                        Thread.sleep(2315);
+                        if ((ExpectedConditions.alertIsPresent()) == null) {
+                                System.out.println("alert was not present");
+                            } else {
+                                Alert alert = driver.switchTo().alert();
+                                Actual = driver.switchTo().alert().getText();
+                                alert.accept();
+                            }
+                              break;
+
+                        case "Change Reconciliation Status":
+
+                          //  driver.switchTo().frame("ifrmListing");
+                            try {
+                             WebElement Reco=driver.findElement(By.xpath(".//*//tr[6]/td/div/table/tbody/tr/td[5]/div/b"));
+                             String total_payments=Reco.getText();
+                                if (total_payments.equals("0"))
+                                {Result="pass";
+                                    Actual="Payment are pending";
+                                }else {
+                                    Actions actions = new Actions(driver);
+                                    actions.moveToElement(driver.findElement(By.xpath(".//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[2]/td[12]")));
+                                    Thread.sleep(200);
+                                    actions.click(); actions.build().perform();
+                                    driver.manage().timeouts().implicitlyWait(23,TimeUnit.SECONDS);
+                                 //   List<WebElement> paynow = driver.findElements(By.xpath(".//*[@id='TreeGridControls']/div/div/div[7]/div/div/div/div/div/div"));
+                                    actions.moveToElement(driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[7]/div/div//div[2]")));
+                                    actions.click(); actions.build().perform();
+                                   /* for (WebElement paynow1 : paynow) {
+                                        String fiels23 = paynow1.getText();
+                                        System.out.println(fiels23);
+                                        if (fiels23.equals(value)) {
+                                            paynow1.click();
+                                            break;
+                                        } ++Rec;
+                                    }
+*/
+                                }
+                            } catch (Throwable e) {
+                                System.out.println(e.getMessage());
+
+                            }
+
+                    }    break;
+
+                case "PAY":
+
+                    switch (objectName) {
+
+                        case "Pending Demand Note":
+
+                        driver.switchTo().frame("ifrmListing");
+                            try {
+                                List<WebElement> cells = driver.findElements(By.xpath(".//*/tr[2]/td[2]/div/div[1]/table/tbody//td[2]"));
+
+                                for (WebElement cell : cells) {
+                                    String fiels = cell.getText();
+                                    System.out.println(fiels);
+                                    if (fiels.equals(value)) {
+
+                                        List<WebElement> paynow = driver.findElements(By.xpath(".//*//tr[2]/td[2]/div/div[1]/table/tbody/tr["+vb+"]/td[6]"));
+
+                                        for (WebElement d : paynow) {
+
+                                            d.click();
+                                            BeforeWH(driver);
+
+                                            WebElement dee=driver.findElement(By.xpath(".//*//tbody/tr[8]/td[2]/table/tbody/tr/td[1]"));
+                                            String dddd=dee.getText();
+                                            System.out.println(dddd);
+
+                                        }
+
+
+                                    }
+                                ++vb;
+                                }
+                            } catch (Throwable e) {
+
+                            }
+
+                    }    break;
 
                 case "LEFT_MENU":
 
@@ -241,7 +324,9 @@ public static int x=3;
                                             System.out.println("Value Name is :-***" + value + "***");
                                             Result = "pass";break;
                                         }
-                                    }          ++k1;
+                                    }    /*else {Result="fail";
+                                    Actual="Tab not present.";
+                                    }   */   ++k1;
 
                                 }
                             } catch (Throwable e) {
@@ -259,8 +344,9 @@ public static int x=3;
                                     if (fiels.equals(value)) {
                                         cell.click();
                                         System.out.println("Value Name is :-***" + value + "***");
-                                        Result = "pass";
+
                                         System.out.println("The value of K:-" + k);
+                                        driver.switchTo().frame("ifrmListing"); Result = "pass";
                                         break;
                                     }
 
@@ -277,12 +363,13 @@ public static int x=3;
 
                         case "Architect":
                             LogFunction(driver);
+                            Result="pass";
                             break;
                         case "Payment":
-                            PC_LogFunction(driver);
+                            MIDCPA_LogFunction(driver);              Result="pass";
                             break;
                         case"Deputy Chief officer":
-                            DFO_LogFunction(driver);
+                            DFO_LogFunction(driver);              Result="pass";
                     }break;
 
 
@@ -406,6 +493,40 @@ break;
                     String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
 /************************************************************************************************/
+
+                        case "Save/Submit challan details":
+                            driver.findElement(By.xpath(".//*[@id='SetB']/tbody/tr/td[2]/a[1]")).click();
+                            Thread.sleep(2333);
+                            try {
+
+                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                } else {
+                                    Alert alert = driver.switchTo().alert();      Actual=alert.getText();
+                                    alert.accept();
+
+                                    Thread.sleep(2333);
+                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    } else {
+                                        Alert alert2 = driver.switchTo().alert();      Actual=alert2.getText();
+                                        alert2.accept();
+                                        Thread.sleep(2333);
+                                        if ((ExpectedConditions.alertIsPresent()) == null) {
+                                        } else {
+                                            Alert alert3 = driver.switchTo().alert();      Actual=alert3.getText();
+                                            alert3.accept();
+
+                                        }
+                                    }
+
+                                }
+
+                            }catch (Throwable j)
+                            {
+                                System.out.println(j.getMessage());
+                                Result="pass";
+                            }
+                            Result="pass";
+
                         case "Submit":
                             application.clickSave_Submit();
                             driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
@@ -1083,12 +1204,43 @@ break;
 
                     switch (objectName) {
 
-                        case"Challan Type":
-                            driver.switchTo().frame("ifrmListing");
-                            WebElement d22=driver.findElement(By.xpath(".//*[@id='divpass']/div[1]/label"));
-                            String dd222=d22.getText();
-                            System.out.println(dd222);
+                        case"Mode of Payment":
+                            try {
+                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='trMode']/td[4]/span"));
+                                for (WebElement cell : cells) {
+
+                                    String Ra=cell.getText();
+                                    if(cell.equals(value))
+                                    {
+                                        List<WebElement> RADi = driver.findElements(By.xpath(".//*[@id='trMode']/td[4]/input["+rr+"]"));
+                                        for (WebElement RAD1i : RADi){  RAD1i.click();}
+                                    }
+
+                                }++rr;
+                                break;
+                            }catch (Throwable e)
+                            {
+                                System.out.println(e.getMessage());
+                            }
                             break;
+
+                        case"Select Bank Name":
+
+                            WebElement Bank=driver.findElement(By.xpath(".//*[@id='cboBankName']"));
+                            Select combo1=new Select(Bank);
+                            combo1.selectByVisibleText(value);
+
+                            break;
+
+                       /* case"Challan Type":
+                            driver.switchTo().frame("ifrmListing");
+                            WebElement d22=driver.findElement(By.xpath("./*//*[@id='cboChallanType']"));
+                            String dd222=d22.getText();
+
+                            Select combo1=new Select(d22);
+                            combo1.selectByVisibleText(value);
+                            System.out.println(dd222);
+                            break;*/
 
 
                         case "Risk paramitter":
@@ -1263,6 +1415,23 @@ break;
                 case "SETTEXT":
 
                     switch (objectName) {
+
+                        case "SWC File No":
+                            driver.findElement(By.xpath(".//*[@id='txtFile']")).sendKeys(value);
+                            driver.findElement(By.xpath(".//*//fieldset/table/tbody/tr[4]/td[4]/table/tbody/tr/td[1]/input")).click();
+                            Result = "pass";
+                            break;
+
+                        case "UTR No.":
+                            driver.findElement(By.xpath(".//*[@id='txtPayOrderNo']")).sendKeys(value);
+                            Result = "pass";
+                            break;
+                        case "Branch Name":
+                            driver.findElement(By.xpath(".//*[@id='txtChequeBranch']")).sendKeys(value);
+                            Result = "pass";
+                            break;
+
+
                         case "Set proposed value":
                             driver.findElement(By.xpath("html/body/form/table[2]/tbody/tr["+x+"]/td[4]/input")).sendKeys(value);
                             Result = "pass";
