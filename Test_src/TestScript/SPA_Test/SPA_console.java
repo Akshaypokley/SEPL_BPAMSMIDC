@@ -13,6 +13,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -437,8 +438,7 @@ public class SPA_console {
                                                     NewWindow(driver);
                                                     driver.findElement(By.xpath(".//*[@id='btnAdd']")).click();
                                                     NewWindow(driver);
-
-                                                }
+                                                }   break;
                                             }
                                         }
                                         Result = "pass";
@@ -510,7 +510,8 @@ public class SPA_console {
 
 
                             } catch (Throwable e) {
-try {
+
+/*try {
     if ((ExpectedConditions.alertIsPresent()) == null) {
         System.out.println("alert was not present");
     } else {
@@ -518,11 +519,13 @@ try {
         Actual = driver.switchTo().alert().getText();
         alert.accept();
     }
+
+
 }catch (Throwable h)
 {
     Result="Fail";
    Actual=h.getMessage();
-}
+}*/
 
                                 System.out.println(e.getMessage());
                             }
@@ -1458,6 +1461,14 @@ try {
                 case "SETTEXT":
 
                     switch (objectName) {
+
+                        case"Note sheet Remarks":
+                            Actions act23=  new Actions(driver);
+                            act23.moveToElement(driver.findElement(By.id(""))).sendKeys("");
+
+
+
+                            break;
 
                         case "SWC File No":
                             driver.findElement(By.xpath(".//*[@id='txtFile']")).sendKeys(value);
