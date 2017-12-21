@@ -2,6 +2,8 @@ package TestScript.SPA_Test;
 
 import Pages.Applicant_Console.ApplicantMenu;
 import Pages.Applicant_Console.Application_Submission.Application;
+import Pages.ScrunityCell.Scrunity.ConversionPending;
+
 import jxl.Workbook;
 import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
@@ -9,10 +11,7 @@ import jxl.write.*;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -69,6 +68,7 @@ public class SPA_console {
     public static String ResultFail1 = "Password";
     public static String Actual;
     public static String Actual2;
+    public static String J;
     static int LastRow;
     static int SetBord;
     static final java.util.regex.Pattern String = java.util.regex.Pattern.compile("^[A-Za-z, ]++$");
@@ -83,6 +83,7 @@ public class SPA_console {
     public static int vb=2;
     public static int k1=1;
     public static int rr=1;
+    public static ConversionPending conversionPending;
 
 
     @BeforeTest
@@ -215,6 +216,14 @@ public class SPA_console {
         try {
             switch (keyword.toUpperCase()) {
 
+                case "FRAME":
+
+                    switch (objectName)
+                    {
+                        case "Main Frame":
+                            driver.switchTo().frame("ifrmListing");
+
+                    }break;
                 case "RECONCILIIATION":
 
                     switch (objectName) {
@@ -324,9 +333,9 @@ public class SPA_console {
                                             System.out.println("Value Name is :-***" + value + "***");
                                             Result = "pass";break;
                                         }
-                                    }    /*else {Result="fail";
+                                    } else {Result="fail";
                                     Actual="Tab not present.";
-                                    }   */   ++k1;
+                                    }   ++k1;
 
                                 }
                             } catch (Throwable e) {
@@ -346,10 +355,12 @@ public class SPA_console {
                                         System.out.println("Value Name is :-***" + value + "***");
 
                                         System.out.println("The value of K:-" + k);
-                                        driver.switchTo().frame("ifrmListing"); Result = "pass";
+                                       /* driver.switchTo().frame("ifrmListing");*/ Result = "pass";
                                         break;
+                                    }else {
+                                        Result = "fail";
+                                        Actual = "Sub Tab not present.";
                                     }
-
                                 }
                             } catch (Throwable e) {
 
@@ -379,41 +390,27 @@ public class SPA_console {
 
                     switch (objectName) {
                         case "Get Opertional Bar Details":
-                            driver.switchTo().parentFrame();
-                            //  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                            try {
-                                driver.switchTo().frame("ifrmToolbar");
-                                List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
-                                for (WebElement cell : d) {
-                                    String fiels = cell.getText();
-                                    System.out.println("Tool bar Componets are " + fiels);
-                                    Result="pass";
-                                    if (fiels.equals(value)) {
+                            if (Actual.equals("Sub Tab not present.") || Actual.equals("Tab not present.")||Actual.equals("File not Found")) {
+
+                                Result="fail";
+                                Actual="File Not found";
+                                driver.quit();
+                            } else {
+                                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                                driver.switchTo().frame("ifrmProjectInfo");
+                                driver.switchTo().parentFrame();
+                                //  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                                try {
+                                    driver.switchTo().frame("ifrmToolbar");
+                                    List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
+                                    for (WebElement cell : d) {
+                                        String fiels = cell.getText();
+                                        System.out.println("Tool bar Componets are " + fiels);
+                                        Result = "pass";
+                                        if (fiels.equals(value)) {
 
 
-                                        if(fiels.equals(" Scrutiny Reports")){
-                                            cell.click();
-                                            NewWindow(driver);
-                                            Thread.sleep(2000);
-                                            java.awt.Robot robot = new java.awt.Robot();
-                                            Thread.sleep(1000);
-                                            robot.keyPress(KeyEvent.VK_CONTROL);
-                                            robot.keyPress(KeyEvent.VK_S);
-                                            robot.keyRelease(KeyEvent.VK_S);
-                                            robot.keyRelease(KeyEvent.VK_CONTROL);
-                                            Thread.sleep(2000);
-                                            robot.keyPress(KeyEvent.VK_ENTER);
-                                            Thread.sleep(2000);
-                                            robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
-                                            Thread.sleep(2000);
-                                            robot.keyPress(KeyEvent.VK_ENTER);
-                                           driver.switchTo().window(WinHandleBefore1);
-
-                                            break;
-                                            /* // hit enter*/
-                                        }else {
-
-                                            if(fiels.equals(" Print NoteSheet")){
+                                            if (fiels.equals(" Scrutiny Reports")) {
                                                 cell.click();
                                                 NewWindow(driver);
                                                 Thread.sleep(2000);
@@ -429,31 +426,14 @@ public class SPA_console {
                                                 robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
                                                 Thread.sleep(2000);
                                                 robot.keyPress(KeyEvent.VK_ENTER);
-
                                                 driver.switchTo().window(WinHandleBefore1);
-                                            }
-                                            else {
-                                                if(fiels.equals(" Notesheet"))
-                                                {       cell.click();
-                                                    NewWindow(driver);
-                                                    driver.findElement(By.xpath(".//*[@id='btnAdd']")).click();
-                                                    NewWindow(driver);
-                                                }   break;
-                                            }
-                                        }
-                                        Result = "pass";
-                                        break;
-                                    }else {
-                                        List<WebElement> d1 = driver.findElements(By.xpath("./*//*[@id='SetbReports']/tbody/tr/td[2]/a"));
-                                        for (WebElement cell1 : d1) {
-                                            String fiels1 = cell1.getText();
-                                            System.out.println("Tool bar Componets are:->"+fiels1);
-                                            if (fiels1.equals(value)) {
 
-                                                System.out.println("Tool bar Componets are "+fiels1);
+                                                break;
+                                            /* // hit enter*/
+                                            } else {
 
-                                                if(fiels1.equals(" Scrutiny Remarks")){
-                                                    cell1.click();
+                                                if (fiels.equals(" Print NoteSheet")) {
+                                                    cell.click();
                                                     NewWindow(driver);
                                                     Thread.sleep(2000);
                                                     java.awt.Robot robot = new java.awt.Robot();
@@ -468,13 +448,43 @@ public class SPA_console {
                                                     robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
                                                     Thread.sleep(2000);
                                                     robot.keyPress(KeyEvent.VK_ENTER);
-                                                 driver.switchTo().window(WinHandleBefore1);
 
+                                                    driver.switchTo().window(WinHandleBefore1);
+                                                } else {
+                                                    if (fiels.equals(" Notesheet")) {
+                                                        cell.click();
+                                                        NewWindow(driver);
+                                                        WebElement ns = driver.findElement(By.xpath(".//*[@id='RadPanelbar1']/ul/li/a/span/span[2]"));
+                                                        String Note = ns.getText();
+                                                        System.out.println(Note);
+                                                        if (Note.equals(Note)) {
+                                                            driver.findElement(By.xpath(".//*[@id='RadPanelbar1']/ul/li/a/span/span[1]")).click();
+                                                            driver.findElement(By.xpath(".//*[@id='RadPanelbar1']/ul/li/div/ul/li[1]/div/table/tbody/tr/td[2]/img")).click();
+                                                            NewWindow(driver);
+                                                        } else {
+                                                            driver.findElement(By.xpath(".//*[@id='btnAdd']")).click();
+                                                            NewWindow(driver);
+                                                        }
+
+
+                                                    }
+
+                                                    //driver.quit();
                                                     break;
-                                            /* // hit enter*/
-                                                }else {
+                                                }
+                                            }
+                                            Result = "pass";
+                                            break;
+                                        } else {
+                                            List<WebElement> d1 = driver.findElements(By.xpath("./*//*[@id='SetbReports']/tbody/tr/td[2]/a"));
+                                            for (WebElement cell1 : d1) {
+                                                String fiels1 = cell1.getText();
+                                                System.out.println("Tool bar Componets are:->" + fiels1);
+                                                if (fiels1.equals(value)) {
 
-                                                    if (fiels1.equals(" Drawing PDF")) {
+                                                    System.out.println("Tool bar Componets are " + fiels1);
+
+                                                    if (fiels1.equals(" Scrutiny Remarks")) {
                                                         cell1.click();
                                                         NewWindow(driver);
                                                         Thread.sleep(2000);
@@ -490,26 +500,47 @@ public class SPA_console {
                                                         robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
                                                         Thread.sleep(2000);
                                                         robot.keyPress(KeyEvent.VK_ENTER);
+                                                        driver.switchTo().window(WinHandleBefore1);
 
-                                                       driver.switchTo().window(WinHandleBefore1);
+                                                        break;
+                                            /* // hit enter*/
+                                                    } else {
+
+                                                        if (fiels1.equals(" Drawing PDF")) {
+                                                            cell1.click();
+                                                            NewWindow(driver);
+                                                            Thread.sleep(2000);
+                                                            java.awt.Robot robot = new java.awt.Robot();
+                                                            Thread.sleep(1000);
+                                                            robot.keyPress(KeyEvent.VK_CONTROL);
+                                                            robot.keyPress(KeyEvent.VK_S);
+                                                            robot.keyRelease(KeyEvent.VK_S);
+                                                            robot.keyRelease(KeyEvent.VK_CONTROL);
+                                                            Thread.sleep(2000);
+                                                            robot.keyPress(KeyEvent.VK_ENTER);
+                                                            Thread.sleep(2000);
+                                                            robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
+                                                            Thread.sleep(2000);
+                                                            robot.keyPress(KeyEvent.VK_ENTER);
+
+                                                            driver.switchTo().window(WinHandleBefore1);
+                                                        }
                                                     }
+                                                    Result = "pass";
+                                                    break;
+                                                } else {
+                                                    Result = "fail";
+                                                    Actual = "Componets are not available";
+                                                    System.out.println("Componets are not available ");
                                                 }
-                                                Result = "pass";
-                                                break;
-                                            }else {
-                                                Result="fail";
-                                                Actual="Componets are not available";
-                                                System.out.println("Componets are not available ");
                                             }
                                         }
+
+
                                     }
 
 
-
-                                }
-
-
-                            } catch (Throwable e) {
+                                } catch (Throwable e) {
 
 /*try {
     if ((ExpectedConditions.alertIsPresent()) == null) {
@@ -527,7 +558,9 @@ public class SPA_console {
    Actual=h.getMessage();
 }*/
 
-                                System.out.println(e.getMessage());
+                                    System.out.println(e.getMessage());
+
+                                }
                             }
                     }break;
 
@@ -539,7 +572,28 @@ public class SPA_console {
                     String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
 /************************************************************************************************/
+                        case "Filter":
+                            try
+                            {
+                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='form1']/div[3]/div/div/div[5]/div/div/div/div/div[2]/table/tbody/tr/td/div/button"));
 
+                                for (WebElement cell : cells) {
+                                    String fiels = cell.getText();
+                                    System.out.println(fiels);
+
+                                    if (fiels.equals(value)) {
+                                        cell.click();
+                                        Result="pass";
+                                        Actual="Done";
+                                        break;
+                                    }
+                                }
+                            }
+                            catch (Throwable t)
+                            {
+                                System.out.println(t.getMessage());
+                            }
+break;
                         case "Save/Submit challan details":
                             driver.findElement(By.xpath(".//*[@id='SetB']/tbody/tr/td[2]/a[1]")).click();
                             Thread.sleep(2333);
@@ -728,45 +782,49 @@ public class SPA_console {
 
 /*---------------------------------------------- Building Deatials --------------------------------------------------------*/
                         case "File Name":
-                            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                            try {
 
-                                if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
-                                    Thread.sleep(80);
-                                    WebElement d = driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[3]/td/div/table/tbody/tr/td/div"));
-                                    String s = d.getText();
-                                    if (s.equals(Expected)) {
-                                        Result = "pass";
-                                    } else {
-                                        Result = "fail";
-                                        Actual = s;
-                                    }
-                                } else {
-                                    driver.manage().timeouts().implicitlyWait(78, TimeUnit.SECONDS);
-                                    List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
+                                driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
-                                    for (WebElement cell : cells) {
-                                        String fiels = cell.getText();
-                                        System.out.println(fiels);
 
-                                        if (fiels.equals(value)) {
-                                            cell.click();
-                                            driver.switchTo().frame("ifrmProjectInfo");
+
+                                try {
+
+                                    if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
+                                        Thread.sleep(80);
+                                        WebElement d = driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[3]/td/div/table/tbody/tr/td/div"));
+                                        String s = d.getText();
+                                        if (s.equals(Expected)) {
                                             Result = "pass";
-                                            break;
-
                                         } else {
-                                            Result = "fails";
-                                            Actual = "File not Found";
+                                            Result = "fail";
+                                            Actual = s;
                                         }
+                                    } else {
+                                        driver.manage().timeouts().implicitlyWait(78, TimeUnit.SECONDS);
+                                        List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
+
+                                        for (WebElement cell : cells) {
+                                            String fiels = cell.getText();
+                                            System.out.println(fiels);
+
+                                            if (fiels.equals(value)) {
+                                                cell.click();
+                                           /* driver.switchTo().frame("ifrmProjectInfo");*/
+                                                Result = "pass";
+                                                break;
+
+                                            } else {
+                                                Result = "fails";
+                                                Actual = "File not Found";
+                                            }
+                                        }
+
+
                                     }
+                                } catch (Throwable e) {
 
-
+                                    System.out.println(e.getMessage());
                                 }
-                            } catch (Throwable e) {
-
-                                System.out.println(e.getMessage());
-                            }
 
 
                             break;
@@ -1462,11 +1520,31 @@ public class SPA_console {
 
                     switch (objectName) {
 
-                        case"Note sheet Remarks":
+                        case "Enter Keyword for search":
+
+                            Thread.sleep(3000);
+                            Actions actionsff = new Actions(driver);
+                            actionsff.moveToElement(driver.findElement(By.xpath(".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")));
+                            actionsff.doubleClick();
+                            actionsff.sendKeys(value);
+                            actionsff.build().perform();
+                            Result="pass";
+
+break;
+                        case"Submit Note sheet Remarks":
                             Actions act23=  new Actions(driver);
-                            act23.moveToElement(driver.findElement(By.id(""))).sendKeys("");
+                            try{
+                                act23.moveToElement(driver.findElement(By.xpath("//iframe[@frameborder='0']"))).doubleClick().sendKeys(value).build().perform();
+                                Result="pass";
+                                Thread.sleep(30000);
+                                driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
 
-
+                               driver.quit();
+                                }catch (Throwable h){
+                                Result="fail";
+                                Actual=h.getMessage();
+                              driver.quit();
+                            }
 
                             break;
 

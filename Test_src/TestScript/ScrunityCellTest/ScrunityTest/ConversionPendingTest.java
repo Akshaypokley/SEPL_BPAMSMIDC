@@ -372,7 +372,7 @@ public class ConversionPendingTest {
 
                             break;
 
-                                case "Enter Keyword for search":
+                        case "Enter Keyword for search":
                             Thread.sleep(3000);
                             Actions actions = new Actions(driver);
                             actions.moveToElement(conversionPending.getSeachWithKeyword());
