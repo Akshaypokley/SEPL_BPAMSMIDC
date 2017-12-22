@@ -442,7 +442,9 @@ public class SPA_console {
                                                     try {
 
                                                         driver.switchTo().parentFrame();
-                                                        driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@style='width: 100%; height: 100%; border: 0px none; top: -10000px;']")));
+                                                        WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
+                                                        driver.switchTo().frame(frame);
+
                                                         String jjj = driver.findElement(By.xpath(".//*[@id='form1']/div[4]/label")).getText();
                                                         System.out.println(jjj);
                                                         driver.quit();
