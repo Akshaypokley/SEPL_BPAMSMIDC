@@ -222,6 +222,7 @@ public class SPA_console {
                     {
                         case "Main Frame":
                             driver.switchTo().frame("ifrmListing");
+                            Result="pass";
 
                     }break;
                 case "RECONCILIIATION":
@@ -390,7 +391,9 @@ public class SPA_console {
 
                     switch (objectName) {
                         case "Get Opertional Bar Details":
-                            if (Actual.equals("Sub Tab not present.") || Actual.equals("Tab not present.")||Actual.equals("File not Found")) {
+
+
+                            if ( Actual.equals("File not Found")|| Actual.equals("Tab not present.")||Actual.equals("Sub Tab not present.")||Actual.equals("No data found")) {
 
                                 Result="fail";
                                 Actual="File Not found";
@@ -410,7 +413,8 @@ public class SPA_console {
                                         if (fiels.equals(value)) {
 
 
-                                            if (fiels.equals(" Scrutiny Reports")) {
+                                            if (fiels.equals(" Scrutiny Reports") || fiels.equals(" Print NoteSheet") || fiels.equals(" Site Visit Report")
+                                                    || fiels.equals(" View Fire NOC")) {
                                                 cell.click();
                                                 NewWindow(driver);
                                                 Thread.sleep(2000);
@@ -432,49 +436,60 @@ public class SPA_console {
                                             /* // hit enter*/
                                             } else {
 
-                                                if (fiels.equals(" Print NoteSheet")) {
+                                                if (fiels.equals(" Create Demand")) {
                                                     cell.click();
-                                                    NewWindow(driver);
-                                                    Thread.sleep(2000);
-                                                    java.awt.Robot robot = new java.awt.Robot();
-                                                    Thread.sleep(1000);
-                                                    robot.keyPress(KeyEvent.VK_CONTROL);
-                                                    robot.keyPress(KeyEvent.VK_S);
-                                                    robot.keyRelease(KeyEvent.VK_S);
-                                                    robot.keyRelease(KeyEvent.VK_CONTROL);
-                                                    Thread.sleep(2000);
-                                                    robot.keyPress(KeyEvent.VK_ENTER);
-                                                    Thread.sleep(2000);
-                                                    robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
-                                                    Thread.sleep(2000);
-                                                    robot.keyPress(KeyEvent.VK_ENTER);
 
-                                                    driver.switchTo().window(WinHandleBefore1);
+                                                    try {
+
+                                                        driver.switchTo().parentFrame();
+                                                        driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@style='width: 100%; height: 100%; border: 0px none; top: -10000px;']")));
+                                                        String jjj = driver.findElement(By.xpath(".//*[@id='form1']/div[4]/label")).getText();
+                                                        System.out.println(jjj);
+                                                        driver.quit();
+                                                        break;
+                                                    } catch (NoSuchElementException gh) {
+                                                        Result = "fail";
+                                                        Actual = gh.getMessage();
+                                                        break;
+                                                    }
+
+
                                                 } else {
                                                     if (fiels.equals(" Notesheet")) {
                                                         cell.click();
                                                         NewWindow(driver);
-                                                        WebElement ns = driver.findElement(By.xpath(".//*[@id='RadPanelbar1']/ul/li/a/span/span[2]"));
+                                                        WebElement ns = driver.findElement(By.xpath(".//*[@id='lblnote']"));
                                                         String Note = ns.getText();
                                                         System.out.println(Note);
-                                                        if (Note.equals(Note)) {
+                                                        if (Note.equals("There is no observation in the Note Sheet !!!")) {
+                                                            driver.findElement(By.xpath(".//*[@id='btnAdd']")).click();
+                                                            NewWindow(driver);
+
+                                                        } else {
+
                                                             driver.findElement(By.xpath(".//*[@id='RadPanelbar1']/ul/li/a/span/span[1]")).click();
                                                             driver.findElement(By.xpath(".//*[@id='RadPanelbar1']/ul/li/div/ul/li[1]/div/table/tbody/tr/td[2]/img")).click();
                                                             NewWindow(driver);
-                                                        } else {
-                                                            driver.findElement(By.xpath(".//*[@id='btnAdd']")).click();
-                                                            NewWindow(driver);
+
                                                         }
 
 
+                                                    } else {
+                                                        if (fiels.equals(" Site Details")) cell.click();
+                                                        {
+                                                            NewWindow(driver);
+                                                            String jjj = driver.findElement(By.xpath(".//*[@id='seTB']/tbody/tr/td[2]/a[1] ")).getText();
+                                                            System.out.println(jjj);
+                                                            driver.quit();
+                                                        }
                                                     }
 
                                                     //driver.quit();
                                                     break;
                                                 }
                                             }
-                                            Result = "pass";
-                                            break;
+
+
                                         } else {
                                             List<WebElement> d1 = driver.findElements(By.xpath("./*//*[@id='SetbReports']/tbody/tr/td[2]/a"));
                                             for (WebElement cell1 : d1) {
@@ -484,8 +499,9 @@ public class SPA_console {
 
                                                     System.out.println("Tool bar Componets are " + fiels1);
 
-                                                    if (fiels1.equals(" Scrutiny Remarks")) {
+                                                    if (fiels1.equals(" Scrutiny Remarks")||fiels1.equals(" Drawing PDF")||fiels1.equals(" Challan Report")) {
                                                         cell1.click();
+
                                                         NewWindow(driver);
                                                         Thread.sleep(2000);
                                                         java.awt.Robot robot = new java.awt.Robot();
@@ -501,29 +517,24 @@ public class SPA_console {
                                                         Thread.sleep(2000);
                                                         robot.keyPress(KeyEvent.VK_ENTER);
                                                         driver.switchTo().window(WinHandleBefore1);
+                                                        Result="Pass";
+                                                        driver.quit();
 
                                                         break;
                                             /* // hit enter*/
                                                     } else {
 
-                                                        if (fiels1.equals(" Drawing PDF")) {
-                                                            cell1.click();
-                                                            NewWindow(driver);
-                                                            Thread.sleep(2000);
-                                                            java.awt.Robot robot = new java.awt.Robot();
-                                                            Thread.sleep(1000);
-                                                            robot.keyPress(KeyEvent.VK_CONTROL);
-                                                            robot.keyPress(KeyEvent.VK_S);
-                                                            robot.keyRelease(KeyEvent.VK_S);
-                                                            robot.keyRelease(KeyEvent.VK_CONTROL);
-                                                            Thread.sleep(2000);
-                                                            robot.keyPress(KeyEvent.VK_ENTER);
-                                                            Thread.sleep(2000);
-                                                            robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
-                                                            Thread.sleep(2000);
-                                                            robot.keyPress(KeyEvent.VK_ENTER);
+                                                        if (fiels1.equals(" IFMS Outward No")) {
 
-                                                            driver.switchTo().window(WinHandleBefore1);
+                                                            cell1.click();
+                                                            driver.switchTo().parentFrame();
+
+                                                            WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
+                                                            driver.switchTo().frame(frame);
+                                                            String jjj=driver.findElement(By.xpath(".//*[@id='lblrepass']")).getText();
+                                                            System.out.println(jjj);
+                                                            driver.quit();
+
                                                         }
                                                     }
                                                     Result = "pass";
@@ -784,9 +795,6 @@ break;
                         case "File Name":
 
                                 driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
-
-
                                 try {
 
                                     if (driver.findElement(By.xpath(".//*[@id='ListProposalGrid']/tbody/tr[6]/td/div/table/tbody/tr/td[3]/div/b")).getText().equals("0")) {
