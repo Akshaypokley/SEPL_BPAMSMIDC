@@ -32,6 +32,7 @@ import static TestScript.ForgotCTest.WinHandleBefore1;
 import static Utilites.AttachFunction.AttachFuntn;
 import static Utilites.BeforeWH.BeforeWH;
 import static Utilites.DateFunction.DateFun;
+import static Utilites.DemandDate.DemanDateFun;
 import static Utilites.LoginFunction.*;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
@@ -403,7 +404,7 @@ public class SPA_console {
                                 driver.switchTo().frame("ifrmProjectInfo");
                                 driver.switchTo().parentFrame();
                                 //  driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-                                try {
+
                                     driver.switchTo().frame("ifrmToolbar");
                                     List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
                                     for (WebElement cell : d) {
@@ -444,9 +445,15 @@ public class SPA_console {
                                                         driver.switchTo().parentFrame();
                                                         WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
                                                         driver.switchTo().frame(frame);
+                                                        driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 
-                                                        String jjj = driver.findElement(By.xpath(".//*[@id='form1']/div[4]/label")).getText();
-                                                        System.out.println(jjj);
+                                                        WebElement jjj = driver.findElement(By.xpath(".//*[@id='form1']/div[4]/label"));
+                                                        String j2=jjj.getText();
+                                                        System.out.println(j2);
+                                                        driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+                                                        DemanDateFun(driver,"25/12/2017");
+                                                        driver.findElement(By.xpath(".//*[@id='btnsave']")).click();
+
                                                         driver.quit();
                                                         break;
                                                     } catch (NoSuchElementException gh) {
@@ -535,7 +542,27 @@ public class SPA_console {
                                                             driver.switchTo().frame(frame);
                                                             String jjj=driver.findElement(By.xpath(".//*[@id='lblrepass']")).getText();
                                                             System.out.println(jjj);
-                                                            driver.quit();
+
+                                                            driver.findElement(By.xpath("//div/div/div/table/tbody/tr[3]/td[2]/input")).sendKeys("1235");
+                                                            driver.findElement(By.xpath("html/body/form/div[4]/div[2]/div/div/input")).click();
+                                                            if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                            } else {
+                                                                Alert alert = driver.switchTo().alert();
+                                                                Actual = alert.getText();
+                                                                alert.accept();
+
+                                                                Thread.sleep(2333);
+                                                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                                } else {
+                                                                    Alert alert2 = driver.switchTo().alert();
+                                                                    Actual = alert2.getText();
+                                                                    alert2.accept();
+
+                                                                }
+                                                            }
+
+                                                           /* DemanDateFun(driver,"28/12/2017");*/
+                                                          //  driver.quit();
 
                                                         }
                                                     }
@@ -553,27 +580,7 @@ public class SPA_console {
                                     }
 
 
-                                } catch (Throwable e) {
 
-/*try {
-    if ((ExpectedConditions.alertIsPresent()) == null) {
-        System.out.println("alert was not present");
-    } else {
-        Alert alert = driver.switchTo().alert();
-        Actual = driver.switchTo().alert().getText();
-        alert.accept();
-    }
-
-
-}catch (Throwable h)
-{
-    Result="Fail";
-   Actual=h.getMessage();
-}*/
-
-                                    System.out.println(e.getMessage());
-
-                                }
                             }
                     }break;
 
