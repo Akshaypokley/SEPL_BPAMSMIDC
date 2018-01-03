@@ -84,8 +84,9 @@ public class SPA_console {
     public static int vb=2;
     public static int k1=1;
     public static int rr=1;
+    public static int Chsv=2;
     public static ConversionPending conversionPending;
-
+    public static  String sv4;
 
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
@@ -487,9 +488,68 @@ public class SPA_console {
                                                         if (fiels.equals(" Site Details")) cell.click();
                                                         {
                                                             NewWindow(driver);
-                                                            String jjj = driver.findElement(By.xpath(".//*[@id='seTB']/tbody/tr/td[2]/a[1] ")).getText();
-                                                            System.out.println(jjj);
-                                                            driver.quit();
+
+                                                            List<WebElement> Svtab= driver.findElements(By.xpath("//div/div[1]/h4/a"));
+                                                            for(WebElement svtab:Svtab)
+                                                            {
+                                                                String svtab1 = svtab.getText();
+                                                                System.out.println(svtab1);
+                                                                System.out.println("*-----------------------------------------------*");
+
+                                                                if(svtab1.equals("Site Visit CheckList"))
+                                                                {
+                                                                    try{
+                                                                        List<WebElement> Sv = driver.findElements(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
+                                                                        for (WebElement svw : Sv) {
+                                                                            String sv = svw.getText();
+                                                                            System.out.println(sv);
+                                                                            System.out.println("*-----------------------------------------------*");
+
+driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+                                                                               WebElement Sv2 = driver.findElement(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + Chsv + "]/td[4]"));
+                                                                    sv4 = Sv2.getText();
+                                                                                System.out.println(sv4);
+                                                                                System.out.println("*-----------------------------------------------*");
+                                                                           ++ Chsv;
+
+                                                                           if (sv4.equals("Yes No")||sv4.equals("Yes NO"))
+                                                                           {
+                                                                       driver.findElement(By.xpath(".//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[2]/td[4]/nobr[1]")).click();
+                                                                           }else {
+                                                                               if (sv4.equals("Select")){
+
+                                                                               //    driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[8]/div/div")).click();
+                                                                                  /* Select combo1=new Select(Sv2);
+                                                                                   combo1.selectByVisibleText("Gala");*/
+
+                                                                               }else {
+                                                                                   Sv2.click();
+                                                                                   Sv2.sendKeys("ok");
+
+                                                                               }
+
+                                                                           }
+
+
+                                                                        }
+break;
+
+
+
+                                                                    }catch (NoSuchElementException d1)
+                                                                    {
+                                                                        System.out.println(d1.getMessage());
+                                                                    }
+
+
+                                                                }else {}
+
+                                                            }
+
+
+
+
+                                                         driver.quit();
                                                         }
                                                     }
 
@@ -1536,6 +1596,8 @@ break;
                 case "SETTEXT":
 
                     switch (objectName) {
+
+
 
                         case "Enter Keyword for search":
 
