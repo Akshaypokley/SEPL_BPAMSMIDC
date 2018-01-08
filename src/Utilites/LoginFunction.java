@@ -31,6 +31,17 @@ public class LoginFunction {
 
     }
 
+    public static void DFOnag_LogFunction(WebDriver driver)
+    {
+
+        LoginConsole loginConsole =new LoginConsole(driver);
+        loginConsole.setUsername("dfonagpur");
+        loginConsole.setPassword("Admin@123");
+        loginConsole.ClickLoginBtn();
+
+
+    }
+
     public static void CFO_LogFunction(WebDriver driver)
     {
 

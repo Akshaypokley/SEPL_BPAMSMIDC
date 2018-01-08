@@ -1,4 +1,4 @@
-package TestScript.SPA_Test;
+package TestScript.Fire_consoleATest;
 
 import Pages.Applicant_Console.ApplicantMenu;
 import Pages.Applicant_Console.Application_Submission.Application;
@@ -43,7 +43,7 @@ import static jxl.format.Colour.LIGHT_TURQUOISE;
 /**
  * Created by akshay.pokley on 12/19/2017.
  */
-public class SPA_console {
+public class Fire_console {
 
     static WebDriver driver;
     public Label l4;
@@ -92,9 +92,9 @@ public class SPA_console {
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
-        sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/SPATestData.xls"));
+        sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/FireTestData.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
-        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/SPAReports/SPATestReport.xls"));
+        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/SPAReports/FireTestReport.xls"));
         sourceSheet = writableTempSource.getSheet(0);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
@@ -177,7 +177,7 @@ public class SPA_console {
                 targetSheet.setColumnView(3, widthInChars2);
                 targetSheet.mergeCells(0, 0, 6, 0);
                 Label lable = new Label (0, 0,
-                        "SPA screen test  report",cellFormat5);
+                        "Fire screen test  report",cellFormat5);
                 targetSheet.addCell(lable);
                 targetSheet.addCell(l2);
                 targetSheet.addCell(l3);
@@ -200,7 +200,7 @@ public class SPA_console {
 
 
     @Test(dataProvider = "hybridData")
-    public static void SPATest(String testcaseName, String keyword, String objectName, String value, String Expected) throws Exception {
+    public static void FireTest(String testcaseName, String keyword, String objectName, String value, String Expected) throws Exception {
 
         if (testcaseName != null && testcaseName.length() != 0) {
 
@@ -219,6 +219,7 @@ public class SPA_console {
         try {
             switch (keyword.toUpperCase()) {
 
+
                 case "FRAME":
 
                     switch (objectName)
@@ -233,20 +234,6 @@ public class SPA_console {
 
                     switch (objectName) {
 
-                        case"Change Status":
-                            WebElement status=driver.findElement(By.xpath(".//*[@id='cboStatus']"));
-                            Select combo=new Select(status);
-                            combo.selectByVisibleText(value);
-                            Result="pass";
-
-                            break;
-
-                        case"Enter Remarks and submit":
-                            driver.findElement(By.xpath(".//*[@id='txtRemarks']")).sendKeys(value);
-                            driver.findElement(By.xpath(".//*[@id='btnSubmited']")).click();
-                            Result="pass";
-
-                            break;
 
                         case "Save Reconciliation Status":
                             driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
@@ -259,6 +246,21 @@ public class SPA_console {
                                 alert.accept();
                             }
                             break;
+
+                            case"Change Status":
+                                WebElement status=driver.findElement(By.xpath(".//*[@id='cboStatus']"));
+                                Select combo=new Select(status);
+                                combo.selectByVisibleText(value);
+                                Result="pass";
+
+                                break;
+
+                                case"Enter Remarks and submit":
+                                    driver.findElement(By.xpath(".//*[@id='txtRemarks']")).sendKeys(value);
+                                    driver.findElement(By.xpath(".//*[@id='btnSubmited']")).click();
+                                    Result="pass";
+
+                                     break;
 
                         case "Change Reconciliation Status":
 
@@ -351,13 +353,25 @@ public class SPA_console {
                                             cell.click();
                                             System.out.println("Value Name is :-***" + value + "***");
                                             Result = "pass";break;
+                                        }else
+                                        {
+                                            Result = "pass";
+
+
                                         }
-                                    } else {Result="fail";
+
+                                        break;
+                                    }
+
+                                    else {
+
+                                        Result="fail";
                                     Actual="Tab not present.";
                                     }   ++k1;
 
                                 }
                             } catch (Throwable e) {
+                                System.out.println(e.getMessage());
 
                             }
                             break;
@@ -398,6 +412,10 @@ public class SPA_console {
                         case "SPA Login":
                             SPA_LogFunction(driver);              Result="pass";
                             break;
+                        case "DFO_Nagpur":
+                        DFOnag_LogFunction(driver);
+                        Result="pass";
+                        break;
                         case"Deputy Chief officer":
                             DFO_LogFunction(driver);              Result="pass";
                     }break;
@@ -417,9 +435,9 @@ public class SPA_console {
                                 Actual="File Not found";
                                 driver.quit();
                             } else {
-                                driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-                                driver.switchTo().frame("ifrmToolbar");
+                                driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                                    driver.switchTo().frame("ifrmToolbar");
                                     List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
                                     for (WebElement cell : d) {
                                         String fiels = cell.getText();
@@ -429,7 +447,7 @@ public class SPA_console {
 
 
                                             if (fiels.equals(" Scrutiny Reports") || fiels.equals(" Print NoteSheet") || fiels.equals(" Site Visit Report")
-                                                    || fiels.equals(" View Fire NOC")) {
+                                                    || fiels.equals(" View Fire NOC")|| fiels.equals(" View Fire NOC")) {
                                                 cell.click();
                                                 NewWindow(driver);
                                                 Thread.sleep(2000);
@@ -445,16 +463,38 @@ public class SPA_console {
                                                 robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
                                                 Thread.sleep(2000);
                                                 robot.keyPress(KeyEvent.VK_ENTER);
-                                                driver.switchTo().window(WinHandleBefore1);
 
+                                                driver.switchTo().window(WinHandleBefore1);
+                                                Result="pass";
                                                 break;
-                                            /* // hit enter*/
+
                                             } else {
 
-                                                if(fiels.equals(" Change Status")){
+                                                if (fiels.equals(" Create Demand")) {
                                                     cell.click();
-                                                    NewWindow(driver);
-                                                    Result="pass";
+
+                                                    try {
+
+                                                        driver.switchTo().parentFrame();
+                                                        WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
+                                                        driver.switchTo().frame(frame);
+                                                        driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+
+                                                        WebElement jjj = driver.findElement(By.xpath(".//*[@id='form1']/div[4]/label"));
+                                                        String j2=jjj.getText();
+                                                        System.out.println(j2);
+                                                        driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+                                                        DemanDateFun(driver,"25/12/2017");
+                                                        driver.findElement(By.xpath(".//*[@id='btnsave']")).click();
+
+                                                        driver.quit();
+                                                        break;
+                                                    } catch (NoSuchElementException gh) {
+                                                        Result = "fail";
+                                                        Actual = gh.getMessage();
+                                                        break;
+                                                    }
+
 
                                                 } else {
                                                     if (fiels.equals(" Notesheet")) {
@@ -473,91 +513,23 @@ public class SPA_console {
                                                             driver.findElement(By.xpath(".//*[@id='RadPanelbar1']/ul/li/div/ul/li[1]/div/table/tbody/tr/td[2]/img")).click();
                                                             NewWindow(driver);
 
+
                                                         }
 
 
                                                     } else {
-                                                        if (fiels.equals(" Site Details")) cell.click();
-                                                        {
-                                                            NewWindow(driver);
 
-                                                            List<WebElement> Svtab= driver.findElements(By.xpath("//div/div[1]/h4/a"));
-                                                            for(WebElement svtab:Svtab)
-                                                            {
-                                                                String svtab1 = svtab.getText();
-                                                                System.out.println(svtab1);
-                                                                System.out.println("*-----------------------------------------------*");
+                                                                    if(fiels.equals(" Change Status")){
 
-                                                                if(svtab1.equals("Site Visit CheckList"))
-                                                                {
-                                                                    try{
-                                                                        List<WebElement> Sv = driver.findElements(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
-                                                                        for (WebElement svw : Sv) {
-                                                                            String sv = svw.getText();
-                                                                            System.out.println(sv);
-                                                                            System.out.println("*-----------------------------------------------*");
+                                                                        cell.click();
+                                                                        NewWindow(driver);
 
-driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
-                                                                               WebElement Sv2 = driver.findElement(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + Chsv + "]/td[4]"));
-                                                                    sv4 = Sv2.getText();
-                                                                                System.out.println(sv4);
-                                                                                System.out.println("*-----------------------------------------------*");
-                                                                           ++ Chsv;
-
-                                                                           if (sv4.equals("Yes No")||sv4.equals("Yes NO"))
-                                                                           {
-                                                                               driver.manage().timeouts().implicitlyWait(120,TimeUnit.SECONDS);
-                                                                       driver.findElement(By.xpath(".//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr["+inc+"]/td[4]/nobr[2]")).click();
-                                                                               ++inc;
-                                                                           }else {
-                                                                               if (sv4.equals("Select")){
-
-                                                                               //    driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[8]/div/div")).click();
-                                                                                  /* Select combo1=new Select(Sv2);
-                                                                                   combo1.selectByVisibleText("Gala");*/
-                                                                                   ++inc;
-                                                                               }else {
-                                                                                   Sv2.click();
-                                                                                   Sv2.click();
-                                                                                  driver.findElement(By.xpath(".//*[@id='TGEdit-0']/input")).sendKeys("ok");
-                                                                                   ++inc;
-                                                                               }
-
-                                                                           }
+                                                                        Result="pass";
+                                                                    }else {Result="fail";}
 
 
-                                                                        }
-break;
+                                                                }
 
-
-
-                                                                    }catch (NoSuchElementException d1)
-                                                                    {
-                                                                        System.out.println(d1.getMessage());
-                                                                    }
-
-
-                                                                }else {
-
-
-
-
-
-
-
-                                                            }
-
-                                                            }
-
-
-
-
-                                                        // driver.quit();
-                                                        }
-
-                                                    }
-
-                                                    //driver.quit();
                                                     break;
                                                 }
                                             }
@@ -574,24 +546,28 @@ break;
 
                                                     if (fiels1.equals(" Scrutiny Remarks")||fiels1.equals(" Drawing PDF")||fiels1.equals(" Challan Report")) {
                                                         cell1.click();
+try{                 NewWindow(driver);
+    Thread.sleep(2000);
+    java.awt.Robot robot = new java.awt.Robot();
+    Thread.sleep(1000);
+    robot.keyPress(KeyEvent.VK_CONTROL);
+    robot.keyPress(KeyEvent.VK_S);
+    robot.keyRelease(KeyEvent.VK_S);
+    robot.keyRelease(KeyEvent.VK_CONTROL);
+    Thread.sleep(2000);
+    robot.keyPress(KeyEvent.VK_ENTER);
+    Thread.sleep(2000);
+    robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
+    Thread.sleep(2000);
+    robot.keyPress(KeyEvent.VK_ENTER);
+    Result="pass";
+    driver.switchTo().window(WinHandleBefore1);
+    Result="Pass";
+    driver.quit();}catch (Throwable j)
+{
+    System.out.println(j.getMessage());
+}
 
-                                                        NewWindow(driver);
-                                                        Thread.sleep(2000);
-                                                        java.awt.Robot robot = new java.awt.Robot();
-                                                        Thread.sleep(1000);
-                                                        robot.keyPress(KeyEvent.VK_CONTROL);
-                                                        robot.keyPress(KeyEvent.VK_S);
-                                                        robot.keyRelease(KeyEvent.VK_S);
-                                                        robot.keyRelease(KeyEvent.VK_CONTROL);
-                                                        Thread.sleep(2000);
-                                                        robot.keyPress(KeyEvent.VK_ENTER);
-                                                        Thread.sleep(2000);
-                                                        robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
-                                                        Thread.sleep(2000);
-                                                        robot.keyPress(KeyEvent.VK_ENTER);
-                                                        driver.switchTo().window(WinHandleBefore1);
-                                                        Result="Pass";
-                                                        driver.quit();
 
                                                         break;
                                             /* // hit enter*/
@@ -656,7 +632,19 @@ break;
                     String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
 /************************************************************************************************/
-                        case "Filter":
+
+case "Document Submission":
+
+    driver.findElement(By.xpath(".//*[@id='btnSave1']")).click();
+
+
+
+    driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+    Thread.sleep(32);
+break;
+
+case "Filter":
                             try
                             {
                                 List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='form1']/div[3]/div/div/div[5]/div/div/div/div/div[2]/table/tbody/tr/td/div/button"));
@@ -981,14 +969,69 @@ break;
                             Result = "pass";
                             break;
 /*---------------------------------------------- Document Deatials --------------------------------------------------------*/
-                        case "Click on Document Tab":
+                        case "Click on Header Tab":
                             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                            try{
+                            try {
 
-                                application.ClickDocument_Tab();
-                                driver.switchTo().frame("ifrmDocuments");
-                                Result = "pass";
-                                break;
+                                    List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='myTab']/li/a"));
+
+                                    for (WebElement cell : cells) {
+                                        String fiels = cell.getText();
+                                        if (fiels.equals(value)) {
+                                            cell.click();
+
+                                                try{
+                                                    switch (value) {
+                                                        case "Forms":
+                                                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            driver.switchTo().frame("ifrmProjectInfo");
+                                                            Result="pass";
+                                                            break;
+                                                        case "Building                 Details":
+                                                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            driver.switchTo().frame("ifrmBuildingDetails");
+                                                            Result="pass";
+                                                            break;
+                                                        case "Documents":  driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            driver.switchTo().frame("ifrmDocuments");
+                                                            Result="pass";
+                                                            break;
+                                                        case "Drawing":
+                                                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            driver.switchTo().frame("ifrmDrawings");
+                                                            Result="pass";
+                                                            break;
+                                                        case "Proposal                 Flow":
+                                                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            driver.switchTo().frame("ifrmProposalFlow");
+                                                            Result="pass";
+                                                            break;
+                                                        case "Site Inspector Flow":
+                                                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            driver.switchTo().frame("IfmSiteFlow");
+                                                            Result="pass";
+                                                            break;
+                                                        case "Fire Flow":
+                                                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            driver.switchTo().frame("ifrmFireFlow");
+                                                            Result="pass";
+                                                            break;
+
+                                                    }
+                                                }catch (Throwable h){
+
+                                                    Result="fail";
+                                                    Actual=h.getMessage();
+                                                }
+
+                                            break;
+                                        }
+
+
+                                    }
+
+
+
                             }catch (Throwable e)
                             {
                                 Result="fail";
@@ -1021,7 +1064,7 @@ break;
 
                             break;
 
-                        case "Attch medatory doc":
+                        case "Verify medatory doc":
                             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
                             try {
@@ -1111,48 +1154,25 @@ break;
                                                 } else {
 
                                                 }
-
-                                                try {
-                                                    Thread.sleep(400);
-                                                    WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[2]"));
-                                                    String d = fiels3.getText();
-                                                    System.out.println(d);
-
-                                                    Thread.sleep(400);
-                                                    WebElement ty = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a"));
-                                                    String h = ty.getText();
-                                                    System.out.println(l);
-                                                    if (!h.equals("Attach Files")) {
-                                                    } else {
+                                                WebElement s=driver.findElement(By.xpath(".//*[@id='btnSave1']"));
+                                                String s1=s.getAttribute("value");
+                                                System.out.println(s1);
+                                                driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                if(!s1.equals("Verify Fire Service Primary Documents")) {
+                                                    WebElement ty = driver.findElement(By.xpath(".//*[@id='chkVerify" + l + "']"));
+                                                    if (!ty.isSelected()) {
                                                         ty.click();
-                                                        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-                                                        driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
-                                                        driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
-
-
-                                                        BeforeWH(driver);
-                                                        WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
-                                                        ss.click();
-                                                        Thread.sleep(600);
-                                                        AttachFuntn(driver, FilePath);
-                                                        System.out.println(driver.switchTo().window(WinHandleBefore1));
-                                                        driver.switchTo().frame("ifrmListing");
-
-
-                                                        driver.switchTo().frame("ifrmDocuments");
-                                                        System.out.println("pass");
-                                                        driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+                                                        System.out.println("D1");
+                                                    } else {
+                                                        WebElement ty1 = driver.findElement(By.xpath(".//*[@id='ChkRcv" + l + "']"));
+                                                        ty1.click();
+                                                        System.out.println("d2");
 
                                                     }
 
-
-                                                } catch (Throwable d) {
-                                                    System.out.println(d.getMessage());
-
                                                 }
-
                                             }
+
 
                                         }
 
@@ -1604,7 +1624,6 @@ break;
 
 
                         case "Enter Keyword for search":
-
                             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                             Actions actionsff = new Actions(driver);
                             actionsff.moveToElement(driver.findElement(By.xpath(".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")));
@@ -2448,9 +2467,9 @@ break;
     @DataProvider(name = "hybridData")
     public Object[][] getDataFromDataprovider() throws IOException {
         Object[][] object = null;
-        FileInputStream fis = new FileInputStream("ExcelData/InputData/SPATestData.xls");
+        FileInputStream fis = new FileInputStream("ExcelData/InputData/FireTestData.xls");
         HSSFWorkbook wb = new HSSFWorkbook(fis);
-        HSSFSheet sh = wb.getSheet("SPA");
+        HSSFSheet sh = wb.getSheet("Fire");
         //  HSSFRow rows = sh.getRow(1);
 //Read keyword sheet
 //Find number of rows in Expl.excel file
