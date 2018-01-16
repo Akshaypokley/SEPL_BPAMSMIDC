@@ -8,9 +8,11 @@ import jxl.Workbook;
 import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
 import jxl.write.*;
+import jxl.write.DateTime;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.joda.time.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -25,6 +27,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -447,7 +451,7 @@ public class Fire_console {
 
 
                                             if (fiels.equals(" Scrutiny Reports") || fiels.equals(" Print NoteSheet") || fiels.equals(" Site Visit Report")
-                                                    || fiels.equals(" View Fire NOC")|| fiels.equals(" View Fire NOC")) {
+                                                    || fiels.equals(" View Fire NOC")|| fiels.equals(" View Fire NOC")|| fiels.equals(" Preview Adjustment Challan")) {
                                                 cell.click();
                                                 NewWindow(driver);
                                                 Thread.sleep(2000);
@@ -470,24 +474,39 @@ public class Fire_console {
 
                                             } else {
 
-                                                if (fiels.equals(" Create Demand")) {
+                                                if (fiels.equals(" Create Demand")||fiels.equals(" Update Demand")) {
                                                     cell.click();
-
+                                                    Thread.sleep(1000);
                                                     try {
 
                                                         driver.switchTo().parentFrame();
                                                         WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
                                                         driver.switchTo().frame(frame);
-                                                        driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+                                                        Thread.sleep(1000);
 
-                                                        WebElement jjj = driver.findElement(By.xpath(".//*[@id='form1']/div[4]/label"));
-                                                        String j2=jjj.getText();
-                                                        System.out.println(j2);
-                                                        driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
-                                                        DemanDateFun(driver,"25/12/2017");
+                                                        DateFun(driver,"16/01/2018");
+
                                                         driver.findElement(By.xpath(".//*[@id='btnsave']")).click();
+                                                        Thread.sleep(1000);
+                                                        if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                        } else {
+                                                            Alert alert = driver.switchTo().alert();
+                                                            Actual = alert.getText();
+                                                            alert.accept();
 
-                                                        driver.quit();
+                                                            if(fiels.equals(" Update Demand"))
+                                                            {
+                                                                Thread.sleep(1000);
+                                                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                                } else {
+                                                                    Alert alert2 = driver.switchTo().alert();
+                                                                    Actual = alert2.getText();
+                                                                    alert2.accept();
+                                                            }
+                                                        }}
+                                                        driver.switchTo().parentFrame();
+                                                      //  driver.quit();
+                                                        Thread.sleep(1000);
                                                         break;
                                                     } catch (NoSuchElementException gh) {
                                                         Result = "fail";
@@ -1102,39 +1121,40 @@ break;
                                                     } else {
 
                                                     }
-                                                    Thread.sleep(400);
-                                                    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                                                    WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[2]"));
-                                                    String d = fiels3.getText();
-                                                    System.out.println(d);
-                                                    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                                                    WebElement df = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a"));
-                                                    String y = df.getText();
-                                                    if (!y.equals("Attach Files")) {
-                                                        System.out.println("E");
-                                                    } else {
-                                                        df.click();
-                                                        System.out.println(k);
-                                                        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                                                    Thread.sleep(2000);
+                                                    WebElement s=driver.findElement(By.xpath(".//*[@id='btnSave1']"));
+                                                    String s1=s.getAttribute("value");
+                                                    System.out.println(s1);
+                                                    driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+                                                    if(s1.contentEquals("Receive Fire Service Primary Documents")) {
+                                                        WebElement ty = driver.findElement(By.xpath(".//*[@id='ChkRcv" + k + "']"));
+                                                        if (!ty.isSelected()) {
+                                                            ty.click();
+                                                            System.out.println("D1");}
 
-                                                        driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
-                                                        driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+                                                    }else {
 
+                                                        if(s1.contentEquals("Verify Fire Service Primary Documents")){
+                                                            WebElement ty = driver.findElement(By.xpath(".//*[@id='chkVerify"+ k +"']"));
+                                                            if (!ty.isSelected()) {
+                                                                ty.click();
+                                                                System.out.println("D1");}
 
-                                                        BeforeWH(driver);
-                                                        WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
-                                                        ss.click();
-                                                        Thread.sleep(600);
-                                                        AttachFuntn(driver, FilePath);
-                                                        System.out.println(driver.switchTo().window(WinHandleBefore1));
-                                                        driver.switchTo().frame("ifrmListing");
-                                                        Thread.sleep(70);
+                                                        }else {
+                                                            if(s1.contentEquals("Raise Objection for Fire Service Primary Documents")) {
+                                                                driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                                WebElement ty = driver.findElement(By.xpath(".//*[@id='chkObjection" + k + "']"));
 
-                                                        driver.switchTo().frame("ifrmDocuments");
-                                                        System.out.println("pass");
-                                                        driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+                                                                if (!ty.isSelected()) {
+                                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
 
-                                                        System.out.println(k);
+                                                                    ty.click();
+                                                                    System.out.println("D1");
+                                                                }
+                                                            }else {
+                                                                System.out.println("not");
+                                                            }
+                                                        }
 
                                                     }
 
@@ -1153,21 +1173,39 @@ break;
                                                     l = r;
                                                 } else {
 
-                                                }
+                                                }     Thread.sleep(2000);
                                                 WebElement s=driver.findElement(By.xpath(".//*[@id='btnSave1']"));
                                                 String s1=s.getAttribute("value");
                                                 System.out.println(s1);
-                                                driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
-                                                if(!s1.equals("Verify Fire Service Primary Documents")) {
-                                                    WebElement ty = driver.findElement(By.xpath(".//*[@id='chkVerify" + l + "']"));
+                                                driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+                                                if(s1.contentEquals("Receive Fire Service Primary Documents")) {
+                                                    WebElement ty = driver.findElement(By.xpath(".//*[@id='ChkRcv" + l + "']"));
                                                     if (!ty.isSelected()) {
                                                         ty.click();
-                                                        System.out.println("D1");
-                                                    } else {
-                                                        WebElement ty1 = driver.findElement(By.xpath(".//*[@id='ChkRcv" + l + "']"));
-                                                        ty1.click();
-                                                        System.out.println("d2");
+                                                        System.out.println("D1");}
 
+                                                }else {
+
+                                                    if(s1.contentEquals("Verify Fire Service Primary Documents")){
+                                                        WebElement ty = driver.findElement(By.xpath(".//*[@id='chkVerify"+ l +"']"));
+                                                        if (!ty.isSelected()) {
+                                                            ty.click();
+                                                            System.out.println("D1");}
+
+                                                    }else {
+                                                        if(s1.contentEquals("Raise Objection for Fire Service Primary Documents")) {
+                                                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                            WebElement ty = driver.findElement(By.xpath(".//*[@id='chkObjection" + l + "']"));
+
+                                                            if (!ty.isSelected()) {
+                                                                driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+
+                                                                ty.click();
+                                                                System.out.println("D1");
+                                                            }
+                                                        }else {
+                                                            System.out.println("not");
+                                                        }
                                                     }
 
                                                 }
