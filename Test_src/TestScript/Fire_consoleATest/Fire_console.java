@@ -467,7 +467,7 @@ public class Fire_console {
                                                 robot.keyPress(KeyEvent.VK_TAB);   // file replace move to yes button
                                                 Thread.sleep(2000);
                                                 robot.keyPress(KeyEvent.VK_ENTER);
-
+                                                Result="pass";
                                                 driver.switchTo().window(WinHandleBefore1);
                                                 Result="pass";
                                                 break;
@@ -484,7 +484,7 @@ public class Fire_console {
                                                         driver.switchTo().frame(frame);
                                                         Thread.sleep(1000);
 
-                                                        DateFun(driver,"16/01/2018");
+                                                        DateFun(driver,"17/01/2018");
 
                                                         driver.findElement(By.xpath(".//*[@id='btnsave']")).click();
                                                         Thread.sleep(1000);
@@ -544,7 +544,13 @@ public class Fire_console {
                                                                         NewWindow(driver);
 
                                                                         Result="pass";
-                                                                    }else {Result="fail";}
+                                                                    }else {
+
+                                                                        if(fiels.equals(" Send")){
+                                                                            cell.click();
+                                                                        }
+
+                                                                    }
 
 
                                                                 }
@@ -650,6 +656,36 @@ try{                 NewWindow(driver);
                     String FilePath2 = "E:\\Akshay\\wew.dwg.dwg";
                     String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
+
+
+                        case "Send Proposal to higher Authority":
+                            List<WebElement> tes11=driver.findElements(By.xpath(".//*[@id='tblBlankRow']/button"));
+                            for(WebElement t:tes11)
+                            {
+                               String ftext= t.getText();
+                                    driver.findElement(By.xpath(".//*[@id='txtUserNotes']")).sendKeys(value);
+                               if(ftext.equals(value))
+                               {
+                                   if(value.equals("  Send")){
+                                       t.click();
+                                       if ((ExpectedConditions.alertIsPresent()) == null) {
+                                           Result="pass";
+                                       } else {
+                                           Alert alert = driver.switchTo().alert();
+                                           Actual = alert.getText();
+                                           alert.accept();
+                                           Result="pass";
+                                       }
+
+                                   }else {
+                                       t.click();
+                                   }
+
+                               }
+
+                            }
+
+                            break;
 /************************************************************************************************/
 
 case "Document Submission":
