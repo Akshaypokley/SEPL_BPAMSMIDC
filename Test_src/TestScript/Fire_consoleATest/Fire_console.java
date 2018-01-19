@@ -419,9 +419,23 @@ public class Fire_console {
                         case "DFO_Nagpur":
                         DFOnag_LogFunction(driver);
                         Result="pass";
+
                         break;
+
+                        case "Joint Chief officer":
+                            JCO_LogFunction(driver);
+                            Result="pass";
+
+                            break;
+                        case "Chief fire officer":
+                            CfO_LogFunction(driver);
+                            Result="pass";
+
+                            break;
+
                         case"Deputy Chief officer":
-                            DFO_LogFunction(driver);              Result="pass";
+                            DFO_LogFunction(driver);
+                            Result="pass";
                     }break;
 
 
@@ -451,7 +465,7 @@ public class Fire_console {
 
 
                                             if (fiels.equals(" Scrutiny Reports") || fiels.equals(" Print NoteSheet") || fiels.equals(" Site Visit Report")
-                                                    || fiels.equals(" View Fire NOC")|| fiels.equals(" View Fire NOC")|| fiels.equals(" Preview Adjustment Challan")) {
+                                                    || fiels.equals(" View Fire NOC")||fiels.equals(" Preview Adjustment Challan")|| fiels.equals(" Issue Fire NOC")) {
                                                 cell.click();
                                                 NewWindow(driver);
                                                 Thread.sleep(2000);
@@ -521,8 +535,9 @@ public class Fire_console {
                                                         NewWindow(driver);
                                                         WebElement ns = driver.findElement(By.xpath(".//*[@id='lblnote']"));
                                                         String Note = ns.getText();
+                                                        WebElement bv=driver.findElement(By.xpath(".//*[@id='btnAdd']"));
                                                         System.out.println(Note);
-                                                        if (Note.equals("There is no observation in the Note Sheet !!!")) {
+                                                        if (Note.equals("There is no observation in the Note Sheet !!!")||bv.isDisplayed()) {
                                                             driver.findElement(By.xpath(".//*[@id='btnAdd']")).click();
                                                             NewWindow(driver);
 
@@ -537,8 +552,7 @@ public class Fire_console {
 
 
                                                     } else {
-
-                                                                    if(fiels.equals(" Change Status")){
+                                                        if(fiels.equals(" Change Status")){
 
                                                                         cell.click();
                                                                         NewWindow(driver);
@@ -548,6 +562,43 @@ public class Fire_console {
 
                                                                         if(fiels.equals(" Send")){
                                                                             cell.click();
+                                                                            WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
+                                                                            driver.switchTo().frame(frame);
+                                                                            Thread.sleep(1000);
+                                                                            Result="pass";
+                                                                        }else {
+
+                                                                            if(fiels.equals(" Approve"))
+                                                                            {
+                                                                                cell.click();
+                                                                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                                                } else {
+                                                                                    Alert alert = driver.switchTo().alert();
+                                                                                    Actual = alert.getText();
+                                                                                    alert.accept();
+
+                                                                                    Thread.sleep(2333);
+                                                                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                                                    } else {
+                                                                                        Alert alert2 = driver.switchTo().alert();
+                                                                                        Actual = alert2.getText();
+                                                                                        alert2.accept();
+                                                                                    }}
+                                                                            }else {
+                                                                                if(fiels.equals(" Attach Fire NOC")){
+                                                                                    cell.click();
+                                                                                    Thread.sleep(300);
+                                                                                    NewWindow(driver);
+                                                                                    driver.manage().timeouts().implicitlyWait(40,TimeUnit.SECONDS);
+                                                                                    WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                                                                                    ss.click();
+                                                                                    Thread.sleep(300);
+                                                                                    AttachFuntn(driver, "E:\\Akshay\\Select.pdf");
+                                                                                    Thread.sleep(1000);
+                                                                                    Result="pass";
+                                                                                }
+                                                                            }
+
                                                                         }
 
                                                                     }
@@ -655,30 +706,52 @@ try{                 NewWindow(driver);
                     String FilePath = "E:\\Akshay\\PWIMS Deployment.pdf";
                     String FilePath2 = "E:\\Akshay\\wew.dwg.dwg";
                     String WinHandleBefore1 = driver.getWindowHandle();
+
                     switch (objectName) {
 
 
                         case "Send Proposal to higher Authority":
+                            driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
                             List<WebElement> tes11=driver.findElements(By.xpath(".//*[@id='tblBlankRow']/button"));
                             for(WebElement t:tes11)
                             {
                                String ftext= t.getText();
-                                    driver.findElement(By.xpath(".//*[@id='txtUserNotes']")).sendKeys(value);
+                                  WebElement usernotes= driver.findElement(By.xpath(".//*[@id='txtUserNotes']"));
+                                  usernotes.sendKeys(value);
+                                Thread.sleep(1000);
+                                String jjj=usernotes.getText();
                                if(ftext.equals(value))
                                {
                                    if(value.equals("  Send")){
                                        t.click();
-                                       if ((ExpectedConditions.alertIsPresent()) == null) {
-                                           Result="pass";
-                                       } else {
-                                           Alert alert = driver.switchTo().alert();
-                                           Actual = alert.getText();
-                                           alert.accept();
+
+                                       if(jjj.isEmpty())
+                                       {
+                                          /* if ((ExpectedConditions.alertIsPresent()) == null) {
+                                               Result="pass";
+                                           } else {
+                                               Alert alert = driver.switchTo().alert();
+                                               Actual = alert.getText();
+                                               alert.accept();
+                                               Result="pass";
+                                           }
+*/
+
+                                       }else{
+
+                                           driver.switchTo().parentFrame();
+                                           WebElement h=driver.findElement(By.id("lblerror"));
+                                           String jjldo=h.getText();
+                                           System.out.println(jjldo);
+
                                            Result="pass";
                                        }
 
+
                                    }else {
                                        t.click();
+
+                                       Result="pass";
                                    }
 
                                }
@@ -1484,7 +1557,9 @@ break;
                     switch (objectName) {
 
                         case"Mode of Payment":
+
                             try {
+
                                 List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='trMode']/td[4]/span"));
                                 for (WebElement cell : cells) {
 
@@ -1714,7 +1789,11 @@ break;
                                 Result="pass";
                                 Thread.sleep(30000);
                                 driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
+                                driver.close();
+                              //  driver.switchTo().parentFrame();
+                                 String WinHandleBefore = driver.getWindowHandle();
 
+driver.switchTo().window(WinHandleBefore);
                                driver.quit();
                                 }catch (Throwable h){
                                 Result="fail";

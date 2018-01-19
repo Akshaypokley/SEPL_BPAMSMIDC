@@ -398,8 +398,12 @@ public class SPA_console {
                         case "SPA Login":
                             SPA_LogFunction(driver);              Result="pass";
                             break;
+                        case "SV Login":
+                            SV_LogFunction(driver);              Result="pass";
+                            break;
                         case"Deputy Chief officer":
-                            DFO_LogFunction(driver);              Result="pass";
+                            DFO_LogFunction(driver);
+                            Result="pass";
                     }break;
 
 
@@ -477,86 +481,91 @@ public class SPA_console {
 
 
                                                     } else {
-                                                        if (fiels.equals(" Site Details")) cell.click();
-                                                        {
-                                                            NewWindow(driver);
+                                                        if (fiels.equals(" Create Demand") || fiels.equals(" Update Demand")) {
+                                                            cell.click();
+                                                            Thread.sleep(1000);
+                                                            try {
 
-                                                            List<WebElement> Svtab= driver.findElements(By.xpath("//div/div[1]/h4/a"));
-                                                            for(WebElement svtab:Svtab)
+                                                                driver.switchTo().parentFrame();
+                                                                WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
+                                                                driver.switchTo().frame(frame);
+                                                                Thread.sleep(1000);
+
+                                                                DateFun(driver, "20/01/2018");
+
+
+                                                            } catch (NoSuchElementException gh) {
+                                                                Result = "fail";
+                                                                Actual = gh.getMessage();
+                                                                break;
+                                                            }
+
+
+                                                        } else {
+                                                            if (fiels.equals(" Site Details")) cell.click();
                                                             {
-                                                                String svtab1 = svtab.getText();
-                                                                System.out.println(svtab1);
-                                                                System.out.println("*-----------------------------------------------*");
+                                                                NewWindow(driver);
 
-                                                                if(svtab1.equals("Site Visit CheckList"))
-                                                                {
-                                                                    try{
-                                                                        List<WebElement> Sv = driver.findElements(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
-                                                                        for (WebElement svw : Sv) {
-                                                                            String sv = svw.getText();
-                                                                            System.out.println(sv);
-                                                                            System.out.println("*-----------------------------------------------*");
+                                                                List<WebElement> Svtab = driver.findElements(By.xpath("//div/div[1]/h4/a"));
+                                                                for (WebElement svtab : Svtab) {
+                                                                    String svtab1 = svtab.getText();
+                                                                    System.out.println(svtab1);
+                                                                    System.out.println("*-----------------------------------------------*");
 
-driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
-                                                                               WebElement Sv2 = driver.findElement(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + Chsv + "]/td[4]"));
-                                                                    sv4 = Sv2.getText();
+                                                                    if (svtab1.equals("Site Visit CheckList")) {
+                                                                        try {
+                                                                            List<WebElement> Sv = driver.findElements(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[3]"));
+                                                                            for (WebElement svw : Sv) {
+                                                                                String sv = svw.getText();
+                                                                                System.out.println(sv);
+                                                                                System.out.println("*-----------------------------------------------*");
+
+                                                                                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                                                                                WebElement Sv2 = driver.findElement(By.xpath(".//tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + Chsv + "]/td[4]"));
+                                                                                sv4 = Sv2.getText();
                                                                                 System.out.println(sv4);
                                                                                 System.out.println("*-----------------------------------------------*");
-                                                                           ++ Chsv;
+                                                                                ++Chsv;
 
-                                                                           if (sv4.equals("Yes No")||sv4.equals("Yes NO"))
-                                                                           {
-                                                                               driver.manage().timeouts().implicitlyWait(120,TimeUnit.SECONDS);
-                                                                       driver.findElement(By.xpath(".//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr["+inc+"]/td[4]/nobr[2]")).click();
-                                                                               ++inc;
-                                                                           }else {
-                                                                               if (sv4.equals("Select")){
+                                                                                if (sv4.equals("Yes No") || sv4.equals("Yes NO")) {
+                                                                                    driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
+                                                                                    WebElement click1=driver.findElement(By.xpath(".//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + inc + "]/td[4]/nobr[2]"));
+                                                                                    Thread.sleep(1223);
+                                                                                   // click1.click();
+                                                                                    Actions builder = new Actions(driver);
+                                                                                    builder.moveToElement( click1 ).click( click1 );
+                                                                                    builder.perform();
+                                                                                    ++inc;
+                                                                                } else {
+                                                                                    if (sv4.equals("Select")) {
 
-                                                                               //    driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[8]/div/div")).click();
+                                                                                        //    driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[8]/div/div")).click();
                                                                                   /* Select combo1=new Select(Sv2);
                                                                                    combo1.selectByVisibleText("Gala");*/
-                                                                                   ++inc;
-                                                                               }else {
-                                                                                   Sv2.click();
-                                                                                   Sv2.click();
-                                                                                  driver.findElement(By.xpath(".//*[@id='TGEdit-0']/input")).sendKeys("ok");
-                                                                                   ++inc;
-                                                                               }
+                                                                                        ++inc;
+                                                                                    } else {
+                                                                                        Sv2.click();
+                                                                                        Sv2.click();
+                                                                                        driver.findElement(By.xpath(".//*[@id='TGEdit-0']/input")).sendKeys("ok");
+                                                                                        ++inc;
+                                                                                    }
 
-                                                                           }
+                                                                                }
 
+                                                                            }
 
+                                                                        } catch (NoSuchElementException d1) {
+                                                                            System.out.println(d1.getMessage());
                                                                         }
-break;
 
-
-
-                                                                    }catch (NoSuchElementException d1)
-                                                                    {
-                                                                        System.out.println(d1.getMessage());
                                                                     }
 
-
-                                                                }else {
-
-
-
-
-
-
-
+                                                                }
+// driver.quit();
                                                             }
 
-                                                            }
-
-
-
-
-                                                        // driver.quit();
                                                         }
-
                                                     }
-
                                                     //driver.quit();
                                                     break;
                                                 }
@@ -606,7 +615,7 @@ break;
                                                             driver.switchTo().frame(frame);
                                                             String jjj=driver.findElement(By.xpath(".//*[@id='lblrepass']")).getText();
                                                             System.out.println(jjj);
-
+                                                           // DateFun(driver, "19/01/2018");
                                                             driver.findElement(By.xpath("//div/div/div/table/tbody/tr[3]/td[2]/input")).sendKeys("1235");
                                                             driver.findElement(By.xpath("html/body/form/div[4]/div[2]/div/div/input")).click();
                                                             if ((ExpectedConditions.alertIsPresent()) == null) {
@@ -625,12 +634,15 @@ break;
                                                                 }
                                                             }
 
-                                                           /* DemanDateFun(driver,"28/12/2017");*/
-                                                          //  driver.quit();
+                                                            Thread.sleep(2333);
+                                                           // driver.findElement(By.xpath(".//*[@id='RadWindowWrapper_RadWM1516363740822']/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/ul/li/a")).click();
+
 
                                                         }
-                                                    }
+//driver.switchTo().parentFrame();
+                                                                    }
                                                     Result = "pass";
+                                                    driver.close();
                                                     break;
                                                 } else {
                                                     Result = "fail";
@@ -656,6 +668,60 @@ break;
                     String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
 /************************************************************************************************/
+                        case "Demand Note Submission/updation":
+
+                        List<WebElement> links= driver.findElements(By.xpath(".//*[@id='divSave']/input"));
+
+                        for(WebElement ll:links){
+                            String ls=ll.getAttribute("value");
+                            System.out.println(ls);
+                            if(ls.equals(value))
+                            {
+                                ll.click();
+                                Thread.sleep(1000);
+                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                } else {
+                                    Alert alert2 = driver.switchTo().alert();
+                                    Actual = alert2.getText();
+                                    alert2.accept();
+                                }
+                                driver.switchTo().parentFrame();
+                                //  driver.quit();
+                                Thread.sleep(1000);
+                                break;
+                            }
+                        }
+
+                        case "Site visit  Submission":
+                            List<WebElement> svs=driver.findElements(By.xpath(".//*[@id='seTB']/tbody/tr/td[2]/a"));
+                            for(WebElement svs1:svs)
+                            {
+                                String sh= svs1.getText();
+                                if(sh.equals(value))
+                                {  svs1.click();
+                                    Thread.sleep(2333);
+                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    } else {
+                                        Alert alert2 = driver.switchTo().alert();      Actual=alert2.getText();
+                                        alert2.accept();}
+
+Result="pass";
+
+                                }
+                            }
+
+                            Thread.sleep(32);
+                            break;
+                        case "Document Submission":
+
+                            driver.findElement(By.xpath(".//*[@id='btnSave1']")).click();
+
+
+
+                            //driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+                            Thread.sleep(32);
+                            break;
                         case "Filter":
                             try
                             {
@@ -981,14 +1047,69 @@ break;
                             Result = "pass";
                             break;
 /*---------------------------------------------- Document Deatials --------------------------------------------------------*/
-                        case "Click on Document Tab":
+                        case "Click on Header Tab":
                             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                            try{
+                            try {
 
-                                application.ClickDocument_Tab();
-                                driver.switchTo().frame("ifrmDocuments");
-                                Result = "pass";
-                                break;
+                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='myTab']/li/a"));
+
+                                for (WebElement cell : cells) {
+                                    String fiels = cell.getText();
+                                    if (fiels.equals(value)) {
+                                        cell.click();
+
+                                        try{
+                                            switch (value) {
+                                                case "Forms":
+                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                    driver.switchTo().frame("ifrmProjectInfo");
+                                                    Result="pass";
+                                                    break;
+                                                case "Building                 Details":
+                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                    driver.switchTo().frame("ifrmBuildingDetails");
+                                                    Result="pass";
+                                                    break;
+                                                case "Documents":  driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                    driver.switchTo().frame("ifrmDocuments");
+                                                    Result="pass";
+                                                    break;
+                                                case "Drawing":
+                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                    driver.switchTo().frame("ifrmDrawings");
+                                                    Result="pass";
+                                                    break;
+                                                case "Proposal                 Flow":
+                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                    driver.switchTo().frame("ifrmProposalFlow");
+                                                    Result="pass";
+                                                    break;
+                                                case "Site Inspector Flow":
+                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                    driver.switchTo().frame("IfmSiteFlow");
+                                                    Result="pass";
+                                                    break;
+                                                case "Fire Flow":
+                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                    driver.switchTo().frame("ifrmFireFlow");
+                                                    Result="pass";
+                                                    break;
+
+                                            }
+                                        }catch (Throwable h){
+
+                                            Result="fail";
+                                            Actual=h.getMessage();
+                                        }
+
+                                        break;
+                                    }
+
+
+                                }
+
+
+
                             }catch (Throwable e)
                             {
                                 Result="fail";
@@ -1021,7 +1142,7 @@ break;
 
                             break;
 
-                        case "Attch medatory doc":
+                        case "Verify medatory doc":
                             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
                             try {
@@ -1059,39 +1180,40 @@ break;
                                                     } else {
 
                                                     }
-                                                    Thread.sleep(400);
-                                                    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                                                    WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[2]"));
-                                                    String d = fiels3.getText();
-                                                    System.out.println(d);
-                                                    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                                                    WebElement df = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a"));
-                                                    String y = df.getText();
-                                                    if (!y.equals("Attach Files")) {
-                                                        System.out.println("E");
-                                                    } else {
-                                                        df.click();
-                                                        System.out.println(k);
-                                                        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                                                    Thread.sleep(2000);
+                                                    WebElement s=driver.findElement(By.xpath(".//*[@id='btnSave1']"));
+                                                    String s1=s.getAttribute("value");
+                                                    System.out.println(s1);
+                                                    driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+                                                    if(s1.contentEquals("Receive Building Plan Primary Documents")) {
+                                                        WebElement ty = driver.findElement(By.xpath(".//*[@id='ChkRcv" + k + "']"));
+                                                        if (!ty.isSelected()) {
+                                                            ty.click();
+                                                            System.out.println("D1");}
 
-                                                        driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
-                                                        driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
+                                                    }else {
 
+                                                        if(s1.contentEquals("Verify Building Plan Primary Documents")){
+                                                            WebElement ty = driver.findElement(By.xpath(".//*[@id='chkVerify"+ k +"']"));
+                                                            if (!ty.isSelected()) {
+                                                                ty.click();
+                                                                System.out.println("D1");}
 
-                                                        BeforeWH(driver);
-                                                        WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
-                                                        ss.click();
-                                                        Thread.sleep(600);
-                                                        AttachFuntn(driver, FilePath);
-                                                        System.out.println(driver.switchTo().window(WinHandleBefore1));
-                                                        driver.switchTo().frame("ifrmListing");
-                                                        Thread.sleep(70);
+                                                        }else {
+                                                            if(s1.contentEquals("Raise Objection for Building Plan Primary Documents")) {
+                                                                driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
+                                                                WebElement ty = driver.findElement(By.xpath(".//*[@id='chkObjection" + k + "']"));
 
-                                                        driver.switchTo().frame("ifrmDocuments");
-                                                        System.out.println("pass");
-                                                        driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+                                                                if (!ty.isSelected()) {
+                                                                    driver.manage().timeouts().implicitlyWait(05,TimeUnit.SECONDS);
 
-                                                        System.out.println(k);
+                                                                    ty.click();
+                                                                    System.out.println("D1");
+                                                                }
+                                                            }else {
+                                                                System.out.println("not");
+                                                            }
+                                                        }
 
                                                     }
 
