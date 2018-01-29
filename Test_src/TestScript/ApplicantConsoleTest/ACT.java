@@ -214,7 +214,16 @@ public static int x=3;
 
         try {
             switch (keyword.toUpperCase()) {
+                case "FRAME":
 
+                    switch (objectName)
+                    {
+                        case "Main Frame":
+                            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                            driver.switchTo().frame("ifrmListing");
+                            Result="pass";
+
+                    }break;
                 case "RECONCILIIATION":
 
                     switch (objectName) {
@@ -229,6 +238,15 @@ public static int x=3;
                                 Alert alert = driver.switchTo().alert();
                                 Actual = driver.switchTo().alert().getText();
                                 alert.accept();
+
+                            Thread.sleep(3315);
+                            if ((ExpectedConditions.alertIsPresent()) == null) {
+                                System.out.println("alert was not present");
+                            } else {
+                                Alert alert3 = driver.switchTo().alert();
+                                Actual = driver.switchTo().alert().getText();
+                                alert3.accept();
+                            }
                             }
                               break;
 
@@ -242,14 +260,41 @@ public static int x=3;
                                 {Result="pass";
                                     Actual="Payment are pending";
                                 }else {
-                                    Actions actions = new Actions(driver);
-                                    actions.moveToElement(driver.findElement(By.xpath(".//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[2]/td[12]")));
+
+                                    List<WebElement> Rs= driver.findElements(By.xpath(".//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[15]"));
+                                    for(WebElement re:Rs) {
+                                        String req = re.getText();
+                                        if (req.equals("Reconciled"))
+                                        {/*
+                                            Actual="File already consiloid ";
+                                            System.out.println(Actual);
+                                            Result="pass";
+                                       */ }
+                                       else {
+                                            Actions actions = new Actions(driver);
+                                            actions.moveToElement(re);
+                                            Thread.sleep(200);
+                                            actions.click();
+                                            actions.build().perform();
+                                            driver.manage().timeouts().implicitlyWait(23,TimeUnit.SECONDS);
+                                            actions.moveToElement(driver.findElement(By.xpath(".//*[@id='TGMenu-0-1']/div/div")));
+                                            actions.click(); actions.build().perform();
+
+
+                                        }
+                                    }
+
+
+
+                              /*      Actions actions = new Actions(driver);
+                                    actions.moveToElement(driver.findElement(By.xpath("./*//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[2]/td[12]")));
                                     Thread.sleep(200);
-                                    actions.click(); actions.build().perform();
-                                    driver.manage().timeouts().implicitlyWait(23,TimeUnit.SECONDS);
+                                    actions.click();
+                                    actions.build().perform();
+                                    driver.manage().timeouts().implicitlyWait(23,TimeUnit.SECONDS);*/
                                  //   List<WebElement> paynow = driver.findElements(By.xpath(".//*[@id='TreeGridControls']/div/div/div[7]/div/div/div/div/div/div"));
-                                    actions.moveToElement(driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[7]/div/div//div[2]")));
-                                    actions.click(); actions.build().perform();
+                             /*       actions.moveToElement(driver.findElement(By.xpath("./*//*[@id='TreeGridControls']/div/div/div[7]/div/div//div[2]")));
+                                    actions.click(); actions.build().perform();*/
                                    /* for (WebElement paynow1 : paynow) {
                                         String fiels23 = paynow1.getText();
                                         System.out.println(fiels23);
@@ -273,7 +318,7 @@ public static int x=3;
 
                         case "Pending Demand Note":
 
-                        driver.switchTo().frame("ifrmListing");
+
                             try {
                                 List<WebElement> cells = driver.findElements(By.xpath(".//*/tr[2]/td[2]/div/div[1]/table/tbody//td[2]"));
 
@@ -346,7 +391,7 @@ public static int x=3;
                                         System.out.println("Value Name is :-***" + value + "***");
 
                                         System.out.println("The value of K:-" + k);
-                                        driver.switchTo().frame("ifrmListing"); Result = "pass";
+                                        Result = "pass";
                                         break;
                                     }
 
@@ -1417,6 +1462,7 @@ break;
                     switch (objectName) {
 
                         case "SWC File No":
+                            driver.manage().timeouts().implicitlyWait(25,TimeUnit.SECONDS);
                             driver.findElement(By.xpath(".//*[@id='txtFile']")).sendKeys(value);
                             driver.findElement(By.xpath(".//*//fieldset/table/tbody/tr[4]/td[4]/table/tbody/tr/td[1]/input")).click();
                             Result = "pass";

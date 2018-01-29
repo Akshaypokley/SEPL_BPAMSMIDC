@@ -419,7 +419,7 @@ public class SPA_console {
 
                                 Result="fail";
                                 Actual="File Not found";
-                                driver.quit();
+                                //driver.quit();
                             } else {
                                 driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
@@ -491,7 +491,7 @@ public class SPA_console {
                                                                 driver.switchTo().frame(frame);
                                                                 Thread.sleep(1000);
 
-                                                                DateFun(driver, "20/01/2018");
+                                                                DateFun(driver, "29/01/2018");
 
 
                                                             } catch (NoSuchElementException gh) {
@@ -665,7 +665,7 @@ public class SPA_console {
                 case "CLICK":
                     String FilePath = "E:\\Akshay\\PWIMS Deployment.pdf";
                     String FilePath2 = "E:\\Akshay\\wew.dwg.dwg";
-                    String WinHandleBefore1 = driver.getWindowHandle();
+//                    String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
 /************************************************************************************************/
                         case "Demand Note Submission/updation":
@@ -684,6 +684,13 @@ public class SPA_console {
                                     Alert alert2 = driver.switchTo().alert();
                                     Actual = alert2.getText();
                                     alert2.accept();
+                                    Thread.sleep(4000);
+                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    } else {
+                                        Alert alert22 = driver.switchTo().alert();
+                                        Actual = alert22.getText();
+                                        alert22.accept();
+                                }
                                 }
                                 driver.switchTo().parentFrame();
                                 //  driver.quit();
@@ -691,7 +698,7 @@ public class SPA_console {
                                 break;
                             }
                         }
-
+break;
                         case "Site visit  Submission":
                             List<WebElement> svs=driver.findElements(By.xpath(".//*[@id='seTB']/tbody/tr/td[2]/a"));
                             for(WebElement svs1:svs)
@@ -776,7 +783,7 @@ break;
                                 Result="pass";
                             }
                             Result="pass";
-
+break;
                         case "Submit":
                             application.clickSave_Submit();
                             driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
