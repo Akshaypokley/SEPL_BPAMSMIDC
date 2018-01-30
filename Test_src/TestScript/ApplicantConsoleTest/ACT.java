@@ -34,6 +34,7 @@ import static Utilites.DateFunction.DateFun;
 import static Utilites.LoginFunction.*;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
+import static Utilites.ReconDate.RecDateFun;
 import static Utilites.Windowhander.NewWindow;
 import static jxl.format.Colour.*;
 import static jxl.format.Colour.LIGHT_TURQUOISE;
@@ -84,7 +85,7 @@ public static int x=3;
     public static int vb=2;
     public static int k1=1;
     public static int rr=1;
-    public static int Rec=1;
+    public static int Rec=2;
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
@@ -229,6 +230,7 @@ public static int x=3;
                     switch (objectName) {
 
 
+
                         case "Save Reconciliation Status":
                         driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
                         Thread.sleep(2315);
@@ -268,9 +270,13 @@ public static int x=3;
                                         {/*
                                             Actual="File already consiloid ";
                                             System.out.println(Actual);
-                                            Result="pass";
-                                       */ }
-                                       else {
+                                            Result="pass"
+                                       */
+                                        ++Rec;
+                                        }
+                                       else {          Thread.sleep(200);
+                                            RecDateFun(driver,"30/01/2018",Rec);
+                                            Thread.sleep(200);
                                             Actions actions = new Actions(driver);
                                             actions.moveToElement(re);
                                             Thread.sleep(200);
@@ -279,7 +285,7 @@ public static int x=3;
                                             driver.manage().timeouts().implicitlyWait(23,TimeUnit.SECONDS);
                                             actions.moveToElement(driver.findElement(By.xpath(".//*[@id='TGMenu-0-1']/div/div")));
                                             actions.click(); actions.build().perform();
-
+                                            ++Rec;
 
                                         }
                                     }

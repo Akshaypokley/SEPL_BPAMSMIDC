@@ -502,6 +502,18 @@ public class SPA_console {
 
 
                                                         } else {
+                                                            if(fiels.equals(" Approve")||fiels.equals(" Reject"))
+                                                            {
+                                                                cell.click();
+                                                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                                } else {
+                                                                    Alert alert = driver.switchTo().alert();
+                                                                    Actual = alert.getText();
+                                                                    alert.accept();
+
+                                                                }
+                                                                }else {
+
                                                             if (fiels.equals(" Site Details")) cell.click();
                                                             {
                                                                 NewWindow(driver);
@@ -529,11 +541,11 @@ public class SPA_console {
 
                                                                                 if (sv4.equals("Yes No") || sv4.equals("Yes NO")) {
                                                                                     driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
-                                                                                    WebElement click1=driver.findElement(By.xpath(".//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + inc + "]/td[4]/nobr[2]"));
+                                                                                    WebElement click1 = driver.findElement(By.xpath(".//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + inc + "]/td[4]/nobr[2]"));
                                                                                     Thread.sleep(1223);
-                                                                                   // click1.click();
+                                                                                    // click1.click();
                                                                                     Actions builder = new Actions(driver);
-                                                                                    builder.moveToElement( click1 ).click( click1 );
+                                                                                    builder.moveToElement(click1).click(click1);
                                                                                     builder.perform();
                                                                                     ++inc;
                                                                                 } else {
@@ -560,7 +572,7 @@ public class SPA_console {
 
                                                                     }
 
-                                                                }
+                                                                }}
 // driver.quit();
                                                             }
 
