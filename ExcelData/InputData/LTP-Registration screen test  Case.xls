@@ -1,0 +1,12 @@
+LTP-Registration screen test  Case				
+TestCase	Keyword	Object	value	Expected
+TEST CASE 1				
+	SELECT	Prifix	Mr	It should available in Drop down.
+	SETTEXT	First Name	Aks%^#$hay	FirstName should  be alphabet.
+	SETTEXT	Middle Name	Raj&&%^aram	Middle Name  should  be alphabet.
+	SETTEXT	Last Name	Pok%^^le	Last Name  should  be alphabet.
+	SELECT	Professional Category	Architect	It should available in Drop down.
+	SETTEXT	Qualification	BE	It should  be alphanumric.
+	SETTEXT	Total Experience	1 year	It should  be alphanumric.
+	SETTEXT	Firm Name	FADY	It should  be alphanumric.
+	SETTEXT	Postal Address	Neharu Ward 	It should  be alphanumric.
