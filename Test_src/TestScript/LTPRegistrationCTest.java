@@ -32,6 +32,7 @@ import static Utilites.BeforeWH.BeforeWH;
 import static Utilites.DateFunction.DateFun;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
+import static Utilites.RegDate.RegDateFun;
 import static Utilites.Windowhander.NewWindow;
 import static jxl.format.Colour.*;
 
@@ -206,7 +207,13 @@ public class LTPRegistrationCTest {
             LTPRegistrationConsole ltpRegistration = new LTPRegistrationConsole(driver);
 
             switch (keyword.toUpperCase()) {
-
+                case"BROWSER CLOSED":
+                    switch (objectName) {
+                        case "Closed":
+                            driver.quit();
+                    break;
+                    }
+                    break;
                 case "CLICK":
                     String FilePath = "E:\\Akshay\\PWIMS Deployment.pdf";
                     String WinHandleBefore1 = driver.getWindowHandle();
@@ -227,10 +234,11 @@ public class LTPRegistrationCTest {
                                 } else {
                                     Alert alert = driver.switchTo().alert();
                                     Actual = driver.switchTo().alert().getText();
-                                    if (Actual.equals(Expected) || Actual2.equals(Expected)) {
+                                    if (Actual.equals(Expected)|| Actual2.equals(Expected)) {
                                         Result = "pass";
                                     } else {
                                         Result = "Fail";
+
                                     }
                                     System.out.println(Actual);
                                     //    Thread.sleep(50);
@@ -546,10 +554,7 @@ public class LTPRegistrationCTest {
                             ltpRegistration.setQlification(value);
                             Result = "pass";
                             break;
-                        case "Total Experience":
-                            driver.findElement(By.id("txtExperience")).sendKeys(value);
-                            Result = "pass";
-                            break;
+
                        /* case "Short Profile":
                             driver.findElement(By.id("txtShortProfile")).sendKeys(value);
                             Result = "pass";
@@ -780,91 +785,103 @@ public class LTPRegistrationCTest {
                         case "Aadhar no":
                             break;
                         case "Login Name":
-                            ltpRegistration.setLoginNm(value);
+try{
 
-                            try {
+    ltpRegistration.setLoginNm(value);
 
-                                if ((ExpectedConditions.alertIsPresent()) == null) {
-                                    final String fieldValue6 = ltpRegistration.getLoginNm().getAttribute("value");
-                                    if (fieldValue6.equals(value)) {
-                                        Result = "pass";
-                                    } else {
-                                        Result = "fail";
-                                    }
-                                } else {
-                                    Alert alert = driver.switchTo().alert();
+    try {
 
-                                    Actual = driver.switchTo().alert().getText();
-                                    Thread.sleep(300);
-                                    alert.accept();
-                                }
+        if ((ExpectedConditions.alertIsPresent()) == null) {
+            final String fieldValue6 = ltpRegistration.getLoginNm().getAttribute("value");
+            if (fieldValue6.equals(value)) {
+                Result = "pass";
+            } else {
+                Result = "fail";
+            }
+        } else {
+            Alert alert = driver.switchTo().alert();
 
-                                final String fieldValue6 = ltpRegistration.getLoginNm().getAttribute("value");
-                                if (fieldValue6.isEmpty()) {
-                                    try {
-                                        if ((ExpectedConditions.alertIsPresent()) == null) {
+            Actual = driver.switchTo().alert().getText();
+            Thread.sleep(300);
+            alert.accept();
+        }
 
-                                        } else {
-                                            Alert alert = driver.switchTo().alert();
-                                            Actual = driver.switchTo().alert().getText();
-                                            if (Actual.equals(Expected)) {
-                                                Result = "pass";
-                                            } else {
-                                                Result = "Fail";
-                                            }
-                                            System.out.println(Actual);
-                                            //    Thread.sleep(50);
-                                            alert.accept();
+        final String fieldValue6 = ltpRegistration.getLoginNm().getAttribute("value");
+        if (fieldValue6.isEmpty()) {
+            try {
+                if ((ExpectedConditions.alertIsPresent()) == null) {
 
-                                        }
+                } else {
+                    Alert alert = driver.switchTo().alert();
+                    Actual = driver.switchTo().alert().getText();
+                    if (Actual.equals(Expected)) {
+                        Result = "pass";
+                    } else {
+                        Result = "Fail";
+                    }
+                    System.out.println(Actual);
+                    //    Thread.sleep(50);
+                    alert.accept();
 
-                                    } catch (Throwable e) {
-                                        Actual = "Alert message not display so,user not get Actual result.";
-                                        Result = "Fail";
-                                    }
+                }
+
+            } catch (Throwable e) {
+                Actual = "Alert message not display so,user not get Actual result.";
+                Result = "Fail";
+            }
 
 
-                                } else {
-                                    if (fieldValue6.equals(value)) {
-                                        if (!Alphnu.matcher(fieldValue6).matches()) {
-                                            try {
-                                                if ((ExpectedConditions.alertIsPresent()) == null) {
-                                                    Actual = "Alert message not display so,user not get Actual result.";
-                                                    Result = "Fail";
-                                                } else {
-                                                    Alert alert = driver.switchTo().alert();
-                                                    Actual = driver.switchTo().alert().getText();
-                                                    if (Actual.equals(Expected)) {
-                                                        Result = "pass";
-                                                    } else {
-                                                        Result = "Fail";
-                                                    }
-                                                    System.out.println(Actual);
-                                                    //    Thread.sleep(50);
-                                                    alert.accept();
-
-                                                }
-
-                                            } catch (Throwable e) {
-                                                Actual = "Alert message not display so,user not get Actual result.";
-                                                Result = "Fail";
-                                            }
-                                        } else {
-                                            Result = "pass";
-                                            System.out.println(fieldValue6);
-                                            System.out.println(Result);
-                                        }
-                                    } else {
-
-                                        if (Actual.equals(Expected)) {
-                                            Result = "pass";
-                                        } else {
-                                            Result = "Fail";
-                                        }
-                                    }
-                                }
-                            } catch (Throwable e) {
+        } else {
+            if (fieldValue6.equals(value)) {
+                if (!Emailval.matcher(fieldValue6).matches()) {
+                    try {
+                        if ((ExpectedConditions.alertIsPresent()) == null) {
+                            Actual = "Alert message not display so,user not get Actual result.";
+                            Result = "Fail";
+                        } else {
+                            Alert alert = driver.switchTo().alert();
+                            Actual = driver.switchTo().alert().getText();
+                            if (Actual.equals(Expected)) {
+                                Result = "pass";
+                            } else {
+                                Result = "Fail";
                             }
+                            System.out.println(Actual);
+                            //    Thread.sleep(50);
+                            alert.accept();
+
+                        }
+
+                    } catch (Throwable e) {
+                        Actual = "Alert message not display so,user not get Actual result.";
+                        Result = "Fail";
+                    }
+                } else {
+                    Result = "pass";
+                    System.out.println(fieldValue6);
+                    System.out.println(Result);
+                }
+            } else {
+
+                if (Actual.equals(Expected)) {
+                    Result = "pass";
+                } else {
+                    Result = "Fail";
+                }
+            }
+        }
+    } catch (Throwable e) {
+
+        Result="Fails";
+        Actual=e.getMessage();
+    }
+
+}catch (Throwable tg)
+{
+    Result="fails";
+    Actual=tg.getMessage();
+}
+
                                 break;
                                 case "Password":
                                     ltpRegistration.setPassword(value);
@@ -1052,10 +1069,12 @@ public class LTPRegistrationCTest {
                                     Result="pass";
                                     break;
                                 case "State":
+                                    Thread.sleep(1000);
                                     ltpRegistration.setState(value);
                                     Result="pass";
                                     break;
                                 case "City":
+                                    Thread.sleep(1000);
                                     ltpRegistration.setCity(value);
                                     Result="pass";
                                     break;
@@ -1064,8 +1083,15 @@ public class LTPRegistrationCTest {
                                     Result="pass";
                                     break;
                                 case "Date":
-                                    DateFun(driver, "19/7/2017");
-                                    Result="pass";
+                                    try{
+                                        RegDateFun(driver, "19/7/2019");
+                                        Result="pass";
+                                    }catch (Throwable g)
+                                    {
+                                        Result="Fails";
+                                        Actual=g.getMessage();
+                                    }
+
 
 
 

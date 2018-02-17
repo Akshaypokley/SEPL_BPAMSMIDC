@@ -17,7 +17,7 @@ public class BeforeWH {
         }
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10);
 
         } catch (InterruptedException e) {
             e.printStackTrace();

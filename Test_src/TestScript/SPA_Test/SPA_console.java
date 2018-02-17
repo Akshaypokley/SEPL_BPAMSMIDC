@@ -36,6 +36,7 @@ import static Utilites.DemandDate.DemanDateFun;
 import static Utilites.LoginFunction.*;
 import static Utilites.OpenBrowser.GetUrl;
 import static Utilites.OpenBrowser.openBrowser;
+import static Utilites.ReconDate.RecDateFun;
 import static Utilites.Windowhander.NewWindow;
 import static jxl.format.Colour.*;
 import static jxl.format.Colour.LIGHT_TURQUOISE;
@@ -88,7 +89,7 @@ public class SPA_console {
     public static int inc=2;
     public static ConversionPending conversionPending;
     public static  String sv4;
-
+    public static int Rec=2;
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
@@ -261,23 +262,57 @@ public class SPA_console {
                             break;
 
                         case "Change Reconciliation Status":
-
+                            Thread.sleep(1000);
                             //  driver.switchTo().frame("ifrmListing");
                             try {
                                 WebElement Reco=driver.findElement(By.xpath(".//*//tr[6]/td/div/table/tbody/tr/td[5]/div/b"));
                                 String total_payments=Reco.getText();
                                 if (total_payments.equals("0"))
-                                {Result="pass";
+                                {
+                                    Result="pass";
                                     Actual="Payment are pending";
                                 }else {
-                                    Actions actions = new Actions(driver);
-                                    actions.moveToElement(driver.findElement(By.xpath(".//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[2]/td[12]")));
+
+                                    List<WebElement> Rs= driver.findElements(By.xpath(".//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr/td[16]"));
+                                    for(WebElement re:Rs) {
+                                        String req = re.getText();
+                                        if (req.equals("Reconciled"))
+                                        {/*
+                                            Actual="File already consiloid ";
+                                            System.out.println(Actual);
+                                            Result="pass"
+                                       */
+                                            ++Rec;
+                                        }
+                                        else {
+
+                                            Thread.sleep(1000);
+                                            RecDateFun(driver,"13/02/2018",Rec);
+                                            Thread.sleep(1000);
+                                            Actions actions = new Actions(driver);
+                                            actions.moveToElement(re);
+                                            Thread.sleep(200);
+                                            actions.click();
+                                            actions.build().perform();
+                                            driver.manage().timeouts().implicitlyWait(23,TimeUnit.SECONDS);
+                                            actions.moveToElement(driver.findElement(By.xpath(".//*[@id='TGMenu-0-1']/div/div")));
+                                            actions.click(); actions.build().perform();
+                                            ++Rec;
+
+                                        }
+                                    }
+
+
+
+                              /*      Actions actions = new Actions(driver);
+                                    actions.moveToElement(driver.findElement(By.xpath("./*//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[2]/td[12]")));
                                     Thread.sleep(200);
-                                    actions.click(); actions.build().perform();
-                                    driver.manage().timeouts().implicitlyWait(23, TimeUnit.SECONDS);
+                                    actions.click();
+                                    actions.build().perform();
+                                    driver.manage().timeouts().implicitlyWait(23,TimeUnit.SECONDS);*/
                                     //   List<WebElement> paynow = driver.findElements(By.xpath(".//*[@id='TreeGridControls']/div/div/div[7]/div/div/div/div/div/div"));
-                                    actions.moveToElement(driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[7]/div/div//div[2]")));
-                                    actions.click(); actions.build().perform();
+                             /*       actions.moveToElement(driver.findElement(By.xpath("./*//*[@id='TreeGridControls']/div/div/div[7]/div/div//div[2]")));
+                                    actions.click(); actions.build().perform();*/
                                    /* for (WebElement paynow1 : paynow) {
                                         String fiels23 = paynow1.getText();
                                         System.out.println(fiels23);
@@ -289,12 +324,13 @@ public class SPA_console {
 */
                                 }
                             } catch (Throwable e) {
-                                System.out.println(e.getMessage());
+                                Actual=e.getMessage();
+                                Result="fails";
+
 
                             }
 
                     }    break;
-
                 case "PAY":
 
                     switch (objectName) {
@@ -390,7 +426,9 @@ public class SPA_console {
                 case "LOGIN":
 
                     switch (objectName) {
-
+                        case "Payment":
+                            MIDCPA_LogFunction(driver);              Result="pass";
+                            break;
                         case "Architect":
                             LogFunction(driver);
                             Result="pass";
@@ -426,6 +464,7 @@ public class SPA_console {
                                 driver.switchTo().frame("ifrmToolbar");
                                     List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
                                     for (WebElement cell : d) {
+                                        Thread.sleep(1000);
                                         String fiels = cell.getText();
                                         System.out.println("Tool bar Componets are " + fiels);
                                         Result = "pass";
@@ -490,8 +529,8 @@ public class SPA_console {
                                                                 WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
                                                                 driver.switchTo().frame(frame);
                                                                 Thread.sleep(1000);
+                                                               if(fiels.equals(" Update Demand")){}else { DateFun(driver, "17/02/2018");}
 
-                                                                DateFun(driver, "29/01/2018");
 
 
                                                             } catch (NoSuchElementException gh) {
@@ -518,7 +557,7 @@ public class SPA_console {
                                                             {
                                                                 NewWindow(driver);
 
-                                                                List<WebElement> Svtab = driver.findElements(By.xpath("//div/div[1]/h4/a"));
+                                                              /*  List<WebElement> Svtab = driver.findElements(By.xpath("//div/div[1]/h4/a"));
                                                                 for (WebElement svtab : Svtab) {
                                                                     String svtab1 = svtab.getText();
                                                                     System.out.println(svtab1);
@@ -541,7 +580,7 @@ public class SPA_console {
 
                                                                                 if (sv4.equals("Yes No") || sv4.equals("Yes NO")) {
                                                                                     driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
-                                                                                    WebElement click1 = driver.findElement(By.xpath(".//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + inc + "]/td[4]/nobr[2]"));
+                                                                                    WebElement click1 = driver.findElement(By.xpath("./*//*[@id='SiteVisitChecklistGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr[" + inc + "]/td[4]/nobr[2]"));
                                                                                     Thread.sleep(1223);
                                                                                     // click1.click();
                                                                                     Actions builder = new Actions(driver);
@@ -551,14 +590,14 @@ public class SPA_console {
                                                                                 } else {
                                                                                     if (sv4.equals("Select")) {
 
-                                                                                        //    driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[8]/div/div")).click();
-                                                                                  /* Select combo1=new Select(Sv2);
-                                                                                   combo1.selectByVisibleText("Gala");*/
+                                                                                        //    driver.findElement(By.xpath("./*//*[@id='TreeGridControls']/div/div/div[8]/div/div")).click();
+                                                                                  *//* Select combo1=new Select(Sv2);
+                                                                                   combo1.selectByVisibleText("Gala");*//*
                                                                                         ++inc;
                                                                                     } else {
                                                                                         Sv2.click();
                                                                                         Sv2.click();
-                                                                                        driver.findElement(By.xpath(".//*[@id='TGEdit-0']/input")).sendKeys("ok");
+                                                                                        driver.findElement(By.xpath("./*//*[@id='TGEdit-0']/input")).sendKeys("ok");
                                                                                         ++inc;
                                                                                     }
 
@@ -572,7 +611,9 @@ public class SPA_console {
 
                                                                     }
 
-                                                                }}
+                                                                }*/
+
+                                                            }
 // driver.quit();
                                                             }
 
@@ -711,7 +752,7 @@ public class SPA_console {
                             }
                         }
 break;
-                        case "Site visit  Submission":
+                        case "Site visit Submission":
                             List<WebElement> svs=driver.findElements(By.xpath(".//*[@id='seTB']/tbody/tr/td[2]/a"));
                             for(WebElement svs1:svs)
                             {

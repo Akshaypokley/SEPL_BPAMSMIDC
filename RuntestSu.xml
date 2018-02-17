@@ -11,7 +11,11 @@
           <!--  <class name="TestScript.ForgotCTest" />
             <class name="TestScript.LTPRegistrationCTest"/>-->
 
-<class name="TestScript.ApplicantCTest.ApplicationSubmissionTest.ApplicationTest"></class>
+
+
+           <!-- <class name="TestScript.ApplicantConsoleTest.ACT"></class>-->
+            <class name="TestScript.Fire_consoleATest.Fire_console"></class>
+        <!--    <class name="TestScript.SPA_Test.SPA_console"></class>-->
        <!--   <class name="TestScript.Fire_consoleATest.HafflowTest"/>-->
             <!--  <class name="TestScript.ScrunityCellTest.ApplicationStatusTest.ScrunityCantBeDoneTest" />
             --> <!-- <class name="Example" />

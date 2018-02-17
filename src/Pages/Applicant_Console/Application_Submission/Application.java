@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 public class Application {
     WebDriver driver;
 
-    @FindBy(xpath = ".//*[@id='imgOrgHeader']")
+    @FindBy(xpath = ".//*[@id='lblDesign']")
     WebElement Formlogo;
     @FindBy(xpath = "./*//*[@id='txtProposalTitle']")
     WebElement Proposal_Title;
@@ -94,6 +94,19 @@ public class Application {
 
     @FindBy(xpath = "./*//*[@id='txtApplicantName']")
     WebElement  Applicant_Name;
+
+    @FindBy(xpath = ".//*[@id='txtApplicantAddress']")
+    WebElement  Applicant_Address;
+    @FindBy(xpath = ".//*[@id='txtApplicantContact']")
+    WebElement  Applicant_ContactNo;
+    @FindBy(xpath = ".//*[@id='txtgstin']")
+    WebElement  Applicant_GSTINNo;
+    @FindBy(xpath = ".//*[@id='txtApplicantEmail']")
+    WebElement  Applicant_Email_ID;
+    @FindBy(xpath = ".//*[@id='txtCompanyName']")
+    WebElement  Company_Name;
+    @FindBy(xpath = ".//*[@id='txtCompanyAddress']")
+    WebElement   Company_Address;
 
     @FindBy(xpath = "./*//*[@id='btnSave']")
     WebElement  Save_Submit;

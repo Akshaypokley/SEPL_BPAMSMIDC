@@ -223,6 +223,8 @@ public class LoginCTest {
                                 }
 
                             } catch (Throwable e) {
+                                Result="fails";
+                                Actual=e.getMessage();
                             }
 
 
@@ -253,7 +255,7 @@ public class LoginCTest {
 
                                     }
 
-                                } catch (Throwable e) {Actual = "Alert message not display.";
+                                } catch (Throwable e) {Actual =e.getMessage();
                                     Result = "Fail";
                                 }
 
@@ -306,7 +308,7 @@ public class LoginCTest {
 
                                         }
 
-                                    } catch (Throwable e) {Actual = "Alert message not display.";
+                                    } catch (Throwable e) {Actual = e.getMessage();
                                         Result = "Fail";
                                     }
                                 }
@@ -315,90 +317,90 @@ public class LoginCTest {
                         case "password":
                             login.setPassword(value);
                             final String fieldValue2 = login.getPassword().getAttribute("value");
-                            String Origvalue = value;
+                         /*   String Origvalue = value;
                             String OrigenExpeted = Expeted;
                             String REs=  ValidationLogic(driver, fieldValue2, Origvalue, OrigenExpeted,Result1);
                             String ACT= ActualoutputFun(Acual);
                             Result=REs;
                             Actual=ACT;
                             System.out.println("R:"+Result);
-                            System.out.println("A:"+ACT);
-//                            if (fieldValue2.isEmpty()) {
-//                                try {
-//                                    if ((ExpectedConditions.alertIsPresent()) == null) {
-//
-//                                    } else {
-//                                        Alert alert = driver.switchTo().alert();
-//                                        Actual = driver.switchTo().alert().getText();
-//                                        if (Actual.equals(Expeted)) {
-//                                            Result = "pass";
-//                                        } else {
-//                                            Result = "Fail";
-//                                        }
-//                                        System.out.println(Actual);
-//                                        //    Thread.sleep(50);
-//                                        alert.accept();
-//
-//                                    }
-//
-//                                } catch (Throwable e) {Actual = "Alert message not display.";
-//                                    Result = "Fail";
-//                                }
-//
-//
-//                            } else {
-//                                if (fieldValue2.equals(value)) {
-//                                    if (!pattern.matcher(fieldValue2).matches()) {
-//                                        try {
-//                                            if ((ExpectedConditions.alertIsPresent()) == null) {
-//                                                Actual = "Alert message not display.";
-//                                                Result = "Fail";
-//                                            } else {
-//                                                Alert alert = driver.switchTo().alert();
-//                                                Actual = driver.switchTo().alert().getText();
-//                                                if (Actual.equals(Expeted)) {
-//                                                    Result = "pass";
-//                                                } else {
-//                                                    Result = "Fail";
-//                                                }
-//                                                System.out.println(Actual);
-//                                                //    Thread.sleep(50);
-//                                                alert.accept();
-//
-//                                            }
-//
-//                                        } catch (Throwable e) {Actual = "Alert message not display .";
-//                                            Result = "Fail";
-//                                        }
-//                                    } else {
-//                                        Result = "pass";
-//                                        System.out.println(fieldValue2);
-//                                        System.out.println(Result);
-//                                    }
-//                                } else {
-//                                    try {
-//                                        if ((ExpectedConditions.alertIsPresent()) == null) {
-//                                            Actual = "Alert message not display .";
-//                                            Result = "Fail";
-//                                        } else {
-//                                            Alert alert = driver.switchTo().alert();
-//                                            Actual = driver.switchTo().alert().getText();
-//                                            if (Actual.equals(Expeted)) {
-//                                                Result = "pass";
-//                                            } else {
-//                                                Result = "Fail";
-//                                            }
-//                                            System.out.println(Actual);
-//                                            //    Thread.sleep(50);
-//                                            alert.accept();
-//
-//                                        }
-//
-//                                    } catch (Throwable e) {Actual = "Alert message not display.";
-//                                        Result = "Fail";
-//                                    }
-//                                }
-//                            }
+                            System.out.println("A:"+ACT);*/
+                            if (fieldValue2.isEmpty()) {
+                               try {
+                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+
+                                    } else {
+                                        Alert alert = driver.switchTo().alert();
+                                        Actual = driver.switchTo().alert().getText();
+                                        if (Actual.equals(Expeted)) {
+                                            Result = "pass";
+                                       } else {
+                                            Result = "Fail";
+                                        }
+                                        System.out.println(Actual);
+                                        //    Thread.sleep(50);
+                                        alert.accept();
+
+                                    }
+
+                                } catch (Throwable e) {Actual = "Alert message not display.";
+                                    Result = "Fail";
+                                }
+
+
+                            } else {
+                                if (fieldValue2.equals(value)) {
+                                   if (!pattern.matcher(fieldValue2).matches()) {
+                                        try {
+                                            if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                Actual = "Alert message not display.";
+                                                Result = "Fail";
+                                            } else {
+                                                Alert alert = driver.switchTo().alert();
+                                                Actual = driver.switchTo().alert().getText();
+                                                if (Actual.equals(Expeted)) {
+                                                    Result = "pass";
+                                                } else {
+                                                   Result = "Fail";
+                                                }
+                                                System.out.println(Actual);
+                                               //    Thread.sleep(50);
+                                               alert.accept();
+
+                                            }
+
+                                        } catch (Throwable e) {Actual = "Alert message not display .";
+                                            Result = "Fail";
+                                        }
+                                    } else {
+                                       Result = "pass";
+                                       System.out.println(fieldValue2);
+                                        System.out.println(Result);
+                                    }
+                                } else {
+                                    try {
+                                       if ((ExpectedConditions.alertIsPresent()) == null) {
+                                            Actual = "Alert message not display .";
+                                            Result = "Fail";
+                                        } else {
+                                            Alert alert = driver.switchTo().alert();
+                                            Actual = driver.switchTo().alert().getText();
+                                            if (Actual.equals(Expeted)) {
+                                               Result = "pass";
+                                            } else {
+                                                Result = "Fail";
+                                           }
+                                            System.out.println(Actual);
+                                            //    Thread.sleep(50);
+                                           alert.accept();
+
+                                       }
+
+                                   } catch (Throwable e) {Actual = "Alert message not display.";
+                                      Result = "Fail";
+                                  }
+                               }
+                           }
                             break;
                     }
 

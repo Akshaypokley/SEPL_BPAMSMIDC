@@ -12,7 +12,7 @@ public class ApplicantMenu {
 
     WebDriver driver;
 
-    @FindBy(xpath = ".//*[@id='imgOrgHeader']")
+    @FindBy(xpath = ".//*[@id='lblDesign']")
     WebElement MenuLogo;
 
     /*ApplicationSubmission*/

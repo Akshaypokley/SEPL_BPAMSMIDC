@@ -498,7 +498,7 @@ public class Fire_console {
                                                         driver.switchTo().frame(frame);
                                                         Thread.sleep(1000);
 
-                                                        DateFun(driver,"17/01/2018");
+                                                        DateFun(driver,"17/02/2018");
 
                                                         driver.findElement(By.xpath(".//*[@id='btnsave']")).click();
                                                         Thread.sleep(1000);
@@ -593,7 +593,7 @@ public class Fire_console {
                                                                                     WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
                                                                                     ss.click();
                                                                                     Thread.sleep(300);
-                                                                                    AttachFuntn(driver, "E:\\Akshay\\Select.pdf");
+                                                                                    AttachFuntn(driver, "E:\\Akshay\\PWIMS Deployment.pdf");
                                                                                     Thread.sleep(1000);
                                                                                     Result="pass";
                                                                                 }
@@ -718,7 +718,7 @@ try{                 NewWindow(driver);
                                String ftext= t.getText();
                                   WebElement usernotes= driver.findElement(By.xpath(".//*[@id='txtUserNotes']"));
                                   usernotes.sendKeys(value);
-                                Thread.sleep(1000);
+                                Thread.sleep(2566);
                                 String jjj=usernotes.getText();
                                if(ftext.equals(value))
                                {
@@ -765,11 +765,11 @@ case "Document Submission":
 
     driver.findElement(By.xpath(".//*[@id='btnSave1']")).click();
 
-
+    Thread.sleep(3655);
 
     driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
 
-    Thread.sleep(32);
+
 break;
 
 case "Filter":

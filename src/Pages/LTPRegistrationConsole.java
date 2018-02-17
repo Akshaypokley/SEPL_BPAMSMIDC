@@ -54,10 +54,10 @@ public class LTPRegistrationConsole {
     @FindBy(xpath = ".//*[@id='txtAdd']")
     WebElement PostalAddress;
 
-    @FindBy(xpath = ".//*[@id='cboState']")
+    @FindBy(id = "cboState")
     WebElement State;
 
-    @FindBy(xpath = ".//*[@id='txtCity']")
+    @FindBy(id = "cboCity")
     WebElement City;
 
     @FindBy(xpath = ".//*[@id='txtZip']")
@@ -226,7 +226,7 @@ public class LTPRegistrationConsole {
     public void setState(String States)
     {
         Select combo=new Select(State);
-        combo.selectByValue(States);
+        combo.selectByVisibleText(States);
 
     }
 

@@ -12,9 +12,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by akshay.pokley on 1/30/2018.
  */
-public class ReconDate {
-    static WebDriver driver;
-    public static void RecDateFun(WebDriver driver, String seDate,int h) throws ParseException, InterruptedException
+public class RegDate {
+
+    public static void RegDateFun(WebDriver driver, String seDate) throws ParseException, InterruptedException
 
     {
 
@@ -23,10 +23,10 @@ public class ReconDate {
         Thread.sleep(1000);
         Date setDate=myDateFormat.parse(seDate);
         Thread.sleep(1000);
-        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-        driver.findElement(By.xpath(".//*[@id='ListPaymentReconsileGrid']/tbody/tr[2]/td[2]/div/div[1]/table/tbody/tr["+h+"]/td[9]")).click();
-driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-     Date curDate = calDateFormat.parse(driver.findElement(By.className("GLPickMYDown")).getText());
+        Thread.sleep(1000);
+        driver.findElement(By.xpath(".//*[@id='dtpk']/p/span/button")).click();
+
+        Date curDate = calDateFormat.parse(driver.findElement(By.className("datepicker-switch")).getText());
         Thread.sleep(1000);
         // Joda org.joda.time.Months class to calculate differenceThread.sleep(1000);
 // to do this converted Date to joda DatTime
@@ -41,10 +41,10 @@ driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 // iterate through month difference
         for(int i=1;i<=monthDiff;i++){
             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-            driver.findElement(By.xpath(".//*[@id='TreeGridControls']/div/div/div[6]/div/div/div/div/div[@class="+ (isFuture ? "'GLPickBR'" : "'GLPickBL'") + "]")).click();
+            driver.findElement(By.xpath("//html/body/div[2]/div[1]/table/thead/tr[1]/th[@class="+ (isFuture ? "'next'" : "'prev'") + "]")).click();
         }
 // Click on Day of Month from table
-        driver.findElement(By.xpath("//tr[@class='GLPickRow']/td/div[text()='" + (new org.joda.time.DateTime(setDate).getDayOfMonth()) + "']")).click();
+        driver.findElement(By.xpath("//html/body/div[2]/div[1]/table/tbody/tr/td[text()='" + (new org.joda.time.DateTime(setDate).getDayOfMonth()) + "']")).click();
 
 
 

@@ -46,7 +46,7 @@ public class AttachFunction {
         }
 
 
-        Thread.sleep(4000);
+
         //WebDriverWait wait = new WebDriverWait(driver,1000);
 
     }
