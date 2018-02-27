@@ -81,7 +81,7 @@ public class ACT {
     public static ApplicantMenu applicantMenu;
     public static String subWindowHandler = null;
     public static String Actvalue;
-public static int x=3;
+    public static int x=3;
     public static int u;
     public static int vb=2;
     public static int k1;
@@ -175,7 +175,7 @@ public static int x=3;
                 targetSheet.setColumnView(3, widthInChars2);
                 targetSheet.mergeCells(0, 0, 6, 0);
                 Label lable = new Label (0, 0,
-                        "Forgot Password screen test  report",cellFormat5);
+                        "Applicant screen test Result",cellFormat5);
                 targetSheet.addCell(lable);
                 targetSheet.addCell(l2);
                 targetSheet.addCell(l3);
@@ -222,7 +222,10 @@ public static int x=3;
                  switch (objectName)
                  {
                      case "Closed":
+                         Thread.sleep(1000);
                          driver.quit();
+                         Thread.sleep(1000);
+                         Result="pass";
                  }
 
                     break;
@@ -246,7 +249,9 @@ public static int x=3;
 
 
                         case "Main Frame":
-                            try{application=new Application(driver);
+                            try{
+
+                                application=new Application(driver);
                                 applicantMenu=new ApplicantMenu(driver);
                                 driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
                                 driver.switchTo().frame("ifrmListing");
@@ -644,6 +649,35 @@ try{
                     String WinHandleBefore1 = driver.getWindowHandle();
                     switch (objectName) {
 /************************************************************************************************/
+
+                        case "Filter":
+                            try
+                            {
+                                List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='form1']/div[3]/div/div/div[5]/div/div/div/div/div[2]/table/tbody/tr/td/div/button"));
+
+                                for (WebElement cell : cells) {
+                                    String fiels = cell.getText();
+                                    System.out.println(fiels);
+
+                                    if (fiels.equals(value)) {
+                                        cell.click();
+                                        Result="pass";
+                                        Actual="Done";
+                                        break;
+                                    }
+                                }
+                            }
+                            catch (Throwable t)
+                            {
+                                Actual=t.getMessage();
+                                Result="fails";
+                            }
+                            break;
+
+
+
+
+
                         case "Click On proposal":
                             try{
 
@@ -925,70 +959,79 @@ try{
                             break;
 /*---------------------------------------------- Drawing Deatials --------------------------------------------------------*/
                         case "Attach Drawing":
-                            driver.switchTo().parentFrame();
-                            application.ClickDrawing_Tab();
-                            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-                            driver.switchTo().frame("ifrmDrawings");
-                            String St = application.getDrawing_Data().getText();
-                            if (St.equals("No data found")) {
-                                driver.findElement(By.id("btnAttached")).click();
-                                if ((ExpectedConditions.alertIsPresent()) == null) {
 
-                                } else {
-                                    Alert alert = driver.switchTo().alert();
-
-                                    //  Actual = driver.switchTo().alert().getText();
-                                    Thread.sleep(1000);
-                                    alert.accept();
-                                }
-                                Thread.sleep(100);
-                                BeforeWH(driver);
-
-                                WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
-                                ss.click();
-                                Thread.sleep(1000);
-                                AttachFuntn(driver, FilePath2);
-                                Thread.sleep(40);
-                                driver.switchTo().window(WinHandleBefore1);
-                                Thread.sleep(1000);
-                                if ((ExpectedConditions.alertIsPresent()) == null) {
-
-                                } else {
-                                    Thread.sleep(1000);
-                                    Alert alert = driver.switchTo().alert();
-
-                                    //  Actual = driver.switchTo().alert().getText();
-                                    Thread.sleep(1000);
-                                    alert.accept();
-                                    Thread.sleep(70);
-
-
-                                }
-
-                            } else {
-                                driver.findElement(By.id("btnAttached")).click();
-                                if ((ExpectedConditions.alertIsPresent()) == null) {
-
-                                } else {
-                                    Alert alert = driver.switchTo().alert();
-
-                                    //  Actual = driver.switchTo().alert().getText();
-                                    Thread.sleep(11000);
-                                    alert.accept();
-                                    Thread.sleep(01);
-
-
-                                }
-                            }
                             try{driver.switchTo().parentFrame();
-                                driver.switchTo().frame("ifrmListing");
-                                driver.findElement(By.xpath(".//*[@id='ProjectTab']/a")).click();
-                                driver.switchTo().frame("ifrmProjectInfo");
-                                Result = "pass";}catch (Throwable g)
+
+                                Thread.sleep(1000);
+                                application.ClickDrawing_Tab();
+                                driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                                driver.switchTo().frame("ifrmDrawings");
+                                String St = application.getDrawing_Data().getText();
+                                if (St.equals("No data found")) {
+                                    driver.findElement(By.id("btnAttached")).click();
+                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+
+                                    } else {
+                                        Alert alert = driver.switchTo().alert();
+
+                                        //  Actual = driver.switchTo().alert().getText();
+                                        Thread.sleep(1000);
+                                        alert.accept();
+                                    }
+                                    Thread.sleep(100);
+                                    BeforeWH(driver);
+
+                                    WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
+                                    ss.click();
+                                    Thread.sleep(1000);
+                                    AttachFuntn(driver, FilePath2);
+                                    Thread.sleep(40);
+                                    driver.switchTo().window(WinHandleBefore1);
+                                    Thread.sleep(1000);
+                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+
+                                    } else {
+                                        Thread.sleep(1000);
+                                        Alert alert = driver.switchTo().alert();
+
+                                        //  Actual = driver.switchTo().alert().getText();
+                                        Thread.sleep(1000);
+                                        alert.accept();
+                                        Thread.sleep(70);
+
+
+                                    }
+
+                                } else {
+                                    driver.findElement(By.id("btnAttached")).click();
+                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+
+                                    } else {
+                                        Alert alert = driver.switchTo().alert();
+
+                                        //  Actual = driver.switchTo().alert().getText();
+                                        Thread.sleep(11000);
+                                        alert.accept();
+                                        Thread.sleep(01);
+
+
+                                    }
+                                }
+                                try{driver.switchTo().parentFrame();
+                                    driver.switchTo().frame("ifrmListing");
+                                    driver.findElement(By.xpath(".//*[@id='ProjectTab']/a")).click();
+                                    driver.switchTo().frame("ifrmProjectInfo");
+                                    Result = "pass";}catch (Throwable g)
+                                {
+                                    Result="Fails";
+                                    Actual=g.getMessage();
+                                }
+                            }catch (Throwable d)
                             {
-                                Result="Fails";
-                                Actual=g.getMessage();
+                                Actual=d.getMessage();
+                                Result="fails";
                             }
+
 
 
                             break;
@@ -1071,12 +1114,12 @@ try{
                                                     } else {
 
                                                     }
-                                                    Thread.sleep(10);
-                                                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                                                    Thread.sleep(12);
+                                                    driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
                                                     WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[2]"));
                                                     String d = fiels3.getText();
                                                     System.out.println(d);
-                                                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                                                    driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
                                                     WebElement df = driver.findElement(By.xpath(".//*[@id='category_Doc" + k + "']/div/table/tbody/tr[2]/td[3]/a"));
                                                     String y = df.getText();
                                                     if (!y.equals("Attach Files")) {
@@ -1084,7 +1127,7 @@ try{
                                                     } else {
                                                         df.click();
                                                         System.out.println(k);
-                                                        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+                                                        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
 
                                                         driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
                                                         driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
@@ -1126,12 +1169,12 @@ Thread.sleep(1000);
                                                 }
 
                                                 try {
-                                                    Thread.sleep(10);
-                                                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                                                    Thread.sleep(1000);
+                                                    driver.manage().timeouts().implicitlyWait(15l, TimeUnit.SECONDS);
                                                     WebElement fiels3 = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[2]"));
                                                     String d = fiels3.getText();
                                                     System.out.println(d);
-                                                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                                                    driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
                                                     WebElement ty = driver.findElement(By.xpath(".//*[@id='category_Doc" + l + "']/div/table/tbody/tr[2]/td[3]/a"));
                                                     String h = ty.getText();
@@ -1139,7 +1182,7 @@ Thread.sleep(1000);
                                                     if (!h.equals("Attach Files")) {
                                                     } else {
                                                         ty.click();
-                                                        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+                                                        driver.manage().timeouts().implicitlyWait(16, TimeUnit.SECONDS);
 
                                                         driver.switchTo().frame("RadWindowContentFrameRadWindowManager2_RadPopupWindow");
                                                         driver.findElement(By.xpath("//html/body/form/table/tbody/tr[3]/td/table/tbody/tr[2]/td/input")).click();
@@ -1489,7 +1532,7 @@ Thread.sleep(1000);
 
                         case "Proposal Type":
                             try{
-                                applicantMenu=new ApplicantMenu(driver);
+                                //applicantMenu=new ApplicantMenu(driver);
                                 application.selectProposal_Type(value);
                                 Result = "pass";
 
@@ -1594,6 +1637,7 @@ Thread.sleep(1000);
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
+
                                         cell.click();
                                     Result = "pass";
                                 }
@@ -1618,6 +1662,7 @@ Thread.sleep(1000);
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
+
                                         cell.click();
                                     Result = "pass";
                                 }
@@ -1644,6 +1689,7 @@ Thread.sleep(1000);
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
+
                                         cell.click();
                                     Result = "pass";
                                 }
@@ -1670,6 +1716,7 @@ Thread.sleep(1000);
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
+
                                         cell.click();
                                     Result = "pass";
                                 }
@@ -1687,6 +1734,23 @@ Thread.sleep(1000);
 
                     switch (objectName) {
 
+                        case "Enter Keyword for search":
+                            try{
+                                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                                Actions actionsff = new Actions(driver);
+                                actionsff.moveToElement(driver.findElement(By.xpath(".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")));
+                                actionsff.doubleClick();
+                                actionsff.sendKeys(value);
+                                actionsff.build().perform();
+                                Result="pass";
+
+                            }catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
+                            }
+
+break;
                         case "SWC File No":
 
                             try{ driver.manage().timeouts().implicitlyWait(25,TimeUnit.SECONDS);

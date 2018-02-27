@@ -44,7 +44,7 @@ import static jxl.format.Colour.LIGHT_TURQUOISE;
 /**
  * Created by akshay.pokley on 12/19/2017.
  */
-public class SPA_console {
+public class SPA_console_Secon {
 
     static WebDriver driver;
     public Label l4;
@@ -83,7 +83,7 @@ public class SPA_console {
     public static String Actvalue;
     public static int x=3;
     public static int vb=2;
-    public static int k1=1;
+    public static int k1;
     public static int rr=1;
     public static int Chsv=2;
     public static int inc=2;
@@ -93,9 +93,9 @@ public class SPA_console {
     @BeforeTest
     public  void OutputExcelCreation() throws IOException, BiffException, WriteException {
 
-        sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/SPATestData.xls"));
+        sourceDocument = Workbook.getWorkbook(new File("ExcelData/InputData/SPATestData_sECON.xls"));
         writableTempSource = Workbook.createWorkbook(new File("ExcelData/InputData/temp.xls"), sourceDocument);
-        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/SPAReports/SPATestReport.xls"));
+        copyDocument = Workbook.createWorkbook(new File("ExcelData/TestReport/SPAReports/SPATestReport2.xls"));
         sourceSheet = writableTempSource.getSheet(0);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
@@ -213,13 +213,13 @@ public class SPA_console {
             targetSheet.addCell(l7);
             Label l8 = new Label(6, SetBord, "", cellFormat6);
             targetSheet.addCell(l8);
+            k1=1;
         } else {
             SetBord = j++;
         }
 
         try {
             switch (keyword.toUpperCase()) {
-
                 case"BROWSER CLOSED":
                     switch (objectName)
                     {
@@ -234,7 +234,7 @@ public class SPA_console {
                     switch (objectName)
                     {
                         case "Main Frame":
-                            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                             driver.switchTo().frame("ifrmListing");
                             Result="pass";
 
@@ -259,19 +259,34 @@ public class SPA_console {
                             break;
 
                         case "Save Reconciliation Status":
-                            driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
-                            Thread.sleep(2315);
-                            if ((ExpectedConditions.alertIsPresent()) == null) {
-                                System.out.println("alert was not present");
-                            } else {
-                                Alert alert = driver.switchTo().alert();
-                                Actual = driver.switchTo().alert().getText();
-                                alert.accept();
+                            try{ driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
+                                Thread.sleep(2315);
+                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    System.out.println("alert was not present");
+                                } else {
+                                    Alert alert = driver.switchTo().alert();
+                                    Actual = driver.switchTo().alert().getText();
+                                    alert.accept();
+
+                                    Thread.sleep(6000);
+
+                                    Alert alert3 = driver.switchTo().alert();
+                                    Actual = driver.switchTo().alert().getText();
+                                    alert3.accept();
+                                }
+
+                            }catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
                             }
+
+
+
                             break;
 
                         case "Change Reconciliation Status":
-                            Thread.sleep(1000);
+Thread.sleep(100);
                             //  driver.switchTo().frame("ifrmListing");
                             try {
                                 WebElement Reco=driver.findElement(By.xpath(".//*//tr[6]/td/div/table/tbody/tr/td[5]/div/b"));
@@ -346,7 +361,6 @@ public class SPA_console {
 
                         case "Pending Demand Note":
 
-                            driver.switchTo().frame("ifrmListing");
                             try {
                                 List<WebElement> cells = driver.findElements(By.xpath(".//*/tr[2]/td[2]/div/div[1]/table/tbody//td[2]"));
 
@@ -366,6 +380,8 @@ public class SPA_console {
                                             String dddd=dee.getText();
                                             System.out.println(dddd);
 
+                                            Result="pass";
+
                                         }
 
 
@@ -373,6 +389,8 @@ public class SPA_console {
                                     ++vb;
                                 }
                             } catch (Throwable e) {
+                                Actual=e.getMessage();
+                                Result="fails";
 
                             }
 
@@ -461,20 +479,25 @@ public class SPA_console {
                     switch (objectName) {
                         case "Get Opertional Bar Details":
 
+                            try{
 
-                            if ( Actual.equals("File not Found")|| Actual.equals("Tab not present.")||Actual.equals("Sub Tab not present.")||Actual.equals("No data found")) {
+                                if ( Actual.equals("File not Found")|| Actual.equals("Tab not present.")||Actual.equals("Sub Tab not present.")||Actual.equals("No data found")) {
 
-                                Result="fail";
-                                Actual="File Not found";
-                                //driver.quit();
-                            } else {
-
-                                try{driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                                    Result="fail";
+                                    Actual="File Not found";
+                                    //driver.quit();
+                                } else {
+                                    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
                                     driver.switchTo().frame("ifrmToolbar");
+
+
+
                                     List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
                                     for (WebElement cell : d) {
-                                        Thread.sleep(4000);
+
+                                        Thread.sleep(8000);
+                                        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
                                         String fiels = cell.getText();
                                         System.out.println("Tool bar Componets are " + fiels);
                                         Result = "pass";
@@ -504,10 +527,10 @@ public class SPA_console {
                                             /* // hit enter*/
                                             } else {
 
-                                                if(fiels.equals(" Change Status")){
+                                                if (fiels.equals(" Change Status")) {
                                                     cell.click();
                                                     NewWindow(driver);
-                                                    Result="pass";
+                                                    Result = "pass";
 
                                                 } else {
                                                     if (fiels.equals(" Notesheet")) {
@@ -539,8 +562,10 @@ public class SPA_console {
                                                                 WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
                                                                 driver.switchTo().frame(frame);
                                                                 Thread.sleep(1000);
-                                                                if(fiels.equals(" Update Demand")){}else { DateFun(driver, "19/02/2018");}
-
+                                                                if (fiels.equals(" Update Demand")) {
+                                                                } else {
+                                                                    DateFun(driver, "19/02/2018");
+                                                                }
 
 
                                                             } catch (NoSuchElementException gh) {
@@ -551,8 +576,7 @@ public class SPA_console {
 
 
                                                         } else {
-                                                            if(fiels.equals(" Approve")||fiels.equals(" Reject"))
-                                                            {
+                                                            if (fiels.equals(" Approve") || fiels.equals(" Reject")) {
                                                                 cell.click();
                                                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                                                 } else {
@@ -561,7 +585,7 @@ public class SPA_console {
                                                                     alert.accept();
 
                                                                 }
-                                                            }else {
+                                                            } else {
 
                                                                 if (fiels.equals(" Site Details")) cell.click();
                                                                 {
@@ -669,43 +693,55 @@ public class SPA_console {
                                             /* // hit enter*/
                                                     } else {
 
-                                                        if (fiels1.equals(" IFMS Outward No")) {
 
-                                                            cell1.click();
-                                                            driver.switchTo().parentFrame();
+                                                        try{
 
-                                                            WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
-                                                            driver.switchTo().frame(frame);
-                                                            String jjj=driver.findElement(By.xpath(".//*[@id='lblrepass']")).getText();
-                                                            System.out.println(jjj);
-                                                            // DateFun(driver, "19/01/2018");
-                                                            driver.findElement(By.xpath("//div/div/div/table/tbody/tr[3]/td[2]/input")).sendKeys("1235");
-                                                            driver.findElement(By.xpath("html/body/form/div[4]/div[2]/div/div/input")).click();
-                                                            if ((ExpectedConditions.alertIsPresent()) == null) {
-                                                            } else {
-                                                                Alert alert = driver.switchTo().alert();
-                                                                Actual = alert.getText();
-                                                                alert.accept();
+                                                            if (fiels1.equals(" IFMS Outward No")) {
 
-                                                                Thread.sleep(2333);
+                                                                cell1.click();
+                                                                driver.switchTo().parentFrame();
+
+                                                                WebElement frame = driver.findElement(By.xpath("//iframe[@frameborder='0']"));
+                                                                driver.switchTo().frame(frame);
+                                                                String jjj=driver.findElement(By.xpath(".//*[@id='lblrepass']")).getText();
+                                                                System.out.println(jjj);
+                                                                // DateFun(driver, "19/01/2018");
+                                                                driver.findElement(By.xpath("//div/div/div/table/tbody/tr[3]/td[2]/input")).sendKeys("1235");
+                                                                driver.findElement(By.xpath("html/body/form/div[4]/div[2]/div/div/input")).click();
                                                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                                                 } else {
-                                                                    Alert alert2 = driver.switchTo().alert();
-                                                                    Actual = alert2.getText();
-                                                                    alert2.accept();
+                                                                    Alert alert = driver.switchTo().alert();
+                                                                    Actual = alert.getText();
+                                                                    alert.accept();
 
+                                                                    Thread.sleep(2333);
+                                                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                                    } else {
+                                                                        Alert alert2 = driver.switchTo().alert();
+                                                                        Actual = alert2.getText();
+                                                                        alert2.accept();
+
+                                                                    }
                                                                 }
+
+                                                                Thread.sleep(2333);
+                                                                // driver.findElement(By.xpath(".//*[@id='RadWindowWrapper_RadWM1516363740822']/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/ul/li/a")).click();
+
+
                                                             }
 
-                                                            Thread.sleep(2333);
-                                                            // driver.findElement(By.xpath(".//*[@id='RadWindowWrapper_RadWM1516363740822']/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/ul/li/a")).click();
-
-
+                                                        }catch (Throwable j)
+                                                        {
+                                                            Actual=j.getMessage();
+                                                            Result="fails";
                                                         }
+
+
+
 //driver.switchTo().parentFrame();
                                                     }
                                                     Result = "pass";
-                                                    driver.close();
+                                                    //driver.close();
                                                     break;
                                                 } else {
                                                     Result = "fail";
@@ -717,17 +753,20 @@ public class SPA_console {
 
 
                                     }
-                                }catch (Throwable g)
-                                {
-                                    Result="Fails";
-                                    Actual=g.getMessage();
+
+
+
                                 }
 
-
-
-
+                            }catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
                             }
-                    }break;
+
+
+
+                    }    break;
 
 
 
@@ -738,55 +777,73 @@ public class SPA_console {
                     switch (objectName) {
 /************************************************************************************************/
                         case "Demand Note Submission/updation":
+                            try{     List<WebElement> links= driver.findElements(By.xpath(".//*[@id='divSave']/input"));
 
-                        List<WebElement> links= driver.findElements(By.xpath(".//*[@id='divSave']/input"));
+                                for(WebElement ll:links){
+                                    String ls=ll.getAttribute("value");
+                                    System.out.println(ls);
+                                    if(ls.equals(value))
+                                    {
+                                        ll.click();
+                                        Thread.sleep(5000);
+                                        if ((ExpectedConditions.alertIsPresent()) == null) {
+                                        } else {
+                                            Alert alert2 = driver.switchTo().alert();
+                                            Actual = alert2.getText();
+                                            alert2.accept();
+                                            Thread.sleep(6000);
+                                            if ((ExpectedConditions.alertIsPresent()) == null) {
+                                            } else {
+                                                Alert alert22 = driver.switchTo().alert();
+                                                Actual = alert22.getText();
+                                                alert22.accept();
+                                            }
+                                        }
+                                        driver.switchTo().parentFrame();
+                                        //  driver.quit();
+                                        Thread.sleep(1000);
+                                        break;
+                                    }
+                                }
 
-                        for(WebElement ll:links){
-                            String ls=ll.getAttribute("value");
-                            System.out.println(ls);
-                            if(ls.equals(value))
+                            }catch (Throwable g)
                             {
-                                ll.click();
-                                Thread.sleep(1000);
-                                if ((ExpectedConditions.alertIsPresent()) == null) {
-                                } else {
-                                    Alert alert2 = driver.switchTo().alert();
-                                    Actual = alert2.getText();
-                                    alert2.accept();
-                                    Thread.sleep(4000);
-                                    if ((ExpectedConditions.alertIsPresent()) == null) {
-                                    } else {
-                                        Alert alert22 = driver.switchTo().alert();
-                                        Actual = alert22.getText();
-                                        alert22.accept();
-                                }
-                                }
-                                driver.switchTo().parentFrame();
-                                //  driver.quit();
-                                Thread.sleep(1000);
-                                break;
+                                Result="Fails";
+                                Actual=g.getMessage();
                             }
-                        }
+
+
+
 break;
                         case "Site visit Submission":
-                            List<WebElement> svs=driver.findElements(By.xpath(".//*[@id='seTB']/tbody/tr/td[2]/a"));
-                            for(WebElement svs1:svs)
-                            {
-                                String sh= svs1.getText();
-                                if(sh.equals(value))
-                                {  svs1.click();
-                                    Thread.sleep(2333);
-                                    if ((ExpectedConditions.alertIsPresent()) == null) {
-                                    } else {
-                                        Alert alert2 = driver.switchTo().alert();      Actual=alert2.getText();
-                                        alert2.accept();}
+                            try{
+                                Thread.sleep(2333);
+                                List<WebElement> svs=driver.findElements(By.xpath(".//*[@id='seTB']/tbody/tr/td[2]/a"));
+                                for(WebElement svs1:svs)
+                                {
+                                    String sh= svs1.getText();
+                                    if(sh.equals(value))
+                                    {  svs1.click();
+                                        Thread.sleep(2333);
+                                        if ((ExpectedConditions.alertIsPresent()) == null) {
+                                        } else {
+                                            Alert alert2 = driver.switchTo().alert();      Actual=alert2.getText();
+                                            alert2.accept();}
 
-Result="pass";
+                                        Result="pass";
 
+                                    }
                                 }
+
+                                Thread.sleep(32);
+                            }catch (Throwable g)
+                            {
+                                Result="Fails";
+                                Actual=g.getMessage();
                             }
 
-                            Thread.sleep(32);
+
+
                             break;
                         case "Document Submission":
 
@@ -821,10 +878,10 @@ Result="pass";
                             }
 break;
                         case "Save/Submit challan details":
-                            driver.findElement(By.xpath(".//*[@id='SetB']/tbody/tr/td[2]/a[1]")).click();
-                            Thread.sleep(2333);
-                            try {
 
+                            try {
+                                driver.findElement(By.xpath(".//*[@id='SetB']/tbody/tr/td[2]/a[1]")).click();
+                                Thread.sleep(2333);
                                 if ((ExpectedConditions.alertIsPresent()) == null) {
                                 } else {
                                     Alert alert = driver.switchTo().alert();      Actual=alert.getText();
@@ -848,8 +905,9 @@ break;
 
                             }catch (Throwable j)
                             {
-                                System.out.println(j.getMessage());
-                                Result="pass";
+                                Actual=j.getMessage();
+                                Result="fails";
+
                             }
                             Result="pass";
 break;
@@ -1836,18 +1894,38 @@ break;
                             break;
 
                         case "UTR No.":
-                            driver.findElement(By.xpath(".//*[@id='txtPayOrderNo']")).sendKeys(value);
-                            Result = "pass";
+
+                            try{
+                                driver.findElement(By.xpath(".//*[@id='txtPayOrderNo']")).sendKeys(value);
+                                Result = "pass";}catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
+                            }
+
+
                             break;
                         case "Branch Name":
-                            driver.findElement(By.xpath(".//*[@id='txtChequeBranch']")).sendKeys(value);
-                            Result = "pass";
+
+                            try{driver.findElement(By.xpath(".//*[@id='txtChequeBranch']")).sendKeys(value);
+                                Result = "pass";}catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
+                            }
                             break;
 
 
                         case "Set proposed value":
-                            driver.findElement(By.xpath("html/body/form/table[2]/tbody/tr["+x+"]/td[4]/input")).sendKeys(value);
-                            Result = "pass";
+
+                            try{driver.findElement(By.xpath("html/body/form/table[2]/tbody/tr["+x+"]/td[4]/input")).sendKeys(value);
+                                Result = "pass";}catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
+                            }
+
+
                             break;
 
                         case "Proposal Title":
@@ -2646,7 +2724,7 @@ break;
     @DataProvider(name = "hybridData")
     public Object[][] getDataFromDataprovider() throws IOException {
         Object[][] object = null;
-        FileInputStream fis = new FileInputStream("ExcelData/InputData/SPATestData.xls");
+        FileInputStream fis = new FileInputStream("ExcelData/InputData/SPATestData_sECON.xls");
         HSSFWorkbook wb = new HSSFWorkbook(fis);
         HSSFSheet sh = wb.getSheet("SPA");
         //  HSSFRow rows = sh.getRow(1);

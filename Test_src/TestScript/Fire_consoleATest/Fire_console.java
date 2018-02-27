@@ -222,7 +222,15 @@ public class Fire_console {
 
         try {
             switch (keyword.toUpperCase()) {
-
+                case"BROWSER CLOSED":
+                    switch (objectName)
+                    {
+                        case "Closed":
+                            Thread.sleep(1000);
+                            driver.quit();
+                            Thread.sleep(1000);
+                            Result="pass";
+                    }
 
                 case "FRAME":
 
@@ -498,7 +506,7 @@ public class Fire_console {
                                                         driver.switchTo().frame(frame);
                                                         Thread.sleep(1000);
 
-                                                        DateFun(driver,"17/02/2018");
+                                                        DateFun(driver,"20/02/2018");
 
                                                         driver.findElement(By.xpath(".//*[@id='btnsave']")).click();
                                                         Thread.sleep(1000);
@@ -596,6 +604,20 @@ public class Fire_console {
                                                                                     AttachFuntn(driver, "E:\\Akshay\\PWIMS Deployment.pdf");
                                                                                     Thread.sleep(1000);
                                                                                     Result="pass";
+                                                                                }else
+                                                                                    {
+
+                                                                                        if(fiels.equals(" Save Drawing Data"))
+                                                                                        {
+                                                                                            cell.click();
+                                                                                            Thread.sleep(1000);
+                                                                                            if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                                                            } else {
+                                                                                                Alert alert = driver.switchTo().alert();
+                                                                                                Actual = alert.getText();
+                                                                                                alert.accept();
+                                                                                            }
+                                                                                }
                                                                                 }
                                                                             }
 
@@ -762,12 +784,18 @@ try{                 NewWindow(driver);
 /************************************************************************************************/
 
 case "Document Submission":
+    try{
 
-    driver.findElement(By.xpath(".//*[@id='btnSave1']")).click();
+        driver.findElement(By.xpath(".//*[@id='btnSave1']")).click();
 
-    Thread.sleep(3655);
+        Thread.sleep(3655);
 
-    driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+        driver.findElement(By.xpath("html/body/span/table/tbody/tr[1]/td[2]/table/tbody/tr/td[3]/img")).click();
+
+    }catch (Throwable d)
+    {Actual=d.getMessage();
+    Result="fail";}
+
 
 
 break;
@@ -1789,16 +1817,16 @@ break;
                                 Result="pass";
                                 Thread.sleep(30000);
                                 driver.findElement(By.xpath(".//*[@id='btnSave']")).click();
-                                driver.close();
+                                //driver.close();
                               //  driver.switchTo().parentFrame();
                                  String WinHandleBefore = driver.getWindowHandle();
 
 driver.switchTo().window(WinHandleBefore);
-                               driver.quit();
+                              // driver.quit();
                                 }catch (Throwable h){
                                 Result="fail";
                                 Actual=h.getMessage();
-                              driver.quit();
+                              //driver.quit();
                             }
 
                             break;
