@@ -212,6 +212,7 @@ public class ACT_TestNG {
             k1 = 1;
         } else {
             SetBord = j++;
+
         }
 
         try {
