@@ -203,24 +203,26 @@ public class RSALL {
     @Test(dataProvider = "hybridData")
     public static void ApplicationTest(String testcaseName, String keyword, String objectName, String value, String Expected) throws Exception {
 
-        if (testcaseName != null && testcaseName.length() != 0) {
 
-            driver = openBrowser("chrome");
-            GetUrl("url");
-            Thread.sleep(200);
-            SetBord = j++;
-            Label l7 = new Label(5, SetBord, "", cellFormat6);
-            targetSheet.addCell(l7);
-            Label l8 = new Label(6, SetBord, "", cellFormat6);
-            targetSheet.addCell(l8);
-            k1=1;
-            targetSheet.mergeCells(u, u,6 , u);
+    if (testcaseName != null && testcaseName.length() != 0) {
 
-        } else {
-            SetBord = j++;
+    driver = openBrowser("chrome");
+    GetUrl("url");
+    Thread.sleep(200);
+    SetBord = j++;
+    Label l7 = new Label(5, SetBord, "", cellFormat6);
+    targetSheet.addCell(l7);
+    Label l8 = new Label(6, SetBord, "", cellFormat6);
+    targetSheet.addCell(l8);
+    k1=1;
+    targetSheet.mergeCells(2, 2,6 , 2);
+
+} else {
+    SetBord = j++;
 
 
-        }
+}
+
 
         try {
             switch (keyword.toUpperCase()) {

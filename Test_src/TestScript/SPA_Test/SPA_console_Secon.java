@@ -99,10 +99,10 @@ public class SPA_console_Secon {
         sourceSheet = writableTempSource.getSheet(0);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
-        WritableFont cellFont = new WritableFont(WritableFont.COURIER, 11);
+        WritableFont cellFont = new WritableFont(WritableFont.TIMES, 11);
         cellFont.setBoldStyle(WritableFont.BOLD);
 /************************************************************************************************/
-        WritableFont cellFont2 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont2 = new WritableFont(WritableFont.TIMES, 10);
         cellFont2.setColour(BLACK);
         //cellFont2.setBoldStyle(WritableFont.BOLD);
         cellFormat1 = new WritableCellFormat(cellFont2);
@@ -110,14 +110,14 @@ public class SPA_console_Secon {
         cellFormat1.setWrap(true);
 /*******************************************************************************************************/
 /************************************************************************************************/
-        WritableFont cellFont3 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont3 = new WritableFont(WritableFont.TIMES, 10);
         cellFont3.setColour(RED);
         // cellFont3.setBoldStyle(WritableFont.BOLD);
         cellFormat3 = new WritableCellFormat(cellFont3);
         cellFormat3.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat3.setWrap(true);
 
-        WritableFont cellFont4 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont4 = new WritableFont(WritableFont.TIMES, 10);
         cellFont4.setColour(GREEN);
         // cellFont4.setBoldStyle(WritableFont.BOLD);
         cellFormat4 = new WritableCellFormat(cellFont4);
@@ -126,25 +126,25 @@ public class SPA_console_Secon {
 
 
         cellFormat = new WritableCellFormat(cellFont);
-        cellFormat.setBackground(LIGHT_BLUE);
+        cellFormat.setBackground(PALE_BLUE);
         cellFormat.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat.setWrap(true);
         cellFormat2 = new WritableCellFormat(cellFont);
         cellFormat2.setBackground(RED);
         //cellFormat.setAlignment(jxl.format.Alignment.getAlignment(20));
-        WritableFont cellFont5 = new WritableFont(WritableFont.COURIER, 18);
+        WritableFont cellFont5 = new WritableFont(WritableFont.TIMES, 18);
         cellFont5.setColour(BLACK);
         cellFont5.setBoldStyle(WritableFont.BOLD);
         cellFormat5 = new WritableCellFormat(cellFont5);
         cellFormat5.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-        cellFormat5.setBackground(LIGHT_BLUE);
+        cellFormat5.setBackground(PALE_BLUE);
         cellFormat5.setAlignment(Alignment.CENTRE);
 
 
         cellFormat6 = new WritableCellFormat(cellFont2);
         cellFormat6.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat6.setWrap(true);
-        cellFormat6.setBackground(LIGHT_TURQUOISE);
+        cellFormat6.setBackground(PALE_BLUE);
         //  sheet.addCell(new Label(col, 1, "CCCCC", cellFormat));
 
         for (int row = 0; row < sourceSheet.getRows(); row++) {
@@ -311,7 +311,7 @@ Thread.sleep(100);
                                         else {
 
                                             Thread.sleep(1000);
-                                            RecDateFun(driver,"13/02/2018",Rec);
+                                            RecDateFun(driver,"6/03/2018",Rec);
                                             Thread.sleep(1000);
                                             Actions actions = new Actions(driver);
                                             actions.moveToElement(re);
@@ -564,7 +564,7 @@ Thread.sleep(100);
                                                                 Thread.sleep(1000);
                                                                 if (fiels.equals(" Update Demand")) {
                                                                 } else {
-                                                                    DateFun(driver, "19/02/2018");
+                                                                    DateFun(driver, "5/03/2018");
                                                                 }
 
 

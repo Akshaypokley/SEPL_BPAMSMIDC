@@ -102,10 +102,10 @@ public class Fire_console_seco {
         sourceSheet = writableTempSource.getSheet(0);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
-        WritableFont cellFont = new WritableFont(WritableFont.COURIER, 11);
+        WritableFont cellFont = new WritableFont(WritableFont.TIMES, 11);
         cellFont.setBoldStyle(WritableFont.BOLD);
 /************************************************************************************************/
-        WritableFont cellFont2 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont2 = new WritableFont(WritableFont.TIMES, 10);
         cellFont2.setColour(BLACK);
         //cellFont2.setBoldStyle(WritableFont.BOLD);
         cellFormat1 = new WritableCellFormat(cellFont2);
@@ -113,14 +113,14 @@ public class Fire_console_seco {
         cellFormat1.setWrap(true);
 /*******************************************************************************************************/
 /************************************************************************************************/
-        WritableFont cellFont3 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont3 = new WritableFont(WritableFont.TIMES, 10);
         cellFont3.setColour(RED);
         // cellFont3.setBoldStyle(WritableFont.BOLD);
         cellFormat3 = new WritableCellFormat(cellFont3);
         cellFormat3.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat3.setWrap(true);
 
-        WritableFont cellFont4 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont4 = new WritableFont(WritableFont.TIMES, 10);
         cellFont4.setColour(GREEN);
         // cellFont4.setBoldStyle(WritableFont.BOLD);
         cellFormat4 = new WritableCellFormat(cellFont4);
@@ -129,25 +129,25 @@ public class Fire_console_seco {
 
 
         cellFormat = new WritableCellFormat(cellFont);
-        cellFormat.setBackground(LIGHT_BLUE);
+        cellFormat.setBackground(PALE_BLUE);
         cellFormat.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat.setWrap(true);
         cellFormat2 = new WritableCellFormat(cellFont);
         cellFormat2.setBackground(RED);
         //cellFormat.setAlignment(jxl.format.Alignment.getAlignment(20));
-        WritableFont cellFont5 = new WritableFont(WritableFont.COURIER, 18);
+        WritableFont cellFont5 = new WritableFont(WritableFont.TIMES, 18);
         cellFont5.setColour(BLACK);
         cellFont5.setBoldStyle(WritableFont.BOLD);
         cellFormat5 = new WritableCellFormat(cellFont5);
         cellFormat5.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-        cellFormat5.setBackground(LIGHT_BLUE);
+        cellFormat5.setBackground(PALE_BLUE);
         cellFormat5.setAlignment(Alignment.CENTRE);
 
 
         cellFormat6 = new WritableCellFormat(cellFont2);
         cellFormat6.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat6.setWrap(true);
-        cellFormat6.setBackground(LIGHT_TURQUOISE);
+        cellFormat6.setBackground(PALE_BLUE);
         //  sheet.addCell(new Label(col, 1, "CCCCC", cellFormat));
 
         for (int row = 0; row < sourceSheet.getRows(); row++) {
@@ -463,7 +463,7 @@ public class Fire_console_seco {
                                 driver.quit();
                             } else {
                                 try{
-                                    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                                    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                                     driver.switchTo().frame("ifrmToolbar");
                                     List<WebElement> d = driver.findElements(By.xpath(".//*[@id='seTbGeneral']/tbody/tr/td/a"));
                                     for (WebElement cell : d) {
@@ -508,7 +508,7 @@ public class Fire_console_seco {
                                                         driver.switchTo().frame(frame);
                                                         Thread.sleep(1000);
 
-                                                        if(fiels.equals(" Update Demand")){}else { DateFun(driver, "27/02/2018");}
+                                                        if(fiels.equals(" Update Demand")){}else { DateFun(driver, "15/03/2018");}
 
 
                                                         driver.findElement(By.xpath(".//*[@id='btnsave']")).click();
@@ -567,11 +567,6 @@ public class Fire_console_seco {
                                                             Actual=g.getMessage();
                                                         }
 
-
-
-
-
-
                                                     } else {
                                                         if(fiels.equals(" Change Status")){
 
@@ -606,9 +601,10 @@ public class Fire_console_seco {
                                                                             alert2.accept();
                                                                         }}
                                                                 }else {
+
                                                                     if(fiels.equals(" Attach Fire NOC")){
                                                                         cell.click();
-                                                                        Thread.sleep(300);
+                                                                       // Thread.sleep(300);
                                                                         NewWindow(driver);
                                                                         driver.manage().timeouts().implicitlyWait(40,TimeUnit.SECONDS);
                                                                         WebElement ss = driver.findElement(By.id("RadAsyncUpload1file0"));
@@ -1243,6 +1239,13 @@ break;
                         case "Verify medatory doc":
                             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
+                /*            WebElement g1=driver.findElement(By.xpath(""));
+                            String h1=g1.getText();
+                            if(h1.equals("")) {
+                                driver.navigate().refresh();
+
+                            }
+*/
                             try {
                                 List<WebElement> cells = driver.findElements(By.xpath(".//*[@id='RadTabStrip1']/div/ul/li/a/span/span"));
 
@@ -1821,13 +1824,23 @@ break;
 
 
                         case "Enter Keyword for search":
-                            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                            Actions actionsff = new Actions(driver);
-                            actionsff.moveToElement(driver.findElement(By.xpath(".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")));
-                            actionsff.doubleClick();
-                            actionsff.sendKeys(value);
-                            actionsff.build().perform();
-                            Result="pass";
+
+                            try{
+
+                                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                                Actions actionsff = new Actions(driver);
+                                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                                actionsff.moveToElement(driver.findElement(By.xpath(".//*[@id='form1']/div[3]//div[5]/div//div[2]/table/tbody/tr/td[2]/div")));
+                                actionsff.doubleClick();
+                                actionsff.sendKeys(value);
+                                actionsff.build().perform();
+                                Result="pass";
+                            }catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
+                            }
+
 
 break;
                         case"Submit Note sheet Remarks":

@@ -96,10 +96,10 @@ public class ACT {
         sourceSheet = writableTempSource.getSheet(0);
         targetSheet = copyDocument.createSheet("sheet 1", 2);
 
-        WritableFont cellFont = new WritableFont(WritableFont.COURIER, 11);
+        WritableFont cellFont = new WritableFont(WritableFont.TIMES, 11);
         cellFont.setBoldStyle(WritableFont.BOLD);
 /************************************************************************************************/
-        WritableFont cellFont2 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont2 = new WritableFont(WritableFont.TIMES, 10);
         cellFont2.setColour(BLACK);
         //cellFont2.setBoldStyle(WritableFont.BOLD);
         cellFormat1 = new WritableCellFormat(cellFont2);
@@ -107,14 +107,14 @@ public class ACT {
         cellFormat1.setWrap(true);
 /*******************************************************************************************************/
 /************************************************************************************************/
-        WritableFont cellFont3 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont3 = new WritableFont(WritableFont.TIMES, 10);
         cellFont3.setColour(RED);
         // cellFont3.setBoldStyle(WritableFont.BOLD);
         cellFormat3 = new WritableCellFormat(cellFont3);
         cellFormat3.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat3.setWrap(true);
 
-        WritableFont cellFont4 = new WritableFont(WritableFont.COURIER, 10);
+        WritableFont cellFont4 = new WritableFont(WritableFont.TIMES, 10);
         cellFont4.setColour(GREEN);
         // cellFont4.setBoldStyle(WritableFont.BOLD);
         cellFormat4 = new WritableCellFormat(cellFont4);
@@ -123,25 +123,25 @@ public class ACT {
 
 
         cellFormat = new WritableCellFormat(cellFont);
-        cellFormat.setBackground(LIGHT_BLUE);
+        cellFormat.setBackground(PALE_BLUE);
         cellFormat.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat.setWrap(true);
         cellFormat2 = new WritableCellFormat(cellFont);
         cellFormat2.setBackground(RED);
         //cellFormat.setAlignment(jxl.format.Alignment.getAlignment(20));
-        WritableFont cellFont5 = new WritableFont(WritableFont.COURIER, 18);
+        WritableFont cellFont5 = new WritableFont(WritableFont.TIMES, 18);
         cellFont5.setColour(BLACK);
         cellFont5.setBoldStyle(WritableFont.BOLD);
         cellFormat5 = new WritableCellFormat(cellFont5);
         cellFormat5.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
-        cellFormat5.setBackground(LIGHT_BLUE);
+        cellFormat5.setBackground(PALE_BLUE);
         cellFormat5.setAlignment(Alignment.CENTRE);
 
 
         cellFormat6 = new WritableCellFormat(cellFont2);
         cellFormat6.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN);
         cellFormat6.setWrap(true);
-        cellFormat6.setBackground(LIGHT_TURQUOISE);
+        cellFormat6.setBackground(PALE_BLUE);
         //  sheet.addCell(new Label(col, 1, "CCCCC", cellFormat));
 
         for (int row = 0; row < sourceSheet.getRows(); row++) {
@@ -205,7 +205,7 @@ public class ACT {
             driver = openBrowser("chrome");
             GetUrl("url");
             Thread.sleep(200);
-          SetBord = j++;
+            SetBord = j++;
             Label l7 = new Label(5, SetBord, "", cellFormat6);
             targetSheet.addCell(l7);
             Label l8 = new Label(6, SetBord, "", cellFormat6);
@@ -326,7 +326,7 @@ public class ACT {
                                        else {
 
                                             Thread.sleep(1000);
-                                            RecDateFun(driver,"13/02/2018",Rec);
+                                            RecDateFun(driver,"14/03/2018",Rec);
                                             Thread.sleep(1000);
                                             Actions actions = new Actions(driver);
                                             actions.moveToElement(re);
@@ -414,26 +414,36 @@ public class ACT {
                 case "LEFT_MENU":
 
                     switch (objectName) {
-                    case "LeftMenuTab":
 
-                              driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+                        case "LeftMenuTab":
+                            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
                             try {
                                 List<WebElement> cells = driver.findElements(By.xpath(".//*/div/nav/ul/li/a/div/div[2]/span"));
 
-                                for (WebElement cell : cells) {
+                                for (WebElement cell : cells)
+                                {
                                     String fiels = cell.getText();
                                     System.out.println(fiels);
-                                    if (fiels.equals(value)) {
+                                    if (fiels.equals(value))
+                                    {
                                         System.out.println(fiels);
-                                        if (k1 != 1) {
+                                        if (k1 != 1)
+                                        {
                                             cell.click();
                                             System.out.println("Value Name is :-***" + value + "***");
                                             Result = "pass";break;
                                         }
-                                    }   else {Result="fail";
-                                    Actual="Tab not present.";
-                                    }      ++k1;
 
+                                            Result="pass";
+                                            break;
+
+                                    }   else {
+
+                                        Result="fail";
+                                        Actual="Tab is not found .";
+                                    }
+
+                                    ++k1;
                                 }
                             } catch (Throwable e) {
                                 Actual=e.getMessage();
@@ -725,9 +735,10 @@ try{
                             Result="pass";
 
                         case "Submit":
-                            try{Thread.sleep(1000);
+                            try{
+                                Thread.sleep(1000);
                                 application.clickSave_Submit();
-                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                                driver.manage().timeouts().implicitlyWait(25, TimeUnit.SECONDS);
                                 WebElement element = driver.findElement(By.xpath("html/body/form/div[1]/table/tbody/tr[2]/td[2]//div/a/span/span"));
                                 System.out.println(element.getText());
                                 Actions actions = new Actions(driver);
@@ -736,9 +747,21 @@ try{
                                 actions.click();
                                 actions.build().perform();
                                 driver.switchTo().parentFrame();
+                               /* if ((ExpectedConditions.alertIsPresent()) == null) {
+                                    System.out.println("alert was not present");
+                                } else {
+                                    Alert alert = driver.switchTo().alert();
+                                    Actual = driver.switchTo().alert().getText();
+                                    alert.accept();
+                                }*/
+
+
                                 driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
                                 driver.switchTo().frame("ifrmProjectInfo");
-                                Result = "pass";}catch (Throwable j)
+                                Result = "pass";
+
+
+                            }catch (Throwable j)
                             {
                                 Actual=j.getMessage();
                                 Result="fails";
@@ -985,7 +1008,7 @@ try{
                                     ss.click();
                                     Thread.sleep(1000);
                                     AttachFuntn(driver, FilePath2);
-                                    Thread.sleep(40);
+                                    Thread.sleep(1000);
                                     driver.switchTo().window(WinHandleBefore1);
                                     Thread.sleep(1000);
                                     if ((ExpectedConditions.alertIsPresent()) == null) {
@@ -1483,9 +1506,9 @@ Thread.sleep(1000);
                                 Actual=j.getMessage();
                                 Result="fails";
                             }
-                            WebElement Bank=driver.findElement(By.xpath(".//*[@id='cboBankName']"));
+                            /*WebElement Bank=driver.findElement(By.xpath("./*//*[@id='cboBankName']"));
                             Select combo1=new Select(Bank);
-                            combo1.selectByVisibleText(value);
+                            combo1.selectByVisibleText(value);*/
 
                             break;
 
@@ -1543,8 +1566,9 @@ Thread.sleep(1000);
                             break;
 
                         case "Company Activity":
-                            Thread.sleep(1000);
+
                             try {
+                                Thread.sleep(1000);
                                 driver.manage().timeouts().implicitlyWait(45,TimeUnit.SECONDS);
                                 List<WebElement> cells = driver.findElements(By.xpath("./*//*[@id='cboCompanyActivitys']/option"));
 
@@ -1552,9 +1576,12 @@ Thread.sleep(1000);
                                     String fiels = cell.getText();
                                     System.out.println(fiels);
 
-                                    if (fiels.equals(value))
+                                    if (fiels.equals(value)){
                                         cell.click();
-                                    Result = "pass";
+                                        Result = "pass";
+                                        break;
+                                    }
+
                                 }
                             } catch (Throwable e) {
 
@@ -1623,23 +1650,29 @@ Thread.sleep(1000);
 /*---------------------------------------------- Building Deatials --------------------------------------------------------*/
 
                         case "Building Use":
-                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                            Actions actions = new Actions(driver);
-                            actions.moveToElement(application.getBuilding_Use());
-                            actions.click();
-                            actions.build().perform();
-                            try {
 
+                            try {
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                                Actions actions = new Actions(driver);
+                                actions.moveToElement(application.getBuilding_Use());
+                                actions.click();
+                                actions.build().perform();
+                                Thread.sleep(1000);
                                 List<WebElement> cells = driver.findElements(By.xpath("./*//*[@class='GLMenuBody GLEnumMenuBody']/div//div"));
 
-                                for (WebElement cell : cells) {
+                                for (WebElement cell : cells)
+
+                                {
                                     String fiels = cell.getText();
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
-
+                                    {
                                         cell.click();
-                                    Result = "pass";
+                                        Result = "pass";
+break;
+                                    }
+
                                 }
                             } catch (Throwable e) {
                                 Actual=e.getMessage();
@@ -1647,14 +1680,14 @@ Thread.sleep(1000);
                             }
                             break;
                         case "Building Subuse":
-                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                            Actions action = new Actions(driver);
-                            action.moveToElement(application.getBuilding_Subuse());
-                            action.click();
 
-                            action.build().perform();
                             try {
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                                Actions action = new Actions(driver);
+                                action.moveToElement(application.getBuilding_Subuse());
+                                action.click();
 
+                                action.build().perform();
                                 List<WebElement> cells = driver.findElements(By.xpath("//div[@class='GLMenuMain GLEnumMenuMain']/div/div/div/div/div"));
 
                                 for (WebElement cell : cells) {
@@ -1662,9 +1695,12 @@ Thread.sleep(1000);
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
+                                    {cell.click();
+                                        Thread.sleep(1000);
+                                        Result = "pass";
+                                    break;
+                                    }
 
-                                        cell.click();
-                                    Result = "pass";
                                 }
                             } catch (Throwable e) {
                                 Actual=e.getMessage();
@@ -1673,15 +1709,15 @@ Thread.sleep(1000);
                             break;
 
                         case "Building Type":
-                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                            Actions action1 = new Actions(driver);
-                            action1.moveToElement(application.getBuilding_Type());
-                            action1.click();
 
-                            action1.build().perform();
-                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             try {
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                                Actions action1 = new Actions(driver);
+                                action1.moveToElement(application.getBuilding_Type());
+                                action1.click();
 
+                                action1.build().perform();
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                                 List<WebElement> cells = driver.findElements(By.xpath("//div[@class='GLMenuMain GLEnumMenuMain']/div/div/div/div/div"));
 
                                 for (WebElement cell : cells) {
@@ -1689,9 +1725,14 @@ Thread.sleep(1000);
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
-
+                                    {
                                         cell.click();
-                                    Result = "pass";
+                                        Thread.sleep(1000);
+                                        Result = "pass";
+                                    break;
+
+                                    }
+
                                 }
                             } catch (Throwable e) {
                                 Actual=e.getMessage();
@@ -1700,15 +1741,15 @@ Thread.sleep(1000);
                             break;
 
                         case "Building Strucher":
-                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-                            Actions action3 = new Actions(driver);
-                            action3.moveToElement(application.getBuilding_Strucher());
-                            action3.click();
 
-                            action3.build().perform();
-                            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                             try {
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                                Actions action3 = new Actions(driver);
+                                action3.moveToElement(application.getBuilding_Strucher());
+                                action3.click();
 
+                                action3.build().perform();
+                                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
                                 List<WebElement> cells = driver.findElements(By.xpath("//div[@class='GLMenuMain GLEnumMenuMain']/div/div/div/div/div"));
 
                                 for (WebElement cell : cells) {
@@ -1716,9 +1757,12 @@ Thread.sleep(1000);
                                     System.out.println(fiels);
 
                                     if (fiels.equals(value))
+                                    { cell.click();
+                                        Thread.sleep(1000);
+                                        Result = "pass";
+                                    break;
+                                    }
 
-                                        cell.click();
-                                    Result = "pass";
                                 }
                             } catch (Throwable e) {
                                 Actual=e.getMessage();
@@ -2319,76 +2363,81 @@ break;
 
                         case "Total Building Height":
 
-
-                                Thread.sleep(100);
+                            try{ Thread.sleep(100);
                                 application.getTotal_Building_Height().clear();
                                 Thread.sleep(2000);
                                 application.setTotal_Building_Height(value);
 
-                            final String fieldValue1 = application.getTotal_Building_Height().getAttribute("value");
-                            if (fieldValue1.isEmpty()) {
-                                try {
-                                    if ((ExpectedConditions.alertIsPresent()) == null) {
+                                final String fieldValue1 = application.getTotal_Building_Height().getAttribute("value");
+                                if (fieldValue1.isEmpty()) {
+                                    try {
+                                        if ((ExpectedConditions.alertIsPresent()) == null) {
 
-                                    } else {
-                                        Alert alert = driver.switchTo().alert();
-
-                                        Actual = driver.switchTo().alert().getText();
-                                        Thread.sleep(300);
-                                        alert.accept();
-                                        if (Actual.equals(Expected)) {
-                                            Result = "pass";
                                         } else {
-                                            Result = "Fail";
-                                        }
-                                        System.out.println(Actual);
-                                        //    Thread.sleep(50);
+                                            Alert alert = driver.switchTo().alert();
 
+                                            Actual = driver.switchTo().alert().getText();
+                                            Thread.sleep(300);
+                                            alert.accept();
+                                            if (Actual.equals(Expected)) {
+                                                Result = "pass";
+                                            } else {
+                                                Result = "Fail";
+                                            }
+                                            System.out.println(Actual);
+                                            //    Thread.sleep(50);
+
+                                        }
+
+                                    } catch (Throwable e) {
+                                        Actual = "Alert message not display.";
+                                        Result = "Fail";
                                     }
 
-                                } catch (Throwable e) {
-                                    Actual = "Alert message not display.";
-                                    Result = "Fail";
-                                }
 
+                                } else {
+                                    if (fieldValue1.equals(value)) {
 
-                            } else {
-                                if (fieldValue1.equals(value)) {
+                                        System.out.println(fieldValue1);
 
-                                    System.out.println(fieldValue1);
-
-                                    if (!Flot.matcher(fieldValue1).matches()) {
-                                        try {
-                                            if ((ExpectedConditions.alertIsPresent()) == null) {
-                                                Actual = "Alert message not display.";
-                                                Result = "Fail";
-                                            } else {
-                                                Alert alert = driver.switchTo().alert();
-                                                Actual = driver.switchTo().alert().getText();
-                                                if (Actual.equals(Expected)) {
-                                                    Result = "pass";
-                                                } else {
+                                        if (!Flot.matcher(fieldValue1).matches()) {
+                                            try {
+                                                if ((ExpectedConditions.alertIsPresent()) == null) {
+                                                    Actual = "Alert message not display.";
                                                     Result = "Fail";
+                                                } else {
+                                                    Alert alert = driver.switchTo().alert();
+                                                    Actual = driver.switchTo().alert().getText();
+                                                    if (Actual.equals(Expected)) {
+                                                        Result = "pass";
+                                                    } else {
+                                                        Result = "Fail";
+                                                    }
+                                                    System.out.println(Actual);
+                                                    //    Thread.sleep(50);
+                                                    alert.accept();
+
                                                 }
-                                                System.out.println(Actual);
-                                                //    Thread.sleep(50);
-                                                alert.accept();
 
+                                            } catch (Throwable e) {
+                                                Actual = "Alert message not display .";
+                                                Result = "Fail";
                                             }
-
-                                        } catch (Throwable e) {
-                                            Actual = "Alert message not display .";
-                                            Result = "Fail";
+                                        } else {
+                                            Result = "pass";
                                         }
                                     } else {
-                                        Result = "pass";
-                                    }
-                                } else {
-                                    Actual = "Building Height not be accept other than flot value ";
+                                        Actual = "Building Height not be accept other than flot value ";
 
-                                    Result = "fail";
+                                        Result = "fail";
+                                    }
                                 }
+                            }catch (Throwable j)
+                            {
+                                Actual=j.getMessage();
+                                Result="fails";
                             }
+
                             break;
 
                         case "Ready Reckoner Rate":

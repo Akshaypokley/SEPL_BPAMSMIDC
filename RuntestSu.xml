@@ -14,7 +14,7 @@
 
 
 
-            <class name="TestScript.ApplicantConsoleTest.ACT"></class>
+         <class name="TestScript.ApplicantConsoleTest.ACT"></class>
             <class name="TestScript.Fire_consoleATest.Fire_console"></class>
             <class name="TestScript.SPA_Test.SPA_console"></class>
 

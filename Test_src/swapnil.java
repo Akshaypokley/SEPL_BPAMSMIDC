@@ -15,18 +15,28 @@ public class swapnil {
 
     @Test
     public void  test() throws InterruptedException {
+
+
+
+        for(int i = 0; i <15; i+=3){
+
+            System.out.println(i);
+
+        }
+
+
         WebDriver driver;
-        driver = openBrowser("chrome");
+       /* driver = openBrowser("chrome");
         driver.get("http://ext-ciwapp.minerva-plm.com/De2Mat_11_QA_AIRBUS/Client/scripts/Innovator.aspx");
 driver.switchTo().frame("main");
-driver.findElement(By.xpath(".//*[@id='username']")).sendKeys("ng478d5");
-driver.findElement(By.xpath(".//*[@id='password']")).sendKeys("de2mat");
-        driver.findElement(By.xpath(".//*[@id='login.login_btn_label']")).click();
+driver.findElement(By.xpath("./*//*[@id='username']")).sendKeys("ng478d5");
+driver.findElement(By.xpath("./*//*[@id='password']")).sendKeys("de2mat");
+        driver.findElement(By.xpath("./*//*[@id='login.login_btn_label']")).click();
         Thread.sleep(3000);
         driver.switchTo().parentFrame();
 Thread.sleep(3000);
      driver.findElement(By.xpath("/html/body/dialog/div[2]/div[2]/div[2]/button")).click();
-
+*/
     }
 
 }
